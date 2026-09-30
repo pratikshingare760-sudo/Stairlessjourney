@@ -3,6 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Google tag (gtag.js) — Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HLPM2X71M2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  // Consent Mode: analytics stays OFF until the visitor clicks "Agree" on the
+  // site's own consent banner (matches the promise in the Privacy Policy).
+  gtag('consent', 'default', {
+    analytics_storage: 'denied', ad_storage: 'denied',
+    ad_user_data: 'denied', ad_personalization: 'denied'
+  });
+  // Returning visitor who already agreed → allow analytics straight away.
+  try {
+    var sjC = JSON.parse(localStorage.getItem('sj_consent_v1') || 'null');
+    if (sjC && sjC.analytics && localStorage.getItem('sj_internal_visitor') !== '1') {
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+    }
+  } catch (e) {}
+  gtag('js', new Date());
+  // Page views are sent manually (see "GOOGLE ANALYTICS 4" script at the end
+  // of <body>) because this site switches pages without reloading.
+  gtag('config', 'G-HLPM2X71M2', { send_page_view: false });
+</script>
 <title>StairlessJourney: Move Freely, Know Before You Go.</title>
 <meta name="description" content="StairlessJourney is India's physically-verified wheelchair accessibility map. Every listed café, restaurant, and public space in Pune, Goa, and Kolkata is audited in person, not just crowdsourced, so you know before you go.">
 <link rel="canonical" href="https://stairlessjourney.com/">
@@ -12475,6 +12498,80 @@ document.addEventListener('consentchange', (e) => {
 
 /* Legal-page TOC scrollspy (Privacy + Terms) */
 (function initLegalSpy(){
+})();
+</script>
+<script>
+/* ════════ GOOGLE ANALYTICS 4: page views for this single-page site ════════
+   Sends one page_view per screen (Home, Explore, a specific place, etc.),
+   only after the visitor has agreed on the consent banner, and never from a
+   device marked "Exclude this device" in the admin Users panel. */
+(function sjGA4(){
+  const TITLES = { home:'Home', explore:'Explore Places', about:'About', events:'Events',
+    a11y:'Accessibility', volunteer:'Volunteer', contact:'Contact', bizdash:'Business Dashboard' };
+  let lastKey = null, lastAt = 0;
+
+  function allowed(){
+    return typeof gtag === 'function'
+      && typeof Consent !== 'undefined' && Consent.has('analytics')
+      && !(typeof sjIsInternalVisitor === 'function' && sjIsInternalVisitor());
+  }
+  function send(path, title){
+    if (!allowed()) return;
+    const now = Date.now();
+    if (path === lastKey && now - lastAt < 1500) return; // skip accidental duplicates
+    lastKey = path; lastAt = now;
+    gtag('event', 'page_view', {
+      page_location: location.origin + path,
+      page_path: path,
+      page_title: title + ' | StairlessJourney'
+    });
+  }
+  function trackSection(name){
+    if (!name || name === 'place') return; // place pages are tracked with their name below
+    send(name === 'home' ? '/' : '/' + name, TITLES[name] || name);
+  }
+  function trackPlace(p){ if (p) send('/place/' + p.id, p.name); }
+  function trackCurrent(){
+    const active = document.querySelector('.section.active')?.id?.replace('section-', '') || 'home';
+    if (active === 'place') {
+      const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == currentPlaceId) : null;
+      trackPlace(p);
+    } else trackSection(active);
+  }
+
+  // Menu / button navigation
+  const prevShow = window.showSection;
+  window.showSection = function(name){ const r = prevShow.apply(this, arguments); trackSection(name); return r; };
+
+  // Individual place pages (from cards, map pins, shared links, back button)
+  const prevOpen = window.openPlacePage;
+  window.openPlacePage = function(id){
+    const r = prevOpen.apply(this, arguments);
+    const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == id) : null;
+    trackPlace(p);
+    return r;
+  };
+
+  // Browser back/forward buttons (they bypass showSection's wrappers)
+  window.addEventListener('popstate', (e) => {
+    if (e.state?.placeId != null) return; // handled by openPlacePage above
+    setTimeout(trackCurrent, 0);
+  });
+
+  // First page view once the page has loaded (shared place links are tracked
+  // when the place itself opens).
+  window.addEventListener('load', () => {
+    setTimeout(() => { if (!/^#place-/.test(location.hash)) trackCurrent(); }, 0);
+  });
+
+  // Visitor answers the consent banner (or "Near me" location prompt) now
+  let wasGranted = allowed();
+  document.addEventListener('consentchange', (e) => {
+    const granted = !!e.detail.analytics && !(typeof sjIsInternalVisitor === 'function' && sjIsInternalVisitor());
+    gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' });
+    if (granted && !wasGranted) { lastKey = null; trackCurrent(); } // count the page they're on right now
+    wasGranted = granted;
+  });
 })();
 </script>
 </body>
