@@ -3,29 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) — Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HLPM2X71M2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  // Consent Mode: analytics stays OFF until the visitor clicks "Agree" on the
-  // site's own consent banner (matches the promise in the Privacy Policy).
-  gtag('consent', 'default', {
-    analytics_storage: 'denied', ad_storage: 'denied',
-    ad_user_data: 'denied', ad_personalization: 'denied'
-  });
-  // Returning visitor who already agreed → allow analytics straight away.
-  try {
-    var sjC = JSON.parse(localStorage.getItem('sj_consent_v1') || 'null');
-    if (sjC && sjC.analytics && localStorage.getItem('sj_internal_visitor') !== '1') {
-      gtag('consent', 'update', { analytics_storage: 'granted' });
-    }
-  } catch (e) {}
-  gtag('js', new Date());
-  // Page views are sent manually (see "GOOGLE ANALYTICS 4" script at the end
-  // of <body>) because this site switches pages without reloading.
-  gtag('config', 'G-HLPM2X71M2', { send_page_view: false });
-</script>
 <title>StairlessJourney: Move Freely, Know Before You Go.</title>
 <meta name="description" content="StairlessJourney is India's physically-verified wheelchair accessibility map. Every listed café, restaurant, and public space in Pune, Goa, and Kolkata is audited in person, not just crowdsourced, so you know before you go.">
 <link rel="canonical" href="https://stairlessjourney.com/">
@@ -999,6 +976,12 @@ footer {
 .info-row { display: flex; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--gray-light); font-size: 0.9rem; }
 .info-row:last-child { border: none; }
 .info-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
+/* Clickable info-rows (business website, partner booking link) — same look
+   as a plain info-row, just an <a> instead of a <div>, with a small
+   trailing external-link mark so it reads as "this one leaves the site". */
+.info-row-link { text-decoration: none; color: inherit; align-items: center; cursor: pointer; }
+.info-row-link:hover { color: var(--red); }
+.info-row-link .info-row-ext { margin-left: auto; flex-shrink: 0; }
 .reviews-section { margin-top: 32px; }
 .review-card {
   background: white; border: 1px solid var(--gray-light);
@@ -3159,6 +3142,25 @@ a.is-red, .text-link-red { color: var(--red-strong); }
 @keyframes consent-rise{ from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;} }
 @keyframes consent-fade{ from{opacity:0;} to{opacity:1;} }
 @media (prefers-reduced-motion:reduce){ .consent, .consent-card{ animation:none; } }
+
+/* Referral explore nudge — small, dismissible, non-blocking bottom card
+   shown only to visitors who arrived via a partner's own link to one
+   specific place page. Deliberately not a modal: no backdrop, doesn't
+   trap focus, page stays fully usable underneath. */
+.referral-banner{ position:fixed; left:16px; right:16px; bottom:16px; z-index:1500; max-width:420px; margin:0 auto;
+  background:#fff; border:1px solid var(--gray-light); border-radius:16px; box-shadow:var(--shadow-lg);
+  padding:18px 20px 16px; animation:referral-rise .45s var(--ease-soft) both; }
+.referral-banner[hidden]{ display:none; }
+.referral-banner-close{ position:absolute; top:8px; right:8px; width:28px; height:28px; display:flex; align-items:center; justify-content:center;
+  background:none; border:none; color:var(--gray-mid); font-size:0.8rem; cursor:pointer; border-radius:50%; transition:background .15s,color .15s; }
+.referral-banner-close:hover{ background:var(--gray-bg); color:var(--near-black); }
+.referral-banner-text{ font-size:0.88rem; line-height:1.5; color:var(--text-secondary); margin:0 22px 12px 0; font-family:'DM Sans',sans-serif; }
+.referral-banner-cta{ display:inline-flex; align-items:center; gap:4px; background:var(--red-strong); color:var(--on-red);
+  border:none; border-radius:100px; padding:9px 16px; font-size:0.84rem; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .2s; }
+.referral-banner-cta:hover{ background:var(--red-dark); }
+@keyframes referral-rise{ from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;} }
+@media (prefers-reduced-motion:reduce){ .referral-banner{ animation:none; } }
+@media (max-width:480px){ .referral-banner{ left:10px; right:10px; bottom:10px; } }
 
 </style>
 <!-- Leaflet (OpenStreetMap) — open-source map, no API key needed -->
@@ -6064,11 +6066,17 @@ function openPlacePage(id) {
 
   // Info
   const infoRow = (icon, text) => (text && text !== 'undefined' && text !== 'null') ? `<div class="info-row"><span class="info-icon" aria-hidden="true"><svg style="width:18px;height:18px;color:var(--red);"><use href="#${icon}"/></svg></span><span>${text}</span></div>` : '';
+  // Outbound rows (business's own website; a booking-partner link) — same
+  // visual language as the plain rows above, just an <a> that leaves the
+  // site, with a small arrow mark so that's clear before tapping.
+  const linkRow = (icon, text, href) => (text && href) ? `<a class="info-row info-row-link" href="${escH(href)}" target="_blank" rel="noopener noreferrer"><span class="info-icon" aria-hidden="true"><svg style="width:18px;height:18px;color:var(--red);"><use href="#${icon}"/></svg></span><span>${escH(text)}</span><svg class="info-row-ext" style="width:13px;height:13px;opacity:.55;" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>` : '';
   document.getElementById('pp-info-rows').innerHTML =
     infoRow('i-pin', p.address) +
     infoRow('i-clock', p.hours) +
     infoRow('i-phone', p.phone) +
-    infoRow('i-check-circle', p.lastVerified ? 'Last visited: ' + p.lastVerified : '');
+    infoRow('i-check-circle', p.lastVerified ? 'Last visited: ' + p.lastVerified : '') +
+    linkRow('i-link', 'Visit Website', p.website) +
+    linkRow('i-arrow-up-right', p.partnerName ? `Bookable through ${p.partnerName}` : '', p.partnerLink);
 
   // Embedded map
   const mapWrap = document.getElementById('pp-map-wrap');
@@ -7309,6 +7317,10 @@ function sjStartRealtimeSync() {
       const pid = _pendingSharedPlaceId;
       _pendingSharedPlaceId = null;
       openPlacePage(pid);
+      if (typeof _pendingReferralSource !== 'undefined' && _pendingReferralSource && String(_pendingReferralSource.placeId) === String(pid)) {
+        sjArmReferralBanner(pid, _pendingReferralSource.source);
+        _pendingReferralSource = null;
+      }
     }
   }, err => console.warn('places sync error:', err));
 
@@ -7856,6 +7868,12 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="ap-form-group"><label class="ap-label">Found By <span style="font-weight:400;color:var(--gray-mid);">(someone who told you about this place in person, not through the website — counts toward their contributor total)</span></label><input type="text" class="ap-input" id="pf-found-by" placeholder="e.g. Priya Sharma"></div>
         </div>
         <div class="ap-form-group"><label class="ap-label">Google Maps URL</label><input type="url" class="ap-input" id="pf-maps" placeholder="https://maps.google.com/..."></div>
+        <div class="ap-form-group"><label class="ap-label">Business Website <span style="font-weight:400;color:var(--gray-mid);">(optional — shows as a "Visit Website" link on the place page)</span></label><input type="url" class="ap-input" id="pf-website" placeholder="https://theirsite.com"></div>
+        <div class="ap-row">
+          <div class="ap-form-group"><label class="ap-label">Partner Name <span style="font-weight:400;color:var(--gray-mid);">(e.g. "HomelyHuts")</span></label><input type="text" class="ap-input" id="pf-partner-name" placeholder="e.g. HomelyHuts"></div>
+          <div class="ap-form-group"><label class="ap-label">Partner Booking Link</label><input type="url" class="ap-input" id="pf-partner-link" placeholder="https://partner-site.com/listing/..."></div>
+        </div>
+        <p style="font-size:0.76rem;color:var(--gray-mid);margin-top:-6px;margin-bottom:14px;">For a booking/tourism-platform collaboration (built generic on purpose — works for any current or future partner, not just one). If both are filled, shows as "Bookable through {Partner Name}" on the place page, linking out to that URL. Leave both blank for a normal listing.</p>
         <div class="ap-card-title" style="margin-top:12px;">Accessibility Features</div>
         <div class="ap-row">
           <div class="ap-form-group"><label class="ap-label">Step-Free</label><div class="ap-yn" id="pf-yn-stepfree"><button class="ap-yn-btn" onclick="pfSetYN('stepfree','Yes',this)">Yes</button><button class="ap-yn-btn" onclick="pfSetYN('stepfree','No',this)">No</button><button class="ap-yn-btn" onclick="pfSetYN('stepfree','Partial',this)">~</button></div></div>
@@ -10628,7 +10646,7 @@ function aeOpenPlaceForm(id) {
   if (id === null) {
     document.getElementById('place-form-title').textContent = 'New Place';
     document.getElementById('pf-id').value = '';
-    ['pf-name','pf-emoji','pf-cat','pf-city','pf-area','pf-address','pf-phone','pf-hours','pf-maps','pf-suited','pf-notsuited','pf-vol-note','pf-vol-name','pf-foundby'].forEach(fid => { const el=document.getElementById(fid); if(el) el.value=''; });
+    ['pf-name','pf-emoji','pf-cat','pf-city','pf-area','pf-address','pf-phone','pf-hours','pf-maps','pf-website','pf-partner-name','pf-partner-link','pf-suited','pf-notsuited','pf-vol-note','pf-vol-name','pf-foundby'].forEach(fid => { const el=document.getElementById(fid); if(el) el.value=''; });
     document.getElementById('pf-rating').value = '';
     document.getElementById('pf-verified').value = '';
     document.getElementById('pf-joined-date').value = '';
@@ -10667,6 +10685,9 @@ function aeOpenPlaceForm(id) {
     document.getElementById('pf-joined-date').value = p.joinedDate || '';
     document.getElementById('pf-found-by').value = p.foundBy || '';
     document.getElementById('pf-maps').value = p.mapsUrl;
+    document.getElementById('pf-website').value = p.website || '';
+    document.getElementById('pf-partner-name').value = p.partnerName || '';
+    document.getElementById('pf-partner-link').value = p.partnerLink || '';
     document.getElementById('pf-badge').value = p.verified ? 'true' : 'false';
     document.getElementById('pf-suited').value = p.suited || '';
     document.getElementById('pf-notsuited').value = p.notSuited || '';
@@ -10784,6 +10805,9 @@ async function aeSavePlace() {
     joinedDate: document.getElementById('pf-joined-date').value || null,
     foundBy: document.getElementById('pf-found-by').value.trim() || null,
     mapsUrl: document.getElementById('pf-maps').value.trim() || 'https://maps.google.com',
+    website: document.getElementById('pf-website').value.trim() || null,
+    partnerName: document.getElementById('pf-partner-name').value.trim() || null,
+    partnerLink: document.getElementById('pf-partner-link').value.trim() || null,
     verified: document.getElementById('pf-badge').value === 'true',
     stepFree: pfYN.stepfree || 'No',
     ramp: pfYN.ramp || 'No',
@@ -11619,6 +11643,15 @@ const esc = escH;   // alias: hardened, backward-compatible
   </div>
 </div>
 
+<!-- ══ REFERRAL EXPLORE NUDGE ══ (see sjArmReferralBanner — only ever shown
+     to a visitor who landed directly on one place page via a partner's own
+     ?ref= link; never appears from ordinary in-site browsing) -->
+<div id="referral-banner" class="referral-banner" hidden role="status" aria-live="polite">
+  <button class="referral-banner-close" onclick="sjDismissReferralBanner()" aria-label="Dismiss">✕</button>
+  <p class="referral-banner-text" id="referral-banner-text"></p>
+  <button class="referral-banner-cta" id="referral-banner-cta" type="button">Explore them all →</button>
+</div>
+
 <script>
 // ══════════════════════════════════════════════════
 // HISTORY API — Android back button fix
@@ -11626,6 +11659,58 @@ const esc = escH;   // alias: hardened, backward-compatible
 
 let _historyNavigating = false;
 let _pendingSharedPlaceId = null; // set on load if the URL points at one specific place
+let _pendingReferralSource = null; // set on load if that same URL also carries ?ref=<partner>
+
+// ══════════════════════════════════════════════════
+// REFERRAL EXPLORE NUDGE
+// Shown only to a visitor who landed directly on one specific place page via
+// a partner's own ?ref=<source> link (HomelyHuts today; built generic so any
+// future partner works the same way with no code change). Armed once real
+// place data confirms the place + its city, fires once 15s later as a
+// small, dismissible bottom card nudging them to see the rest of that city's
+// verified places. Never armed for anyone who finds the same place by
+// browsing the site normally — see the ?ref= check in the load handler above.
+// ══════════════════════════════════════════════════
+let _referralBannerShown = false;
+
+function sjArmReferralBanner(placeId, source) {
+  if (_referralBannerShown) return;
+  const delayMs = 15000; // 15s
+  setTimeout(() => sjShowReferralBanner(placeId, source), delayMs);
+}
+
+function sjShowReferralBanner(placeId, source) {
+  if (_referralBannerShown) return;
+  if (typeof document !== 'undefined' && document.hidden) {
+    // Tab is backgrounded right now — wait for them to actually come back
+    // rather than have the nudge appear, unseen, behind another tab/app.
+    const onVisible = () => {
+      document.removeEventListener('visibilitychange', onVisible);
+      sjShowReferralBanner(placeId, source);
+    };
+    document.addEventListener('visibilitychange', onVisible);
+    return;
+  }
+  const p = (typeof PLACES !== 'undefined' ? PLACES : []).find(x => x.id == placeId);
+  if (!p || !p.city) return; // nothing sensible to say without knowing the city
+  const banner = document.getElementById('referral-banner');
+  if (!banner) return;
+  const cityCount = PLACES.filter(x => x.city === p.city).length;
+  _referralBannerShown = true;
+  document.getElementById('referral-banner-text').textContent =
+    `You're exploring StairlessJourney. We have ${cityCount} verified accessible place${cityCount === 1 ? '' : 's'} in ${p.city} — from cafes to parks.`;
+  document.getElementById('referral-banner-cta').onclick = () => {
+    sjDismissReferralBanner();
+    if (typeof showSection === 'function') showSection('explore');
+    if (typeof filterByCity === 'function') filterByCity(p.city);
+  };
+  banner.hidden = false;
+}
+
+function sjDismissReferralBanner() {
+  const banner = document.getElementById('referral-banner');
+  if (banner) banner.hidden = true;
+}
 
 // Push state when navigating sections
 const _origShowSection = window.showSection;
@@ -11650,17 +11735,33 @@ window.addEventListener('popstate', (e) => {
 
 // Set initial history state on load
 window.addEventListener('load', () => {
-  const hash = location.hash.replace('#', '');
-  const placeMatch = hash.match(/^place-(.+)$/);
+  const hashRaw = location.hash.replace('#', '');
+  // A partner link's ?ref= can legitimately end up in two different places
+  // depending on how it's built: as a real query string before the hash
+  // (the correct way: .../?ref=homelyhuts#place-123, read from
+  // location.search) or, just as commonly, tacked onto the end of the hash
+  // itself (.../#place-123?ref=homelyhuts, which browsers treat as part of
+  // the hash, not the query — read from hashQuery below). Support both so
+  // a partner's dev doesn't have to get URL syntax exactly right for this
+  // to work.
+  const [hashPath, hashQuery] = hashRaw.split('?');
+  const placeMatch = hashPath.match(/^place-(.+)$/);
   if (placeMatch) {
     // PLACES may not have loaded from Firestore yet — the onSnapshot
     // listener checks _pendingSharedPlaceId once real data arrives.
     _pendingSharedPlaceId = placeMatch[1];
-    history.replaceState({ section: 'place', placeId: placeMatch[1] }, '', '#' + hash);
+    history.replaceState({ section: 'place', placeId: placeMatch[1] }, '', '#' + hashPath);
+    // Only a hard page load ever runs this handler, so finding a ?ref= here
+    // is exactly the "arrived here directly from a partner's own link"
+    // signal — someone who found the same place by browsing the site
+    // normally never passes through this code path at all.
+    const refParam = new URLSearchParams(location.search).get('ref')
+      || (hashQuery ? new URLSearchParams(hashQuery).get('ref') : null);
+    if (refParam) _pendingReferralSource = { placeId: placeMatch[1], source: refParam };
   } else {
-    const startSection = hash || 'home';
+    const startSection = hashPath || 'home';
     history.replaceState({ section: startSection }, '', '#' + startSection);
-    if (hash && hash !== 'home') _origShowSection(hash);
+    if (startSection && startSection !== 'home') _origShowSection(startSection);
   }
 });
 
@@ -12498,80 +12599,6 @@ document.addEventListener('consentchange', (e) => {
 
 /* Legal-page TOC scrollspy (Privacy + Terms) */
 (function initLegalSpy(){
-})();
-</script>
-<script>
-/* ════════ GOOGLE ANALYTICS 4: page views for this single-page site ════════
-   Sends one page_view per screen (Home, Explore, a specific place, etc.),
-   only after the visitor has agreed on the consent banner, and never from a
-   device marked "Exclude this device" in the admin Users panel. */
-(function sjGA4(){
-  const TITLES = { home:'Home', explore:'Explore Places', about:'About', events:'Events',
-    a11y:'Accessibility', volunteer:'Volunteer', contact:'Contact', bizdash:'Business Dashboard' };
-  let lastKey = null, lastAt = 0;
-
-  function allowed(){
-    return typeof gtag === 'function'
-      && typeof Consent !== 'undefined' && Consent.has('analytics')
-      && !(typeof sjIsInternalVisitor === 'function' && sjIsInternalVisitor());
-  }
-  function send(path, title){
-    if (!allowed()) return;
-    const now = Date.now();
-    if (path === lastKey && now - lastAt < 1500) return; // skip accidental duplicates
-    lastKey = path; lastAt = now;
-    gtag('event', 'page_view', {
-      page_location: location.origin + path,
-      page_path: path,
-      page_title: title + ' | StairlessJourney'
-    });
-  }
-  function trackSection(name){
-    if (!name || name === 'place') return; // place pages are tracked with their name below
-    send(name === 'home' ? '/' : '/' + name, TITLES[name] || name);
-  }
-  function trackPlace(p){ if (p) send('/place/' + p.id, p.name); }
-  function trackCurrent(){
-    const active = document.querySelector('.section.active')?.id?.replace('section-', '') || 'home';
-    if (active === 'place') {
-      const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == currentPlaceId) : null;
-      trackPlace(p);
-    } else trackSection(active);
-  }
-
-  // Menu / button navigation
-  const prevShow = window.showSection;
-  window.showSection = function(name){ const r = prevShow.apply(this, arguments); trackSection(name); return r; };
-
-  // Individual place pages (from cards, map pins, shared links, back button)
-  const prevOpen = window.openPlacePage;
-  window.openPlacePage = function(id){
-    const r = prevOpen.apply(this, arguments);
-    const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == id) : null;
-    trackPlace(p);
-    return r;
-  };
-
-  // Browser back/forward buttons (they bypass showSection's wrappers)
-  window.addEventListener('popstate', (e) => {
-    if (e.state?.placeId != null) return; // handled by openPlacePage above
-    setTimeout(trackCurrent, 0);
-  });
-
-  // First page view once the page has loaded (shared place links are tracked
-  // when the place itself opens).
-  window.addEventListener('load', () => {
-    setTimeout(() => { if (!/^#place-/.test(location.hash)) trackCurrent(); }, 0);
-  });
-
-  // Visitor answers the consent banner (or "Near me" location prompt) now
-  let wasGranted = allowed();
-  document.addEventListener('consentchange', (e) => {
-    const granted = !!e.detail.analytics && !(typeof sjIsInternalVisitor === 'function' && sjIsInternalVisitor());
-    gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' });
-    if (granted && !wasGranted) { lastKey = null; trackCurrent(); } // count the page they're on right now
-    wasGranted = granted;
-  });
 })();
 </script>
 </body>
