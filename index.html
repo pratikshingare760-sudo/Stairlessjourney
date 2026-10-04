@@ -5908,8 +5908,15 @@ function renderPlaces() {
   document.getElementById('no-results').style.display = filtered.length ? 'none' : 'block';
 
   // Pinned places float to the top of whatever's already passed the filters
-  // above — no visual difference on the card itself, just position.
-  filtered = [...filtered].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+  // above — no visual difference on the card itself, just position. Below
+  // that, newest-added places come first: `id` is a creation-time stamp
+  // (Date.now() when a place is first saved — see aeSavePlace), so sorting
+  // by it descending orders by recency with no extra field or admin step.
+  filtered = [...filtered].sort((a, b) => {
+    const pinDiff = (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0);
+    if (pinDiff) return pinDiff;
+    return (Number(b.id) || 0) - (Number(a.id) || 0);
+  });
 
   grid.innerHTML = filtered.map(p => {
     const cardThumb = placeCardThumb(p);
@@ -7317,10 +7324,19 @@ function sjStartRealtimeSync() {
       const pid = _pendingSharedPlaceId;
       _pendingSharedPlaceId = null;
       openPlacePage(pid);
-      if (typeof _pendingReferralSource !== 'undefined' && _pendingReferralSource && String(_pendingReferralSource.placeId) === String(pid)) {
-        sjArmReferralBanner(pid, _pendingReferralSource.source);
-        _pendingReferralSource = null;
-      }
+      // Arm the nudge for ANY hard-load landing directly on one place page
+      // — a partner's ?ref= link, a visitor's own Share link, or just
+      // someone pasting the URL. All of these skip straight past Explore,
+      // so whoever lands this way has never seen there's more than this
+      // one place — that's the real signal, not specifically "came from a
+      // partner". When a ?ref= IS present (partner collaborations), its
+      // value is kept as the source for future reference; otherwise it's
+      // tagged 'direct-link' (covers Share and any other plain deep link).
+      const referralSource = (typeof _pendingReferralSource !== 'undefined' && _pendingReferralSource && String(_pendingReferralSource.placeId) === String(pid))
+        ? _pendingReferralSource.source
+        : 'direct-link';
+      sjArmReferralBanner(pid, referralSource);
+      _pendingReferralSource = null;
     }
   }, err => console.warn('places sync error:', err));
 
@@ -11643,9 +11659,10 @@ const esc = escH;   // alias: hardened, backward-compatible
   </div>
 </div>
 
-<!-- ══ REFERRAL EXPLORE NUDGE ══ (see sjArmReferralBanner — only ever shown
-     to a visitor who landed directly on one place page via a partner's own
-     ?ref= link; never appears from ordinary in-site browsing) -->
+<!-- ══ DIRECT-LINK EXPLORE NUDGE ══ (see sjArmReferralBanner — shown to
+     anyone who lands directly on one place page via any hard-load link
+     (a partner's ?ref= link, a visitor's own Share link, a pasted URL);
+     never appears from ordinary in-site browsing) -->
 <div id="referral-banner" class="referral-banner" hidden role="status" aria-live="polite">
   <button class="referral-banner-close" onclick="sjDismissReferralBanner()" aria-label="Dismiss">✕</button>
   <p class="referral-banner-text" id="referral-banner-text"></p>
@@ -11662,14 +11679,18 @@ let _pendingSharedPlaceId = null; // set on load if the URL points at one specif
 let _pendingReferralSource = null; // set on load if that same URL also carries ?ref=<partner>
 
 // ══════════════════════════════════════════════════
-// REFERRAL EXPLORE NUDGE
-// Shown only to a visitor who landed directly on one specific place page via
-// a partner's own ?ref=<source> link (HomelyHuts today; built generic so any
-// future partner works the same way with no code change). Armed once real
-// place data confirms the place + its city, fires once 15s later as a
-// small, dismissible bottom card nudging them to see the rest of that city's
-// verified places. Never armed for anyone who finds the same place by
-// browsing the site normally — see the ?ref= check in the load handler above.
+// DIRECT-LINK EXPLORE NUDGE
+// Shown to anyone who lands directly on one specific place page from a hard
+// page load — a partner's own ?ref=<source> link (HomelyHuts today; built
+// generic so any future partner works the same way with no code change),
+// someone's own Share link, or just a pasted/bookmarked URL. All of these
+// skip straight past Explore, so whoever arrives this way has never seen
+// there's more than this one place — that's the actual signal, regardless
+// of where the link came from. Armed once real place data confirms the
+// place + its city, fires once 15s later as a small, dismissible bottom
+// card nudging them to see the rest of that city's verified places. Never
+// armed for anyone who finds the same place by browsing the site normally
+// (clicking in from Explore/Home never sets _pendingSharedPlaceId below).
 // ══════════════════════════════════════════════════
 let _referralBannerShown = false;
 
@@ -12043,7 +12064,11 @@ let pfPhotoCategory = {}; // keyed by photo src: which category name (from pfCat
 // That's the whole reason links exist: for full-resolution documentation
 // photos where quality can't be compromised.
 const PF_MAX_DIRECT = 3;
-const PF_MAX_LINKS = 40;
+// Raised from 40 — this is our own UI cap, not a real Google Drive limit.
+// At ~70-100 bytes per link, even 150 of them is ~15KB against each
+// place's own ~1024KB Firestore document budget (see note above), so
+// there's lots of headroom for a business with a large photo library.
+const PF_MAX_LINKS = 150;
 function pfIsLink(src) { return src !== '__processing__' && typeof src === 'string' && !src.startsWith('data:'); }
 
 // ── Photo Categories manager (the named boxes — "Entrance", "Ramp", etc.) ──
