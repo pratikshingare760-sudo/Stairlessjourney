@@ -5916,6 +5916,7 @@ function renderPlaces() {
   if (!grid) return;
 
   let filtered = PLACES.filter(p => {
+    if (!sjIsPlaceActive(p)) return false;
     if (city && p.city !== city) return false;
     if (cat && !p.category.toLowerCase().includes(cat.toLowerCase())) return false;
     if (dis && !p.disability.includes(dis)) return false;
@@ -5999,7 +6000,7 @@ function sjRenderBrowseGrids() {
       // Counts every place in this city, regardless of badge (Community
       // Visited vs Submitted by Community) — both are published, verified
       // listings on Explore, so both count here the same way.
-      const n = PLACES.filter(p => p.city === city).length;
+      const n = PLACES.filter(p => p.city === city && sjIsPlaceActive(p)).length;
       const label = n === 0 ? 'No verified listings yet · audits in progress' : `${n} verified listing${n === 1 ? '' : 's'}`;
       return `
       <div class="city-card" role="listitem button" tabindex="0" onclick="showSection('explore');filterByCity('${esc(city)}')" onkeypress="if(event.key==='Enter'){showSection('explore');filterByCity('${esc(city)}')}">
@@ -6025,14 +6026,14 @@ function syncHomeCounters() {
   // Both badge types — Community Visited and Submitted by Community — are
   // published, counted listings. The badge only credits how a place was
   // found; it was never meant to gate whether it counts.
-  const total = PLACES.length;
+  const total = PLACES.filter(sjIsPlaceActive).length;
   // "Active" = we have a presence there at all (verified or audits still in
   // progress), same idea as a city card showing up in Browse by City before
   // its first verified listing exists. Not just the cities with 16+ hardcoded
   // — this was previously a hand-typed number that had to be remembered and
   // updated by hand every time a new city launched.
-  const activeCities = new Set(PLACES.map(p => p.city).filter(Boolean)).size;
-  const countFor = city => PLACES.filter(p => p.city === city).length;
+  const activeCities = new Set(PLACES.filter(sjIsPlaceActive).map(p => p.city).filter(Boolean)).size;
+  const countFor = city => PLACES.filter(p => p.city === city && sjIsPlaceActive(p)).length;
   const label = n => n === 0
     ? 'No verified listings yet · audits in progress'
     : `${n} verified listing${n === 1 ? '' : 's'}`;
@@ -6054,7 +6055,7 @@ function syncHomeCounters() {
 function openPlacePage(id) {
   // Use loose comparison to handle string/number ID mismatches from Firebase
   const p = PLACES.find(x => x.id == id);
-  if (!p) { console.warn('Place not found:', id, PLACES.map(x=>x.id)); return; }
+  if (!p || !sjIsPlaceActive(p)) { console.warn('Place not found or inactive:', id); return; }
   currentPlaceId = p.id;
   sjTrackPlaceView(p.id);
 
@@ -6981,6 +6982,7 @@ function getFilteredPlaces() {
   const lift     = document.getElementById('filter-lift-btn')?.getAttribute('aria-pressed') === 'true';
   const toilet   = document.getElementById('filter-toilet-btn')?.getAttribute('aria-pressed') === 'true';
   return PLACES.filter(p => {
+    if (!sjIsPlaceActive(p)) return false;
     if (city && p.city !== city) return false;
     if (cat && !(p.category||'').toLowerCase().includes(cat.toLowerCase())) return false;
     if (stepfree && !(p.stepFree && p.stepFree !== 'No')) return false;
@@ -7339,6 +7341,10 @@ function sjStartRealtimeSync() {
     if (typeof sjPopulatePlaceDatalists === 'function') sjPopulatePlaceDatalists();
     if (typeof renderPlaces === 'function') renderPlaces();
     if (typeof syncHomeCounters === 'function') syncHomeCounters();
+    try {
+      const _cp = (typeof currentPlaceId !== 'undefined' && currentPlaceId != null) ? PLACES.find(x => x.id == currentPlaceId) : null;
+      if (_cp && !sjIsPlaceActive(_cp) && document.getElementById('section-place')?.classList.contains('active')) showSection('explore');
+    } catch(e) {}
     if (adminActive && typeof renderPlacesList === 'function') renderPlacesList();
     if (adminActive && typeof renderDashboard === 'function') renderDashboard();
     if (typeof _pendingSharedPlaceId !== 'undefined' && _pendingSharedPlaceId != null && typeof openPlacePage === 'function') {
@@ -7929,6 +7935,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div class="ap-form-group"><label class="ap-label">Badge Type <span style="font-weight:400;color:var(--gray-mid);">(how this place was found — every place counts in "Verified Listings" either way)</span></label>
           <select class="ap-input ap-select" id="pf-badge"><option value="true">✓ Community Visited</option><option value="false">⊕ Submitted by Community</option></select>
+        </div>
+        <div class="ap-form-group">
+          <label class="ap-label">Status <span style="font-weight:400;color:var(--gray-mid);">(Inactive = hidden everywhere on the website for everyone. Active = visible to all)</span></label>
+          <div class="ap-yn" id="pf-yn-active"><button type="button" class="ap-yn-btn" onclick="pfSetActive(true,this)">Active</button><button type="button" class="ap-yn-btn" onclick="pfSetActive(false,this)">Inactive</button></div>
         </div>
         <div class="ap-form-group">
           <label class="ap-label">Pin to Top of Explore <span style="font-weight:400;color:var(--gray-mid);">(up to 3 places, no badge shown to visitors)</span></label>
@@ -10514,15 +10524,18 @@ let apPlacesViewChainId = null;
 
 function apPlaceRowHTML(p, reviewCounts) {
   const totalReviews = (reviewCounts[String(p.id)] || 0) + (p.reviewItems?.length || 0);
+  const isActive = sjIsPlaceActive(p);
   return `
-    <div class="ap-item">
+    <div class="ap-item"${isActive ? '' : ' style="opacity:0.6;"'}>
       <div class="ap-item-icon">${p.emoji}</div>
       <div class="ap-item-info">
         <div class="ap-item-name">${escH(p.name)}</div>
         <div class="ap-item-sub">${p.city} · ${p.category} · ⭐${p.rating} · ${totalReviews} review${totalReviews===1?'':'s'} · 👁 ${p.views||0} views (${p.viewsThisWeek||0} this wk)</div>
       </div>
       <span class="ap-badge ${p.verified?'ap-badge-green':'ap-badge-blue'}">${p.verified?'✓':'⊕'}</span>
+      <span class="ap-badge ${isActive?'ap-badge-green':'ap-badge-red'}">${isActive?'Active':'Inactive'}</span>
       <div class="ap-item-actions">
+        <button class="ap-btn ap-btn-ghost ap-btn-sm" onclick="aeTogglePlaceActive(${p.id})">${isActive?'Set Inactive':'Set Active'}</button>
         <button class="ap-btn ap-btn-ghost ap-btn-sm" onclick="openBizDashboard(${p.id})">📊 Dashboard</button>
         <button class="ap-btn ap-btn-ghost ap-btn-sm" onclick="aeOpenPlaceForm(${p.id})">Edit</button>
         <button class="ap-btn ap-btn-danger ap-btn-sm" onclick="aeDeletePlace(${p.id})">Del</button>
@@ -10703,6 +10716,7 @@ function aeOpenPlaceForm(id) {
     pfBuildPhotoGrid();
     pfPinned = false;
     document.querySelectorAll('#pf-yn-pinned .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
+    pfActive = true; pfRenderActive();
     document.getElementById('pf-biz-username').value = '';
     document.getElementById('pf-biz-password').value = '';
     document.getElementById('pf-biz-email').value = '';
@@ -10748,6 +10762,7 @@ function aeOpenPlaceForm(id) {
     document.querySelectorAll('#pf-yn-pinned .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
     const pinnedBtns = document.querySelectorAll('#pf-yn-pinned .ap-yn-btn');
     if (pinnedBtns.length === 2) pinnedBtns[pfPinned ? 0 : 1].classList.add(pfPinned ? 'y' : 'n');
+    pfActive = p.active !== false; pfRenderActive();
     pfYN = { stepfree:p.stepFree, ramp:p.ramp, lift:p.lift, toilet:p.toilet, parking:p.parking, staff:p.staff };
     ['stepfree','ramp','lift','toilet','parking','staff'].forEach(f => {
       const val = pfYN[f];
@@ -10809,6 +10824,40 @@ function pfSetPinned(val, btn) {
   btn.classList.add(val ? 'y' : 'n');
 }
 
+// ── Place Active / Inactive status ──
+// Stored on the place's own Firestore document as `active` (true/false).
+// A place with no `active` field (every place saved before this feature)
+// counts as Active, so nothing existing disappears.
+let pfActive = true;
+function pfRenderActive() {
+  const btns = document.querySelectorAll('#pf-yn-active .ap-yn-btn');
+  btns.forEach(b => b.classList.remove('y','n'));
+  if (btns.length === 2) btns[pfActive ? 0 : 1].classList.add(pfActive ? 'y' : 'n');
+}
+function pfSetActive(val, btn) {
+  pfActive = !!val;
+  pfRenderActive();
+}
+// One-click switch from the Places list. Saves straight to Firestore;
+// every visitor's site updates live through the existing places listener.
+async function aeTogglePlaceActive(id) {
+  const p = PLACES.find(x => String(x.id) === String(id));
+  if (!p) return;
+  const makeActive = !sjIsPlaceActive(p);
+  if (!makeActive && !confirm('Set "' + (p.name || 'this place') + '" to Inactive? It will be hidden everywhere on the website until you set it Active again.')) return;
+  try {
+    await FS_PLACES().doc(String(p.id)).set({ active: makeActive }, { merge: true });
+    p.active = makeActive;
+    renderPlacesList();
+    renderPlaces();
+    if (typeof syncHomeCounters === 'function') syncHomeCounters();
+    if (typeof renderDashboard === 'function') renderDashboard();
+  } catch(e) {
+    console.warn('Place status change error:', e);
+    alert('Could not change this place\'s status. Check your connection and try again.' + (e && e.message ? '\n\nDetails: ' + e.message : ''));
+  }
+}
+
 async function aeSavePlace() {
   const name = document.getElementById('pf-name').value.trim();
   if (!name) { alert('Place name is required.'); return false; }
@@ -10867,6 +10916,7 @@ async function aeSavePlace() {
     photoCategoryNames: pfCategoryNames,
     photoCategoryMap: pfPhotoCategory,
     pinned: pfPinned,
+    active: pfActive,
     photo: pfPhotosList.find(s => s !== '__processing__' && !pfIsLink(s) && !(typeof ppIsVideo === 'function' && ppIsVideo(s))) || document.getElementById('pf-photo-data').value || null,
     reviewItems: volNote ? [{ name: volName || 'Community Volunteer', rating: 5, text: volNote }] : [],
     audit: { "Getting There":"See volunteer notes.", "Entrance": pfYN.stepfree==='Yes'?'Step-free.':'Check before visiting.', "Toilets": pfYN.toilet==='Yes'?'Accessible toilet available.':'No accessible toilet.', "Staff Awareness": pfYN.staff==='Yes'?'Staff helpful.':'Limited support.' },
@@ -11739,10 +11789,10 @@ function sjShowReferralBanner(placeId, source) {
     return;
   }
   const p = (typeof PLACES !== 'undefined' ? PLACES : []).find(x => x.id == placeId);
-  if (!p || !p.city) return; // nothing sensible to say without knowing the city
+  if (!p || !p.city || !sjIsPlaceActive(p)) return; // nothing sensible to say without knowing the city
   const banner = document.getElementById('referral-banner');
   if (!banner) return;
-  const cityCount = PLACES.filter(x => x.city === p.city).length;
+  const cityCount = PLACES.filter(x => x.city === p.city && sjIsPlaceActive(x)).length;
   _referralBannerShown = true;
   document.getElementById('referral-banner-text').textContent =
     `You're exploring StairlessJourney. We have ${cityCount} verified accessible place${cityCount === 1 ? '' : 's'} in ${p.city} — from cafes to parks.`;
@@ -12607,15 +12657,19 @@ document.addEventListener('DOMContentLoaded', () => { if (typeof updateSavedCoun
 // ── City & category are free text now (StairlessJourney is expanding
 // beyond Pune/Goa/Kolkata) — these compute the real, current set from
 // whatever's actually published, so filters/menus never go stale. ──
-function sjUniquePlaceValues(field) {
-  const vals = (typeof PLACES !== 'undefined' ? PLACES : []).map(p => (p[field]||'').trim()).filter(Boolean);
+// A place is Active unless it has been explicitly set to Inactive in the
+// admin panel (`active === false` on its Firestore document). Places saved
+// before this feature existed have no `active` field and stay Active.
+function sjIsPlaceActive(p) { return !!p && p.active !== false; }
+function sjUniquePlaceValues(field, includeInactive) {
+  const vals = (typeof PLACES !== 'undefined' ? PLACES : []).filter(p => includeInactive || sjIsPlaceActive(p)).map(p => (p[field]||'').trim()).filter(Boolean);
   return [...new Set(vals)].sort((a,b) => a.localeCompare(b));
 }
 function sjPopulatePlaceDatalists() {
   const cityList = document.getElementById('pf-city-list');
   const catList = document.getElementById('pf-cat-list');
-  if (cityList) cityList.innerHTML = sjUniquePlaceValues('city').map(c => `<option value="${escH(c)}">`).join('');
-  if (catList) catList.innerHTML = sjUniquePlaceValues('category').map(c => `<option value="${escH(c)}">`).join('');
+  if (cityList) cityList.innerHTML = sjUniquePlaceValues('city', true).map(c => `<option value="${escH(c)}">`).join('');
+  if (catList) catList.innerHTML = sjUniquePlaceValues('category', true).map(c => `<option value="${escH(c)}">`).join('');
   const subCityList = document.getElementById('sub-city-list');
   const subCatList = document.getElementById('sub-cat-list');
   if (subCityList) subCityList.innerHTML = sjUniquePlaceValues('city').map(c => `<option value="${escH(c)}">`).join('');
