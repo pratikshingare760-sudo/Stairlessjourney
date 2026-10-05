@@ -464,8 +464,9 @@ section { padding: 72px 0; }
 }
 .btn-cal:hover { border-color: var(--red); color: var(--red); }
 .btn-register {
+  display: inline-flex; align-items: center; justify-content: center;
   padding: 8px 14px; border-radius: 8px;
-  background: var(--red); color: white;
+  background: var(--red); color: white; text-decoration: none;
   font-size: 0.85rem; font-weight: 600; border: none; cursor: pointer;
   transition: all var(--transition);
 }
@@ -934,6 +935,18 @@ footer {
 .pp-photo-add span { font-size: 0.65rem; color: var(--gray-mid); }
 .pf-photo-cell { display: flex; flex-direction: column; gap: 3px; }
 .pf-photo-cat-select { font-size: 0.66rem; padding: 2px 3px; border-radius: 5px; border: 1px solid var(--gray-light); background: white; color: var(--gray-dark); width: 100%; }
+/* Drag-to-reorder handle on each admin photo cell — see pfPhotoDragStart.
+   touch-action:none stops the phone from scrolling the page once a finger
+   lands here, so our own JS owns the whole gesture from the first touch. */
+.pp-photo-drag-handle {
+  position: absolute; top: 3px; left: 3px;
+  background: rgba(0,0,0,0.65); color: white; border: none;
+  border-radius: 50%; width: 20px; height: 20px;
+  cursor: grab; display: flex; align-items: center; justify-content: center;
+  touch-action: none; transition: background 0.2s; padding: 0;
+}
+.pp-photo-drag-handle:hover { background: var(--red); }
+.pf-photo-cell.pf-dragging .pp-photo-thumb { opacity: 0.4; outline: 2px dashed var(--red); outline-offset: 2px; }
 .place-body { padding: 40px 0; }
 .place-layout { display: grid; grid-template-columns: 1fr 340px; gap: 40px; }
 .access-snapshot {
@@ -5743,7 +5756,15 @@ function eventCardHTML(ev, isPast) {
   const calBtn = ev.gcalStart ? `<a href="${buildGCalLink(ev)}" target="_blank" rel="noopener noreferrer" class="btn-cal" aria-label="Add ${esc(ev.name)} to Google Calendar">
     <svg style="width:14px;height:14px;vertical-align:middle;margin-right:4px;" aria-hidden="true"><use href="#i-calendar"/></svg> Add to Calendar
   </a>` : '';
-  const regBtn = !isPast ? `<button class="btn-register" onclick="openRegModal(${ev.id})" aria-label="Register for ${esc(ev.name)}">Register Now</button>` : '';
+  // If an admin has attached a registration link (e.g. a Google Form),
+  // "Register Now" opens it directly in a new tab — same look, same label,
+  // just a plain link instead of a button. With no link attached, it falls
+  // back to the original behaviour: the built-in name/email popup below.
+  const regBtn = !isPast
+    ? (ev.registerLink
+        ? `<a href="${esc(ev.registerLink)}" target="_blank" rel="noopener noreferrer" class="btn-register" aria-label="Register for ${esc(ev.name)}">Register Now</a>`
+        : `<button class="btn-register" onclick="openRegModal(${ev.id})" aria-label="Register for ${esc(ev.name)}">Register Now</button>`)
+    : '';
   return `
   <div class="event-card${pastClass}" role="listitem">
     <div class="event-date-block" aria-label="${ev.date}">
@@ -7823,6 +7844,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="ap-row">
           <div class="ap-form-group"><label class="ap-label">Calendar Start<br><small style="font-weight:400;text-transform:none;letter-spacing:0;">YYYYMMDDTHHMMSS</small></label><input type="text" class="ap-input" id="ef-gcal-s" placeholder="20250515T090000"></div>
           <div class="ap-form-group"><label class="ap-label">Calendar End</label><input type="text" class="ap-input" id="ef-gcal-e" placeholder="20250515T120000"></div>
+        </div>
+        <div class="ap-form-group"><label class="ap-label">Registration Form Link (optional)</label><input type="url" class="ap-input" id="ef-register-link" placeholder="Paste a Google Form link here">
+          <p style="font-size:0.78rem;color:var(--gray-mid);margin-top:4px;">If filled in, "Register Now" opens this link directly in a new tab. Leave blank to use the built-in name/email popup instead.</p>
         </div>
         <div style="display:flex;gap:8px;margin-top:4px;">
           <button class="ap-btn ap-btn-primary" onclick="aeSaveEvent()">Save Event</button>
@@ -10408,7 +10432,7 @@ function aeOpenEventForm(id) {
   if (id === null) {
     document.getElementById('event-form-title').textContent = 'New Event';
     document.getElementById('ef-id').value = '';
-    ['ef-name','ef-day','ef-month','ef-date','ef-time','ef-desc','ef-gcal-s','ef-gcal-e'].forEach(fid => { const el = document.getElementById(fid); if(el) el.value = ''; });
+    ['ef-name','ef-day','ef-month','ef-date','ef-time','ef-desc','ef-gcal-s','ef-gcal-e','ef-register-link'].forEach(fid => { const el = document.getElementById(fid); if(el) el.value = ''; });
     document.getElementById('ef-city').value = 'Pune';
     document.getElementById('ef-status').value = 'upcoming';
   } else {
@@ -10426,6 +10450,7 @@ function aeOpenEventForm(id) {
     document.getElementById('ef-desc').value = ev.description;
     document.getElementById('ef-gcal-s').value = ev.gcalStart || '';
     document.getElementById('ef-gcal-e').value = ev.gcalEnd || '';
+    document.getElementById('ef-register-link').value = ev.registerLink || '';
     document.getElementById('ef-status').value = ev.past ? 'past' : 'upcoming';
   }
   document.getElementById('ef-name').focus();
@@ -10449,6 +10474,7 @@ function aeSaveEvent() {
     description: document.getElementById('ef-desc').value.trim(),
     gcalStart: document.getElementById('ef-gcal-s').value.trim(),
     gcalEnd: document.getElementById('ef-gcal-e').value.trim(),
+    registerLink: document.getElementById('ef-register-link').value.trim() || null,
     past: isPast
   };
   if (existingId) {
@@ -12055,6 +12081,51 @@ let pfPhotosList = []; // array of compressed-photo data URLs and/or link URLs (
 let pfPhotoCaptions = {}; // keyed by photo src: { title, description } — optional, per photo
 let pfCategoryNames = []; // admin-defined category names for this place, e.g. ['Entrance','Ramp','Washroom']
 let pfPhotoCategory = {}; // keyed by photo src: which category name (from pfCategoryNames) it belongs to, if any
+let pfDragFromIdx = null; // index currently being dragged in the photo grid, or null when not dragging
+let pfDragActive = false;
+
+// ── Drag-to-reorder for the admin photo grid ──
+// Pointer Events (not the native HTML5 drag-and-drop API) so this works
+// identically with a mouse or a finger — native HTML5 DnD is mouse-only on
+// most touch browsers. pfBuildPhotoGrid() re-renders the whole grid on every
+// cell crossed while dragging (that's how the live reorder is shown), which
+// destroys and recreates the DOM node the pointer first went down on — so
+// drag tracking lives in plain variables + document-level listeners, never
+// relying on that original node (or its pointer capture) surviving a rebuild.
+function pfPhotoDragStart(e, idx) {
+  if (e.pointerType === 'mouse' && e.button !== 0) return; // left-click only
+  e.preventDefault();
+  try { e.target.releasePointerCapture(e.pointerId); } catch(_) {} // see note above — force plain hit-testing for every later move
+  pfDragFromIdx = idx;
+  pfDragActive = true;
+  pfBuildPhotoGrid();
+  document.addEventListener('pointermove', pfPhotoDragMove);
+  document.addEventListener('pointerup', pfPhotoDragEnd);
+  document.addEventListener('pointercancel', pfPhotoDragEnd);
+}
+
+function pfPhotoDragMove(e) {
+  if (!pfDragActive || pfDragFromIdx == null) return;
+  e.preventDefault();
+  const el = document.elementFromPoint(e.clientX, e.clientY);
+  const cell = el && el.closest ? el.closest('.pf-photo-cell') : null;
+  if (!cell) return;
+  const overIdx = Number(cell.dataset.idx);
+  if (Number.isNaN(overIdx) || overIdx === pfDragFromIdx) return;
+  const [moved] = pfPhotosList.splice(pfDragFromIdx, 1);
+  pfPhotosList.splice(overIdx, 0, moved);
+  pfDragFromIdx = overIdx;
+  pfBuildPhotoGrid();
+}
+
+function pfPhotoDragEnd() {
+  pfDragActive = false;
+  pfDragFromIdx = null;
+  document.removeEventListener('pointermove', pfPhotoDragMove);
+  document.removeEventListener('pointerup', pfPhotoDragEnd);
+  document.removeEventListener('pointercancel', pfPhotoDragEnd);
+  pfBuildPhotoGrid();
+}
 
 // Each place has its own Firestore document (its own ~1024KB budget, totally
 // independent of every other place). A DIRECTLY UPLOADED photo costs real
@@ -12131,6 +12202,9 @@ function pfBuildPhotoGrid() {
   const container = document.getElementById('pf-photos-grid');
   if (!container) return;
   const directCount = pfPhotosList.filter(s => s !== '__processing__' && !pfIsLink(s)).length;
+  // Only worth offering a drag handle once there's something to reorder
+  // against, and never on the "still compressing" placeholder below.
+  const canReorder = pfPhotosList.filter(s => s !== '__processing__').length > 1;
   let html = pfPhotosList.map((src, i) => {
     if (src === '__processing__') {
       return `<div class="pp-photo-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--gray-bg);"><span style="font-size:0.72rem;color:var(--gray-mid);">Compressing…</span></div>`;
@@ -12152,10 +12226,21 @@ function pfBuildPhotoGrid() {
           ${pfCategoryNames.map(name => `<option value="${escH(name)}" ${pfPhotoCategory[src]===name ? 'selected' : ''}>${escH(name)}</option>`).join('')}
         </select>`
       : '';
+    const dragHandle = canReorder
+      ? `<button type="button" class="pp-photo-drag-handle" title="Drag to reorder" aria-label="Drag to move this photo to a different position" onpointerdown="pfPhotoDragStart(event, ${i})">
+          <svg width="10" height="14" viewBox="0 0 10 14" aria-hidden="true">
+            <circle cx="2.5" cy="2.5" r="1.4" fill="currentColor"/><circle cx="7.5" cy="2.5" r="1.4" fill="currentColor"/>
+            <circle cx="2.5" cy="7" r="1.4" fill="currentColor"/><circle cx="7.5" cy="7" r="1.4" fill="currentColor"/>
+            <circle cx="2.5" cy="11.5" r="1.4" fill="currentColor"/><circle cx="7.5" cy="11.5" r="1.4" fill="currentColor"/>
+          </svg>
+        </button>`
+      : '';
+    const draggingClass = (pfDragActive && pfDragFromIdx === i) ? ' pf-dragging' : '';
     return `
-    <div class="pf-photo-cell">
+    <div class="pf-photo-cell${draggingClass}" data-idx="${i}">
       <div class="pp-photo-thumb">
         ${media}
+        ${dragHandle}
         <button class="pp-photo-caption-btn" onclick="pfEditCaption(${i})" title="Add title & description">${pfPhotoCaptions[src]?.title || pfPhotoCaptions[src]?.description ? '✏️ Captioned' : '✏️ Add caption'}</button>
         <button class="pp-photo-del" onclick="pfRemovePhoto(${i})" title="Remove">✕</button>
       </div>
