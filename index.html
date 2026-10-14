@@ -1,26 +1,5 @@
-<!DOCTYPE html><?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url># Real per-place URLs (e.g. /places/cafe-bloom-pune) are handled entirely by
-# the site's own JavaScript (a single-page app) — there's no separate page
-# per place on the server. Without this rule, Netlify would 404 on a direct
-# hit to one of these URLs (a fresh visit from Google, a bookmark, or a
-# WhatsApp link preview crawler) since no such file exists on disk. This
-# rule serves the same index.html for any /places/* address instead, and the
-# page's own script reads the URL and shows the right place — status 200
-# (not a redirect) so the browser's address bar keeps showing the real,
-# clean /places/<slug> URL instead of bouncing to the homepage.
-/places/*  /index.html  200
-
-    <loc>https://stairlessjourney.com/</loc>
-    <lastmod>2026-10-13</lastmod>
-  </url>
-</urlset>
-
-<User-agent: *
-Allow: /
-
-Sitemap: https://stairlessjourney.com/sitemap.xml
-html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
