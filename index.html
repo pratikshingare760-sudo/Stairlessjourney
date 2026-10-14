@@ -576,11 +576,10 @@ footer {
   gap: 24px; padding: 40px 0;
 }
 .place-card {
-  display: block; background: white; border-radius: var(--radius);
+  background: white; border-radius: var(--radius);
   border: 1px solid var(--gray-light);
   overflow: hidden; cursor: pointer;
   transition: all var(--transition); box-shadow: var(--shadow-sm);
-  text-decoration: none; color: inherit;
 }
 .place-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
 .place-img {
@@ -5981,16 +5980,9 @@ function renderPlaces() {
 
   grid.innerHTML = filtered.map(p => {
     const cardThumb = placeCardThumb(p);
-    // A real href (not just an onclick) so Google's crawler — and anyone
-    // ctrl/cmd-clicking or right-clicking "open in new tab" — has an actual
-    // link to follow to this place's own page, not just a JS click handler.
-    // The onclick still intercepts a plain left-click for the fast in-app
-    // navigation visitors already get; modified clicks fall through to the
-    // browser's normal link behavior.
-    const sjCardClick = `if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();openPlacePage(${p.id})`;
     return `
-    <a class="place-card" role="listitem" tabindex="0" href="${placeUrlPath(p)}"
-         onclick="${sjCardClick}"
+    <div class="place-card" role="listitem" tabindex="0"
+         onclick="openPlacePage(${p.id})"
          onkeypress="if(event.key==='Enter')openPlacePage(${p.id})"
          aria-label="${esc(p.name)}, ${esc(p.category)}, ${esc(p.city)}. ${p.verified ? 'Community Visited' : 'Submitted by Community'}.">
       <div class="place-img" aria-hidden="true" style="${cardThumb ? `background-image:url('${cardThumb}');background-size:cover;background-position:center;` : ''}">
@@ -6014,7 +6006,7 @@ function renderPlaces() {
           <button class="btn-view" onclick="event.stopPropagation();openPlacePage(${p.id})">View Details</button>
         </div>
       </div>
-    </a>`;
+    </div>`;
   }).join('');
 }
 
@@ -6107,10 +6099,8 @@ function syncHomeCounters() {
 }
 
 function openPlacePage(id) {
-  // Resolves either a real place id (loose comparison handles string/number
-  // ID mismatches from Firebase) or a URL slug (/places/<slug> links) —
-  // same entry point either way.
-  const p = findPlaceByIdOrSlug(id);
+  // Use loose comparison to handle string/number ID mismatches from Firebase
+  const p = PLACES.find(x => x.id == id);
   if (!p) { console.warn('Place not found:', id, PLACES.map(x=>x.id)); return; }
   // Inactive places are hidden everywhere, including direct links — unless
   // an admin is logged in and previewing it on purpose.
@@ -6226,14 +6216,10 @@ function openPlacePage(id) {
   if (auditBody) auditBody.classList.remove('open');
 
   showSection('place');
-  // Give this specific place its own real, shareable, crawlable URL
-  // (/places/<slug>) — so a copied link, the browser's own address bar, a
-  // search engine, or a WhatsApp preview all point at exactly this place,
-  // not just the generic Explore page. The old #place-<id> hash links still
-  // resolve correctly (see the page-load handler) — this only changes what
-  // NEW navigation to a place shows in the address bar going forward.
-  history.replaceState({ section: 'place', placeId: p.id }, '', placeUrlPath(p));
-  if (typeof sjSetPlaceMeta === 'function') sjSetPlaceMeta(p);
+  // Give this specific place its own shareable URL (#place-123), so a
+  // copied link — or the browser's own address bar — reopens this exact
+  // place, not just the generic Explore page.
+  history.replaceState({ section: 'place', placeId: p.id }, '', '#place-' + p.id);
 }
 
 // Shares the currently-open place specifically (not just the site) —
@@ -6246,11 +6232,7 @@ function sharePlaceCurrent() {
     alert("Sharing only works on the real website (stairlessjourney.com), not a local file open on your computer. A link to a file on your Mac can't open on anyone else's device. Try this once it's live.");
     return;
   }
-  // A real path-based URL (not the old #place-<id> hash) — this is what
-  // actually lets Google index this place on its own and lets WhatsApp show
-  // this place's real name/photo in the link preview instead of the site's
-  // generic one.
-  const shareUrl = `${location.origin}${placeUrlPath(p)}`;
+  const shareUrl = `${location.origin}${location.pathname}#place-${p.id}`;
   const shareText = `Check out ${p.name} on StairlessJourney, a verified accessible place.`;
   sjTrackShare(p.id);
   const titleEl = document.getElementById('share-modal-title');
@@ -7458,7 +7440,6 @@ function sjStartRealtimeSync() {
     if (typeof sjPopulatePlaceDatalists === 'function') sjPopulatePlaceDatalists();
     if (typeof renderPlaces === 'function') renderPlaces();
     if (typeof syncHomeCounters === 'function') syncHomeCounters();
-    if (typeof sjRenderPlacesJsonLd === 'function') sjRenderPlacesJsonLd();
     if (adminActive && typeof renderPlacesList === 'function') renderPlacesList();
     if (adminActive && typeof renderDashboard === 'function') renderDashboard();
     if (typeof _pendingSharedPlaceId !== 'undefined' && _pendingSharedPlaceId != null && typeof openPlacePage === 'function') {
@@ -7732,181 +7713,6 @@ function placeCardThumb(p) {
   return null;
 }
 
-// ── SEO: real, crawlable per-place URLs ──────────────────────────────────
-// Turns free text into a clean, URL-safe slug ("Cafe Bloom" -> "cafe-bloom").
-function sjSlugify(s) {
-  return String(s || '').toLowerCase().trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-// Every place gets a short, human-readable, PERMANENT URL slug so it can be
-// found by Google and previewed properly when shared (instead of only the
-// old #place-<id> hash, which neither search engines nor link-preview
-// crawlers like WhatsApp's treat as a distinct page). A place's slug is
-// generated once, the first time it's saved (see aeSavePlace), and never
-// regenerated after that — even if the name is edited later — so a link
-// already shared or indexed never breaks. This function is only the
-// fallback for places saved before this feature existed (no stored slug
-// yet): it computes the same kind of slug on the fly, falling back to the
-// place's id if another place would collide on the exact same name+city.
-function placeSlug(p) {
-  if (p && p.slug) return p.slug;
-  if (!p) return '';
-  const base = sjSlugify(`${p.name || ''} ${p.city || ''}`);
-  if (!base) return String(p.id);
-  const all = (typeof PLACES !== 'undefined' ? PLACES : []);
-  const collision = all.some(x => x.id !== p.id && !x.slug && sjSlugify(`${x.name || ''} ${x.city || ''}`) === base);
-  return collision ? `${base}-${p.id}` : base;
-}
-
-// Generates a brand-new, collision-safe slug for a place being saved for
-// the first time — checks against every OTHER place's already-stored slug
-// (not just the live fallback above), so two places can never end up
-// sharing one real URL.
-function sjGenerateUniqueSlug(name, city, ownId) {
-  const base = sjSlugify(`${name || ''} ${city || ''}`);
-  if (!base) return String(ownId);
-  const all = (typeof PLACES !== 'undefined' ? PLACES : []);
-  const taken = new Set(all.filter(x => x.id !== ownId).map(x => x.slug || placeSlug(x)));
-  if (!taken.has(base)) return base;
-  return `${base}-${ownId}`;
-}
-
-function placeUrlPath(p) { return `/places/${placeSlug(p)}`; }
-
-// Resolves a place from either its real id (numeric, from the old #place-<id>
-// hash links and from internal calls like card clicks) or its URL slug (from
-// the new /places/<slug> links) — whichever the caller happens to have.
-function findPlaceByIdOrSlug(key) {
-  if (key == null || typeof PLACES === 'undefined') return null;
-  const byId = PLACES.find(x => x.id == key);
-  if (byId) return byId;
-  const keyStr = String(key);
-  return PLACES.find(x => placeSlug(x) === keyStr) || null;
-}
-
-// ── SEO: per-place <title>/meta/Open Graph tags ───────────────────────────
-// Google, WhatsApp, Facebook etc. all read these tags straight out of the
-// page, not out of whatever's currently on screen — keeping them in sync
-// with whichever place is open means a shared place link actually previews
-// with THAT place's name/description/photo, instead of always showing the
-// generic homepage text, and gives search engines a real distinct title per
-// place instead of one title shared by the whole site.
-let _sjDefaultMeta = null; // captured once, from whatever's really in <head>, so it can always be restored exactly
-function sjSetMetaTag(selector, attr, value) {
-  const el = document.querySelector(selector);
-  if (el) el.setAttribute(attr, value || '');
-}
-function sjCaptureDefaultMeta() {
-  if (_sjDefaultMeta) return _sjDefaultMeta;
-  const get = sel => document.querySelector(sel)?.getAttribute(sel.startsWith('link') ? 'href' : 'content') || '';
-  _sjDefaultMeta = {
-    title: document.title,
-    description: get('meta[name="description"]'),
-    canonical: get('link[rel="canonical"]'),
-    ogTitle: get('meta[property="og:title"]'),
-    ogDescription: get('meta[property="og:description"]'),
-    ogUrl: get('meta[property="og:url"]'),
-    ogImage: get('meta[property="og:image"]'),
-    twitterTitle: get('meta[name="twitter:title"]'),
-    twitterDescription: get('meta[name="twitter:description"]')
-  };
-  return _sjDefaultMeta;
-}
-function sjSetPlaceMeta(p) {
-  sjCaptureDefaultMeta(); // always save the real defaults before the first overwrite
-  const title = `${p.name} — Wheelchair Accessible ${p.category || 'Place'} in ${p.city || ''} | StairlessJourney`;
-  const desc = (p.suited && p.suited.trim())
-    ? p.suited.trim()
-    : `${p.name} in ${p.city || 'India'} — physically verified for wheelchair accessibility by StairlessJourney.`;
-  const url = `${location.origin}${placeUrlPath(p)}`;
-  const img = placeCardThumb(p);
-  const usableImg = (img && !img.startsWith('data:')) ? img : ''; // a data: URI isn't fetchable by link-preview crawlers, so skip it rather than publish a broken image
-  document.title = title;
-  sjSetMetaTag('meta[name="description"]', 'content', desc);
-  sjSetMetaTag('link[rel="canonical"]', 'href', url);
-  sjSetMetaTag('meta[property="og:title"]', 'content', title);
-  sjSetMetaTag('meta[property="og:description"]', 'content', desc);
-  sjSetMetaTag('meta[property="og:url"]', 'content', url);
-  sjSetMetaTag('meta[property="og:image"]', 'content', usableImg);
-  sjSetMetaTag('meta[name="twitter:title"]', 'content', title);
-  sjSetMetaTag('meta[name="twitter:description"]', 'content', desc);
-}
-function sjResetSiteMeta() {
-  if (!_sjDefaultMeta) return; // never left the defaults, nothing to restore
-  const d = _sjDefaultMeta;
-  document.title = d.title;
-  sjSetMetaTag('meta[name="description"]', 'content', d.description);
-  sjSetMetaTag('link[rel="canonical"]', 'href', d.canonical);
-  sjSetMetaTag('meta[property="og:title"]', 'content', d.ogTitle);
-  sjSetMetaTag('meta[property="og:description"]', 'content', d.ogDescription);
-  sjSetMetaTag('meta[property="og:url"]', 'content', d.ogUrl);
-  sjSetMetaTag('meta[property="og:image"]', 'content', d.ogImage);
-  sjSetMetaTag('meta[name="twitter:title"]', 'content', d.twitterTitle);
-  sjSetMetaTag('meta[name="twitter:description"]', 'content', d.twitterDescription);
-}
-
-// ── SEO: structured data listing every active place ──────────────────────
-// A second JSON-LD block (the first, static one above describes the NGO
-// itself) listing every active place as an ItemList — gives Google real
-// place data to parse straight off the one page even for places whose own
-// /places/<slug> page it hasn't crawled/indexed yet. Rebuilt every time
-// PLACES changes (see the places onSnapshot listener) so it's never stale.
-function sjRenderPlacesJsonLd() {
-  if (typeof PLACES === 'undefined' || typeof document === 'undefined') return;
-  const visible = PLACES.filter(p => p.active !== false);
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": visible.map((p, i) => ({
-      "@type": "ListItem",
-      "position": i + 1,
-      "item": {
-        "@type": "LocalBusiness",
-        "name": p.name,
-        "url": `${location.origin}${placeUrlPath(p)}`,
-        "addressLocality": p.city || undefined,
-        "address": p.address || undefined,
-        "category": p.category || undefined
-      }
-    }))
-  };
-  let el = document.getElementById('sj-places-jsonld');
-  if (!el) {
-    el = document.createElement('script');
-    el.type = 'application/ld+json';
-    el.id = 'sj-places-jsonld';
-    document.head.appendChild(el);
-  }
-  el.textContent = JSON.stringify(data);
-}
-
-// One-click, always-accurate sitemap.xml — built from the real PLACES data
-// already loaded in the admin's own browser, since there's no backend here
-// to regenerate this automatically. Only lists URLs that actually resolve
-// to something on the real site: the homepage and every active place's own
-// /places/<slug> page — NOT the Explore/Events/etc. sections, which are
-// reached by a # hash from the homepage, not a real separate address, so
-// they'd be meaningless (and could even mislead Google) in a sitemap.
-// Pratik downloads this whenever he's added/removed places and uploads it
-// to stairlessjourney.com/sitemap.xml, replacing the one already there.
-function aeDownloadSitemap() {
-  const base = 'https://stairlessjourney.com';
-  const placePaths = PLACES.filter(p => p.active !== false).map(p => placeUrlPath(p));
-  const today = new Date().toISOString().slice(0, 10);
-  const urlTag = path => `  <url>\n    <loc>${base}${path}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`;
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['/', ...placePaths].map(urlTag).join('\n')}\n</urlset>\n`;
-  const blob = new Blob([xml], { type: 'application/xml' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'sitemap.xml';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
   sjStartRealtimeSync();
   renderHomeEvents();
@@ -8168,7 +7974,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div style="display:flex;gap:8px;">
           <button class="ap-btn ap-btn-ghost" id="places-migrate-btn" onclick="aeMigratePlacesToCollection()" style="display:none;">🔧 Move Places to Individual Storage</button>
-          <button class="ap-btn ap-btn-ghost" onclick="aeDownloadSitemap()" title="Download an up-to-date sitemap.xml listing every active place's real URL — upload it to replace the one at stairlessjourney.com/sitemap.xml whenever you've added or removed places">🗺️ Download Sitemap</button>
           <button class="ap-btn ap-btn-ghost" onclick="aeOpenChainForm(null)">+ Add Chain</button>
           <button class="ap-btn ap-btn-primary" onclick="aeOpenPlaceForm(null)">+ Add Place</button>
         </div>
@@ -11147,20 +10952,12 @@ async function aeSavePlace() {
   if (!chainId && bizUsername && bizPasswordTyped) {
     bizHash = await sjHashPassword(bizPasswordTyped);
   }
-  const newId = existingId ? Number(existingId) : Date.now();
-  const cityVal = document.getElementById('pf-city').value;
-  // A place's URL slug is generated once and kept forever once set — even if
-  // the name is edited later — so an already-shared or Google-indexed link
-  // never breaks. Only a brand-new place (or a legacy one that somehow still
-  // has none) gets a fresh one here.
-  const slug = existingPlace?.slug || sjGenerateUniqueSlug(name, cityVal, newId);
   const p = {
-    id: newId,
-    slug,
+    id: existingId ? Number(existingId) : Date.now(),
     name,
     emoji: document.getElementById('pf-emoji').value.trim() || '📍',
     category: document.getElementById('pf-cat').value,
-    city: cityVal,
+    city: document.getElementById('pf-city').value,
     area: document.getElementById('pf-area').value.trim(),
     address: document.getElementById('pf-address').value.trim(),
     phone: document.getElementById('pf-phone').value.trim(),
@@ -12102,10 +11899,6 @@ function sjGoToSharedEvent(id) {
 const _origShowSection = window.showSection;
 window.showSection = function(name) {
   _origShowSection(name);
-  // Leaving the place page for anywhere else — put the generic site
-  // title/description/OG tags back so they don't stick around for whatever
-  // section is now showing (openPlacePage sets its own when going TO a place).
-  if (name !== 'place' && typeof sjResetSiteMeta === 'function') sjResetSiteMeta();
   if (!_historyNavigating) {
     history.pushState({ section: name }, '', '#' + name);
   }
@@ -12114,9 +11907,6 @@ window.showSection = function(name) {
 // Listen for back/forward button
 window.addEventListener('popstate', (e) => {
   _historyNavigating = true;
-  // Reset first; if we're actually headed back to a place, openPlacePage
-  // (called just below) immediately re-applies that place's own meta tags.
-  if (typeof sjResetSiteMeta === 'function') sjResetSiteMeta();
   if (e.state?.placeId != null && typeof openPlacePage === 'function') {
     openPlacePage(e.state.placeId);
   } else if (e.state?.eventId != null) {
@@ -12131,21 +11921,6 @@ window.addEventListener('popstate', (e) => {
 
 // Set initial history state on load
 window.addEventListener('load', () => {
-  // Real, crawlable place links (/places/<slug>) take priority over the old
-  // #place-<id> hash — a hard load on one of these is handled the same way
-  // a shared hash link always has been (see _pendingSharedPlaceId below),
-  // just reached from the real path instead of the hash. Old shared/indexed
-  // #place-<id> links keep working forever via the hash branch further down
-  // — this is purely additive.
-  const pathPlaceMatch = location.pathname.match(/^\/places\/([^/]+)\/?$/);
-  if (pathPlaceMatch) {
-    const slugOrId = decodeURIComponent(pathPlaceMatch[1]);
-    _pendingSharedPlaceId = slugOrId;
-    history.replaceState({ section: 'place', placeId: slugOrId }, '', location.pathname + location.search);
-    const refParam = new URLSearchParams(location.search).get('ref');
-    if (refParam) _pendingReferralSource = { placeId: slugOrId, source: refParam };
-    return;
-  }
   const hashRaw = location.hash.replace('#', '');
   // A partner link's ?ref= can legitimately end up in two different places
   // depending on how it's built: as a real query string before the hash
@@ -13114,7 +12889,7 @@ document.addEventListener('consentchange', (e) => {
     if (!name || name === 'place') return; // place pages are tracked with their name below
     send(name === 'home' ? '/' : '/' + name, TITLES[name] || name);
   }
-  function trackPlace(p){ if (p) send(typeof placeUrlPath === 'function' ? placeUrlPath(p) : '/place/' + p.id, p.name); }
+  function trackPlace(p){ if (p) send('/place/' + p.id, p.name); }
   function trackCurrent(){
     const active = document.querySelector('.section.active')?.id?.replace('section-', '') || 'home';
     if (active === 'place') {
@@ -13131,11 +12906,7 @@ document.addEventListener('consentchange', (e) => {
   const prevOpen = window.openPlacePage;
   window.openPlacePage = function(id){
     const r = prevOpen.apply(this, arguments);
-    // id may be a real id OR a /places/<slug> value by this point — resolve
-    // the same way openPlacePage itself does, so a slug-based open is still
-    // tracked under the right place name.
-    const p = (typeof findPlaceByIdOrSlug === 'function') ? findPlaceByIdOrSlug(id)
-      : ((typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == id) : null);
+    const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == id) : null;
     trackPlace(p);
     return r;
   };
