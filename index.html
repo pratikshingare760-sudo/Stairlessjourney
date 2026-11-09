@@ -695,6 +695,27 @@ footer {
 }
 .submit-success h3 { color: #1A7F64; margin-bottom: 8px; }
 
+/* ── SUBMIT A PLACE: two ways into one form (submit a place / request a verification) ── */
+.sub-mode {
+  display: flex; gap: 4px; padding: 4px; margin-bottom: 24px;
+  background: var(--white); border: 1.5px solid var(--gray-light); border-radius: 12px;
+}
+.sub-mode .evt-btn {
+  flex: 1; justify-content: center; text-align: center;
+  min-height: var(--tap-min); padding: 10px 14px;
+  font-size: 0.92rem; font-weight: 600; line-height: 1.25;
+}
+.sub-mode .evt-btn.active, .sub-mode .evt-btn.active:hover { background: var(--red-strong); color: var(--on-red); box-shadow: none; }
+.sub-share-only { display: contents; }
+.sub-request-only { display: none; }
+.sub-is-request .sub-share-only { display: none; }
+.sub-is-request .sub-request-only { display: contents; }
+.sub-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.sub-chips .pill { min-height: var(--tap-min); padding: 8px 16px; font-size: 0.88rem; }
+.sub-chips .pill:hover:not(.active) { background: white; color: inherit; border-color: var(--red); }
+.sub-chips .pill.active::before { content: "\2713\00a0"; }
+.sub-hint { font-size: 0.8rem; color: var(--gray-mid); }
+
 /* ── PLACE PAGE ── */
 .place-page-header { background: var(--red); color: white; padding: 40px 0 0; }
 .back-btn {
@@ -3487,7 +3508,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
       <div class="nav-actions">
         <span id="user-display" style="display:none"></span>
         <button class="btn-outline-sm" onclick="showSection('explore')">Explore Places</button>
-        <button class="btn-red-sm" onclick="requireLogin('submit')" aria-label="Ask us to check a place">Ask Us to Check</button>
+        <button class="btn-red-sm" onclick="requireLogin('submit')">Submit a Place</button>
         <button class="nav-hamburger" id="nav-hamburger-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu()">
           <span class="hamburger-icon" aria-hidden="true">
             <span></span><span></span><span></span>
@@ -3521,7 +3542,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
         <span class="mobile-nav-icon-svg" aria-hidden="true"><svg width="100%" height="100%"><use href="#i-mail"/></svg></span> Contact
       </a>
       <div class="mobile-nav-actions">
-        <button class="btn-red" style="width:100%;justify-content:center;font-size:0.95rem;" onclick="requireLogin('submit');toggleMobileMenu()">Ask Us to Check a Place</button>
+        <button class="btn-red" style="width:100%;justify-content:center;font-size:0.95rem;" onclick="requireLogin('submit');toggleMobileMenu()">Submit a Place</button>
       </div>
     </div>
   </div>
@@ -3546,7 +3567,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             Explore Places
           </button>
-          <button class="btn-ghost" onclick="requireLogin('submit')">Ask Us to Check a Place</button>
+          <button class="btn-ghost" onclick="requireLogin('submit')">Submit a Place</button>
         </div>
         <div class="hero-stats" role="list">
           <div role="listitem">
@@ -3769,14 +3790,14 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           </span>
         </button>
 
-        <button class="help-card" type="button" onclick="requireLogin('submit')" aria-label="Ask us to check a place">
+        <button class="help-card" type="button" onclick="requireLogin('submit')" aria-label="Submit a place you know">
           <span class="help-card-icon" aria-hidden="true">
             <svg width="28" height="28"><use href="#i-pin"/></svg>
           </span>
-          <h3>Ask us to check a place</h3>
-          <p>Heading somewhere we haven't checked, or know an accessible place we've missed? Tell us, and our team will verify it.</p>
+          <h3>Submit a place</h3>
+          <p>Know a café, clinic, or shop with good (or bad) access? Send it in and our team will verify and publish it.</p>
           <span class="help-card-arrow">
-            Tell us where
+            Suggest a place
             <svg width="16" height="16"><use href="#i-arrow-right"/></svg>
           </span>
         </button>
@@ -3818,7 +3839,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
         <div class="footer-col">
           <h4>Platform</h4>
           <a onclick="showSection('explore')">Explore Places</a>
-          <a onclick="requireLogin('submit')">Ask Us to Check a Place</a>
+          <a onclick="requireLogin('submit')">Submit a Place</a>
           <a onclick="showSection('events')">Events</a>
           <a onclick="showSection('volunteer')">Volunteer</a>
         </div>
@@ -3930,32 +3951,123 @@ a.is-red, .text-link-red { color: var(--red-strong); }
   <div class="submit-section" id="submit-section">
     <div class="container">
       <div class="submit-inner">
-        <span class="section-label">Ask Us</span>
-        <h2 class="mb-12">Heading somewhere we haven't checked yet?</h2>
-        <p style="margin-bottom:12px;font-size:1.05rem;">Tell us where, or tell us about an accessible place we've missed. Our team will verify it and publish the details, so anyone can go with confidence.</p>
-        <p style="margin-bottom:28px;font-size:0.9rem;color:var(--gray-mid);">Our on-ground teams are active in Pune, Goa, and Kolkata today. Tell us about any city in India. It helps us decide where to go next.</p>
+        <span class="section-label">Contribute</span>
+        <h2 class="mb-12" id="sub-title">Know an accessible place we've missed?</h2>
+        <p id="sub-lead" style="margin-bottom:12px;font-size:1.05rem;">Submit it. Our team will verify and publish it.</p>
+        <p id="sub-note" style="margin-bottom:28px;font-size:0.9rem;color:var(--gray-mid);">Our on-ground teams are active in Pune, Goa, and Kolkata today. Submissions are open from anywhere in India, and coverage is growing city by city.</p>
 
         <div id="submit-form-wrap">
+          <div class="sub-mode" id="sub-mode" role="group" aria-label="What would you like to do?">
+            <button type="button" class="evt-btn active" data-mode="share" aria-pressed="true" onclick="setSubMode('share')">Submit a place</button>
+            <button type="button" class="evt-btn" data-mode="request" aria-pressed="false" onclick="setSubMode('request')">Request a verification</button>
+          </div>
           <div class="form-grid" id="submit-form">
-            <div class="form-group">
+            <div class="form-group form-full">
               <label class="form-label" for="sub-name">Place Name *</label>
               <input class="form-input" id="sub-name" type="text" placeholder="e.g. Jehangir Art Gallery">
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label" id="sub-address-label" for="sub-address">Address *</label>
+              <input class="form-input" id="sub-address" type="text" placeholder="Full address">
             </div>
             <div class="form-group">
               <label class="form-label" for="sub-city">City *</label>
               <input class="form-input" id="sub-city" type="text" placeholder="e.g. Pune, Mumbai, Jaipur" list="sub-city-list">
               <datalist id="sub-city-list"></datalist>
             </div>
-            <div class="form-group form-full">
-              <label class="form-label" for="sub-address">Address or landmark</label>
-              <input class="form-input" id="sub-address" type="text" placeholder="Anything that helps us find it">
+            <div class="form-group">
+              <label class="form-label" id="sub-cat-label" for="sub-cat">Category *</label>
+              <input class="form-input" id="sub-cat" type="text" placeholder="e.g. Café, Government, F1 Race Track" list="sub-cat-list">
+              <datalist id="sub-cat-list"></datalist>
             </div>
-            <div class="form-group form-full">
-              <label class="form-label" for="sub-note">Anything you'd like to know, or tell us? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
-              <textarea class="form-input" id="sub-note" rows="4" maxlength="600" placeholder="e.g. Is the washroom big enough for a power wheelchair? Or: there's a ramp at the side entrance." style="resize:vertical;"></textarea>
+
+            <div class="sub-share-only">
+            <div class="form-group">
+              <label class="form-label">Step-free entrance?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'stepfree','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'stepfree','No')">No</button>
+                <button class="yn-btn" onclick="setYN(this,'stepfree','Partial')">Partial</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ramp?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'ramp','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'ramp','No')">No</button>
+                <button class="yn-btn" onclick="setYN(this,'ramp','Partial')">Partial</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Wide doorway?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'wideDoorway','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'wideDoorway','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lift?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'lift','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'lift','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accessible Toilet?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'toilet','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'toilet','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accessible seating?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'seating','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'seating','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Parking?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'parking','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'parking','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Staff Support?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'staff','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'staff','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group form-full" style="background:#FAFAF8;border:1.5px dashed var(--gray-light);border-radius:12px;padding:16px;">
+              <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">📷 Have photos or a video?</div>
+              <p style="font-size:0.82rem;color:var(--gray-mid);margin-bottom:10px;">Totally optional. Add them separately after submitting, so this form stays quick.</p>
+              <a href="#" id="sub-photo-form-link" onclick="return openPhotoForm(event)" class="btn-outline-sm" style="display:inline-block;">Add photos / video →</a>
+            </div>
+            </div><!-- /sub-share-only -->
+            <div class="sub-request-only">
+              <div class="form-group form-full">
+                <label class="form-label" id="sub-chips-label">What would you like us to check?</label>
+                <div class="sub-chips" id="sub-chips" role="group" aria-labelledby="sub-chips-label">
+                <button type="button" class="pill" data-key="stepfree" aria-pressed="false" onclick="toggleSubChip(this)">Step-free entrance</button>
+                <button type="button" class="pill" data-key="ramp" aria-pressed="false" onclick="toggleSubChip(this)">Ramp</button>
+                <button type="button" class="pill" data-key="wideDoorway" aria-pressed="false" onclick="toggleSubChip(this)">Wide doorway</button>
+                <button type="button" class="pill" data-key="lift" aria-pressed="false" onclick="toggleSubChip(this)">Lift</button>
+                <button type="button" class="pill" data-key="toilet" aria-pressed="false" onclick="toggleSubChip(this)">Accessible toilet</button>
+                <button type="button" class="pill" data-key="seating" aria-pressed="false" onclick="toggleSubChip(this)">Accessible seating</button>
+                <button type="button" class="pill" data-key="parking" aria-pressed="false" onclick="toggleSubChip(this)">Parking</button>
+                <button type="button" class="pill" data-key="staff" aria-pressed="false" onclick="toggleSubChip(this)">Staff support</button>
+                </div>
+                <span class="sub-hint">Pick as many as you like. Leave it blank and we'll cover the essentials.</span>
+              </div>
+              <div class="form-group form-full">
+                <label class="form-label" for="sub-request-note">Anything else you'd like to know? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
+                <textarea class="form-input" id="sub-request-note" rows="4" maxlength="600" placeholder="e.g. I use a power wheelchair. Is the washroom big enough to turn around in?" style="resize:vertical;"></textarea>
+              </div>
             </div>
             <div class="form-full">
-              <button class="btn-red" id="submit-place-btn" onclick="handleSubmitPlace()" style="width:100%;justify-content:center;">Send to Our Team</button>
+              <button class="btn-red" id="submit-place-btn" onclick="handleSubmitPlace()" style="width:100%;justify-content:center;">Submit for Review</button>
             </div>
           </div>
         </div>
@@ -3964,9 +4076,9 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           <div style="width:56px;height:56px;margin:0 auto 16px;background:#E8F6F0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#1A7F64;">
             <svg width="32" height="32" aria-hidden="true"><use href="#i-check"/></svg>
           </div>
-          <h3>We've got it.</h3>
-          <p id="sub-success-text" style="color:#1A7F64;">Thank you for telling us. Our team will verify it, and once it's done you'll find its accessibility details on the Explore page.</p>
-          <button class="btn-red" style="margin-top:24px;" onclick="resetSubmitForm()">Tell us about another place</button>
+          <h3 id="sub-success-title">Thank you for contributing!</h3>
+          <p id="sub-success-text" style="color:#1A7F64;">Your submission is under review. Our team will verify and publish it shortly. We appreciate you helping make India more accessible.</p>
+          <button class="btn-red" id="sub-success-btn" style="margin-top:24px;" onclick="resetSubmitForm()">Submit another place</button>
         </div>
       </div>
     </div>
@@ -6560,31 +6672,102 @@ function handleRegister() {
 // SUBMIT A PLACE
 // ══════════════════════════════════
 
+// Two ways into the same form: "Submit a place" (you know it, tell us what you
+// know) or "Request a verification" (you need to know — ask us to check it).
+// Requests are saved through the exact same submissions flow, as a place
+// submission tagged kind:'request', so they land in the admin's existing
+// Place Submissions tab with no new collection or Firestore rule.
+let subMode = 'share';
+const SUB_REQUEST_ITEMS = [['stepfree','Step-free entrance'],['ramp','Ramp'],['wideDoorway','Wide doorway'],['lift','Lift'],['toilet','Accessible toilet'],['seating','Accessible seating'],['parking','Parking'],['staff','Staff support']];
+const SUB_REQUEST_COPY = {
+  title: "Heading somewhere we haven't checked yet?",
+  lead: 'Tell us where. Our team will verify it and publish its accessibility details, so you can go with confidence.',
+  note: 'Our on-ground teams are active in Pune, Goa, and Kolkata today. Requests are open for any city in India, and they help us decide where to go next.',
+  addressLabel: 'Address or landmark',
+  addressPh: 'Anything that helps us find it',
+  catLabel: 'Category',
+  button: 'Request Verification',
+  successTitle: 'Request received.',
+  successText: "Thank you for telling us where it matters. Our team will look into this place, and once it's verified you'll find its accessibility details on the Explore page. Requests like yours help us decide where our teams go next.",
+  successBtn: 'Request another place'
+};
+let _subShareCopy = null; // the form's original wording, read from the page the first time it's needed
+function setSubMode(mode) {
+  const $ = id => document.getElementById(id);
+  const wrap = $('submit-form-wrap'); if (!wrap) return;
+  if (!_subShareCopy) _subShareCopy = {
+    title: $('sub-title').textContent, lead: $('sub-lead').textContent, note: $('sub-note').textContent,
+    addressLabel: $('sub-address-label').textContent, addressPh: $('sub-address').placeholder,
+    catLabel: $('sub-cat-label').textContent, button: $('submit-place-btn').textContent,
+    successTitle: $('sub-success-title').textContent, successText: $('sub-success-text').textContent, successBtn: $('sub-success-btn').textContent
+  };
+  subMode = mode === 'request' ? 'request' : 'share';
+  const req = subMode === 'request', c = req ? SUB_REQUEST_COPY : _subShareCopy;
+  wrap.classList.toggle('sub-is-request', req);
+  $('sub-title').textContent = c.title; $('sub-lead').textContent = c.lead; $('sub-note').textContent = c.note;
+  $('sub-address-label').textContent = c.addressLabel; $('sub-address').placeholder = c.addressPh;
+  $('sub-cat-label').textContent = c.catLabel; $('submit-place-btn').textContent = c.button;
+  $('sub-success-title').textContent = c.successTitle; $('sub-success-text').textContent = c.successText; $('sub-success-btn').textContent = c.successBtn;
+  document.querySelectorAll('#sub-mode .evt-btn').forEach(b => {
+    const on = b.dataset.mode === subMode;
+    b.classList.toggle('active', on); b.setAttribute('aria-pressed', String(on));
+  });
+}
+function toggleSubChip(btn) {
+  const on = !btn.classList.contains('active');
+  btn.classList.toggle('active', on); btn.setAttribute('aria-pressed', String(on));
+}
+
 async function handleSubmitPlace() {
   if (!currentUser) { requireLogin('submit'); return; }
-  const val = id => (document.getElementById(id)?.value || '').trim();
-  const name = val('sub-name');
-  const city = val('sub-city');
-  if (!name || !city) { alert('Please add the place name and the city.'); return; }
+  const isRequest = subMode === 'request';
+  const name = document.getElementById('sub-name')?.value.trim();
+  const city = document.getElementById('sub-city')?.value;
+  const cat = document.getElementById('sub-cat')?.value;
+  // Asking us to verify a place only needs to say which place and where —
+  // the category is optional (the person may not know it).
+  if (isRequest ? (!name || !city || !city.trim()) : (!name || !city || !cat)) {
+    alert(isRequest ? 'Please fill in the required fields: Place Name and City.' : 'Please fill in the required fields: Place Name, City, and Category.');
+    return;
+  }
   const btn = document.getElementById('submit-place-btn');
   const prevLabel = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
-  const ok = await saveSub('place_submissions', {
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
+  const entry = isRequest ? {
     kind: 'request',
     name,
-    city,
-    address: val('sub-address'),
-    requestNote: val('sub-note').slice(0, 600),
+    city: city.trim(),
+    category: (cat || '').trim(),
+    address: (document.getElementById('sub-address')?.value || '').trim(),
+    requestedInfo: [...document.querySelectorAll('#sub-chips .pill.active')].map(b => b.dataset.key),
+    requestNote: (document.getElementById('sub-request-note')?.value || '').trim().slice(0, 600),
     submittedBy: currentUser?.name || 'Anonymous',
     submittedByEmail: currentUser?.email || ''
-  });
+  } : {
+    name,
+    city,
+    category: cat,
+    address: document.getElementById('sub-address')?.value || '',
+    stepfree: ynValues['stepfree'] || '',
+    ramp: ynValues['ramp'] || '',
+    wideDoorway: ynValues['wideDoorway'] || '',
+    lift: ynValues['lift'] || '',
+    toilet: ynValues['toilet'] || '',
+    seating: ynValues['seating'] || '',
+    parking: ynValues['parking'] || '',
+    staff: ynValues['staff'] || '',
+    submittedBy: currentUser?.name || 'Anonymous',
+    submittedByEmail: currentUser?.email || ''
+  };
+  const ok = await saveSub('place_submissions', entry);
   if (btn) { btn.disabled = false; btn.textContent = prevLabel; }
   if (!ok) {
     alert("Couldn't reach the server to save this right now. Check your connection and try again. (A copy was kept on this device so nothing is lost, but it won't show up for the team until it's re-submitted with a connection.)");
     return;
   }
-  const msg = document.getElementById('sub-success-text');
-  if (msg) msg.textContent = 'Thank you for telling us about ' + name + '. Our team will verify it, and once it\'s done you\'ll find its accessibility details on the Explore page.';
+  if (isRequest) {
+    document.getElementById('sub-success-text').textContent = `Thank you for telling us where it matters. Our team will look into ${name}, and once it's verified you'll find its accessibility details on the Explore page. Requests like yours help us decide where our teams go next.`;
+  }
   document.getElementById('submit-form-wrap').style.display = 'none';
   document.getElementById('submit-success').style.display = 'block';
 }
@@ -6592,9 +6775,14 @@ async function handleSubmitPlace() {
 function resetSubmitForm() {
   document.getElementById('submit-form-wrap').style.display = 'block';
   document.getElementById('submit-success').style.display = 'none';
-  // #submit-form is a <div>, so it has no reset(): clear the fields directly
-  // so "another place" starts blank.
-  ['sub-name','sub-city','sub-address','sub-note'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('submit-form').reset?.();
+  // (The line above does nothing on a <div>, so the previous entries used to
+  // stay put — clear them for real so "another place" starts blank.)
+  ['sub-name','sub-address','sub-city','sub-cat','sub-request-note'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ynValues = {};
+  document.querySelectorAll('#submit-form .yn-btn').forEach(b => b.classList.remove('selected-yes','selected-no','selected-partial'));
+  document.querySelectorAll('#sub-chips .pill').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+  setSubMode(subMode); // puts the success text back to its generic wording for the chosen option
 }
 
 function setYN(btn, field, val) {
@@ -11583,18 +11771,21 @@ function renderSubItems(items, tab, el, localKey) {
     const photoCount = s.photos ? Object.values(s.photos).reduce((sum, arr) => sum + (arr?.length||0), 0) : null;
 
     if (tab === 'places' && s.kind === 'request') {
+      const wants = (s.requestedInfo || []).map(k => (SUB_REQUEST_ITEMS.find(i => i[0] === k) || [k, k])[1]);
       return `<div class="sub-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
           <div class="sub-name">${escH(s.name||'—')}</div>
           <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;"><div class="sub-time">${s.time||''}</div>${delBtn}</div>
         </div>
         ${s.address?`<div class="sub-row">📍 <strong>${escH(s.address)}</strong></div>`:''}
-        <div class="sub-row">🏙️ <strong>${escH(s.city||'—')}</strong></div>
+        <div class="sub-row">🏙️ <strong>${escH(s.city||'—')}</strong>${s.category?` · ${escH(s.category)}`:''}</div>
         ${s.submittedBy?`<div class="sub-row">👤 <strong>${escH(s.submittedBy)}</strong>${s.submittedByEmail?` · ${escH(s.submittedByEmail)}`:''}</div>`:''}
+        ${wants.length?`<div class="sub-row" style="flex-direction:column;gap:2px;"><span style="font-size:0.7rem;color:var(--gray-mid);">Wants to know about:</span><strong>${wants.map(escH).join(' · ')}</strong></div>`:''}
         ${s.requestNote?`<p style="font-size:0.88rem;margin:6px 0;">${escH(s.requestNote)}</p>`:''}
-        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#FEF3E2;color:#9A5B00;font-size:0.68rem;font-weight:700;margin-top:8px;">To Verify</span>
+        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#FEF3E2;color:#9A5B00;font-size:0.68rem;font-weight:700;margin-top:8px;">Verification Request</span>
       </div>`;
     }
+
     if (tab === 'places') {
       return `<div class="sub-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
