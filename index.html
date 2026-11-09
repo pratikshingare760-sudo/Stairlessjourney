@@ -3,29 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Google tag (gtag.js) — Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HLPM2X71M2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  // Consent Mode: analytics stays OFF until the visitor clicks "Agree" on the
-  // site's own consent banner (matches the promise in the Privacy Policy).
-  gtag('consent', 'default', {
-    analytics_storage: 'denied', ad_storage: 'denied',
-    ad_user_data: 'denied', ad_personalization: 'denied'
-  });
-  // Returning visitor who already agreed → allow analytics straight away.
-  try {
-    var sjC = JSON.parse(localStorage.getItem('sj_consent_v1') || 'null');
-    if (sjC && sjC.analytics && localStorage.getItem('sj_internal_visitor') !== '1') {
-      gtag('consent', 'update', { analytics_storage: 'granted' });
-    }
-  } catch (e) {}
-  gtag('js', new Date());
-  // Page views are sent manually (see "GOOGLE ANALYTICS 4" script at the end
-  // of <body>) because this site switches pages without reloading.
-  gtag('config', 'G-HLPM2X71M2', { send_page_view: false });
-</script>
 <title>StairlessJourney: Move Freely, Know Before You Go.</title>
 <meta name="description" content="StairlessJourney is India's physically-verified wheelchair accessibility map. Every listed café, restaurant, and public space in Pune, Goa, and Kolkata is audited in person, not just crowdsourced, so you know before you go.">
 <link rel="canonical" href="https://stairlessjourney.com/">
@@ -461,10 +438,6 @@ section { padding: 72px 0; }
   transition: box-shadow var(--transition);
 }
 .event-card:hover { box-shadow: var(--shadow-md); }
-/* Brief highlight for the one event a shared #event-<id> link points at —
-   see sjGoToSharedEvent. Fades on its own via the transition above once the
-   class is removed a couple seconds later. */
-.event-card.event-card-highlight { box-shadow: 0 0 0 3px var(--red), var(--shadow-md); }
 .event-date-block {
   text-align: center; background: var(--red-tint);
   border-radius: var(--radius-sm); padding: 12px 8px;
@@ -576,11 +549,10 @@ footer {
   gap: 24px; padding: 40px 0;
 }
 .place-card {
-  display: block; background: white; border-radius: var(--radius);
+  background: white; border-radius: var(--radius);
   border: 1px solid var(--gray-light);
   overflow: hidden; cursor: pointer;
   transition: all var(--transition); box-shadow: var(--shadow-sm);
-  text-decoration: none; color: inherit;
 }
 .place-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); }
 .place-img {
@@ -963,18 +935,6 @@ footer {
 .pp-photo-add span { font-size: 0.65rem; color: var(--gray-mid); }
 .pf-photo-cell { display: flex; flex-direction: column; gap: 3px; }
 .pf-photo-cat-select { font-size: 0.66rem; padding: 2px 3px; border-radius: 5px; border: 1px solid var(--gray-light); background: white; color: var(--gray-dark); width: 100%; }
-/* Drag-to-reorder handle on each admin photo cell — see pfPhotoDragStart.
-   touch-action:none stops the phone from scrolling the page once a finger
-   lands here, so our own JS owns the whole gesture from the first touch. */
-.pp-photo-drag-handle {
-  position: absolute; top: 3px; left: 3px;
-  background: rgba(0,0,0,0.65); color: white; border: none;
-  border-radius: 50%; width: 20px; height: 20px;
-  cursor: grab; display: flex; align-items: center; justify-content: center;
-  touch-action: none; transition: background 0.2s; padding: 0;
-}
-.pp-photo-drag-handle:hover { background: var(--red); }
-.pf-photo-cell.pf-dragging .pp-photo-thumb { opacity: 0.4; outline: 2px dashed var(--red); outline-offset: 2px; }
 .place-body { padding: 40px 0; }
 .place-layout { display: grid; grid-template-columns: 1fr 340px; gap: 40px; }
 .access-snapshot {
@@ -2825,108 +2785,6 @@ html.focus-boost *:focus-visible {
   border-radius: 4px;
 }
 
-/* ═══ I'M PLANNING TO GO (place page) ═══ */
-.pp-title-row { display:flex; align-items:center; justify-content:space-between; gap:12px 24px; flex-wrap:wrap; position:relative; }
-.pp-title-col { min-width:0; flex:1 1 320px; }
-.plan-hero { position:relative; flex:0 0 auto; }
-.plan-state { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.plan-btn { min-height:var(--tap-min); justify-content:center; }
-.plan-btn svg { width:18px; height:18px; flex-shrink:0; }
-.plan-hero .plan-state :focus-visible { outline:3px solid #fff; outline-offset:3px; border-radius:10px; }
-.plan-undo { background:none; border:none; color:#fff; text-decoration:underline; font-size:0.92rem; font-weight:500; cursor:pointer; min-height:var(--tap-min); min-width:var(--tap-min); padding:0 6px; }
-.plan-undo[hidden] { display:none; }
-.plan-sheet { position:absolute; right:0; top:calc(100% + 10px); width:min(380px, 92vw); background:#fff; color:var(--near-black); border-radius:var(--radius); box-shadow:var(--shadow-lg); padding:20px 20px 18px; z-index:60; text-align:left; }
-.plan-sheet[hidden] { display:none; }
-.plan-sheet:focus, .plan-sheet:focus-visible, #fu-title:focus, #fu-title:focus-visible, #fu-done:focus, #fu-done:focus-visible, #coffee-success:focus, #coffee-success:focus-visible { outline:none; }  /* script-moved focus on non-interactive containers: no frame */
-.plan-sheet :focus-visible { outline:2px solid var(--red-strong); outline-offset:2px; }
-.plan-sheet h3 { font-size:1.2rem; margin:0 76px 8px 0; color:var(--near-black); }
-.plan-sheet p { font-size:0.9rem; margin:0 0 12px; }
-.plan-sheet-close { position:absolute; top:6px; right:8px; min-height:var(--tap-min); padding:0 10px; background:none; border:none; color:var(--gray-mid); font-weight:600; font-size:0.88rem; text-decoration:underline; cursor:pointer; }
-.plan-sheet .form-group { margin-bottom:4px; }
-.plan-sheet .btn-red { width:100%; justify-content:center; min-height:var(--tap-min); margin-top:12px; }
-.sj-hint { font-size:0.8rem; color:var(--gray-mid); margin:0; }
-.sj-err { color:var(--red-strong); font-size:0.85rem; font-weight:600; margin:6px 0 0; }
-.sj-err:empty { display:none; }
-.plan-consent { display:flex; gap:10px; align-items:flex-start; font-size:0.88rem; margin:12px 0 0; cursor:pointer; }
-.plan-consent[hidden] { display:none; }
-.plan-consent input { width:22px; height:22px; flex-shrink:0; margin-top:1px; }
-.plan-skip { display:block; background:none; border:none; color:var(--red-strong); text-decoration:underline; font-size:0.92rem; font-weight:500; min-height:var(--tap-min); margin:6px auto 0; cursor:pointer; }
-.plan-done { display:block; width:100%; background:none; border:none; text-align:center; padding:12px 0 4px; font-size:1rem; font-weight:600; color:var(--near-black); cursor:pointer; }
-.plan-done small { display:block; font-weight:400; font-size:0.8rem; color:var(--gray-mid); margin-top:4px; }
-.plan-live { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-.plan-bar { display:none; position:fixed; left:0; right:0; bottom:0; z-index:1400; background:#fff; border-top:1px solid var(--gray-light); box-shadow:0 -4px 16px rgba(26,23,20,0.08); padding:10px 14px calc(10px + env(safe-area-inset-bottom)); gap:8px; align-items:center; flex-wrap:wrap; }
-.plan-bar-main { flex:2 1 170px; display:flex; align-items:center; gap:4px; min-width:0; }
-.plan-bar-main .plan-btn { flex:1 1 auto; padding:12px 14px; font-size:0.95rem; }
-.plan-undo-bar { color:var(--red-strong); }
-.plan-bar .sj-err { flex-basis:100%; margin:0; }
-.plan-dir { flex:1 1 100px; min-height:var(--tap-min); padding:10px 14px; font-size:0.95rem; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
-.plan-dir[hidden] { display:none; }
-.plan-hero .sj-err { color:#fff; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:8px; }
-@media (max-width:768px) {
-  .plan-hero .plan-state { display:none; }
-  .plan-hero .sj-err { display:none; }
-  .plan-sheet { position:fixed; left:0; right:0; bottom:0; top:auto; width:auto; max-height:88vh; overflow:auto; border-radius:18px 18px 0 0; padding:20px 18px calc(18px + env(safe-area-inset-bottom)); z-index:3000; }
-  body.on-place .plan-bar { display:flex; }
-  body.on-place #section-place { padding-bottom:calc(var(--plan-bar-h, 76px) + 16px); }
-  body.on-place #a11y-widget { bottom:calc(var(--plan-bar-h, 76px) + 12px); }
-  body.on-place .referral-banner { bottom:calc(var(--plan-bar-h, 76px) + 10px); }
-}
-
-/* ═══ FOLLOW-UP PAGE ═══ */
-.fu-wrap { max-width:640px; margin:0 auto; padding:32px 0 64px; }
-.fu-choices { display:grid; gap:14px; }
-.fu-btn { display:flex; align-items:center; gap:14px; width:100%; min-height:72px; padding:16px 22px; background:var(--gray-bg); border:2px solid var(--red); border-radius:var(--radius); color:var(--near-black); font-size:1.15rem; font-weight:600; text-align:left; cursor:pointer; font-family:inherit; }
-.fu-btn:hover { background:var(--red-tint); }
-.fu-btn:disabled { opacity:0.6; cursor:default; }
-.fu-btn svg { width:26px; height:26px; color:var(--red-strong); flex-shrink:0; }
-.fu-fieldset { border:none; padding:0; margin:0 0 20px; }
-.fu-fieldset legend { font-size:1.05rem; font-weight:600; margin-bottom:10px; padding:0; }
-.fu-radios { display:grid; gap:10px; }
-.fu-radio { display:flex; align-items:center; gap:12px; min-height:56px; padding:12px 16px; background:#fff; border:2px solid var(--gray-light); border-radius:12px; cursor:pointer; font-weight:600; }
-.fu-radio input { width:22px; height:22px; flex-shrink:0; }
-.fu-radio:has(input:checked) { border-color:var(--red-strong); background:var(--red-tint); }
-.fu-card { background:var(--gray-bg); border:1.5px solid var(--gray-light); border-radius:var(--radius); padding:24px; }
-.fu-card[hidden], .fu-step[hidden] { display:none; }
-
-/* ═══ COFFEE WITH THE FOUNDER ═══ */
-.coffee-section { padding:64px 0; }
-.coffee-card { display:flex; align-items:center; justify-content:space-between; gap:32px; background:var(--gray-bg); border:1.5px solid var(--gray-light); border-radius:20px; padding:40px; }
-.coffee-copy { flex:1 1 auto; max-width:560px; }
-.coffee-copy h2 { margin-bottom:10px; }
-.coffee-copy p { font-size:1.05rem; margin-bottom:22px; }
-.coffee-photo { flex:0 0 auto; width:160px; height:160px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:var(--shadow-md); }
-.coffee-photo[hidden], .coffee-section[hidden] { display:none; }
-.coffee-strip { background:#fff; border-bottom:1px solid var(--gray-light); }
-.coffee-strip[hidden] { display:none; }
-.coffee-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:4px 0; }
-.coffee-strip p { margin:0; font-size:0.9rem; }
-.coffee-strip a { display:inline-flex; align-items:center; min-height:var(--tap-min); color:var(--red-strong); font-weight:600; text-decoration:underline; }
-.coffee-strip-close { flex-shrink:0; min-height:var(--tap-min); padding:0 14px; background:none; border:1.5px solid var(--gray-light); border-radius:8px; font-size:0.85rem; font-weight:600; color:var(--near-black); cursor:pointer; }
-.coffee-page { max-width:640px; margin:0 auto; padding:40px 0 72px; }
-.coffee-page > p { font-size:1.02rem; margin-bottom:14px; }
-.coffee-form { display:grid; gap:18px; margin-top:24px; }
-.coffee-check { display:flex; gap:12px; align-items:flex-start; font-size:0.92rem; cursor:pointer; }
-.coffee-check input { width:22px; height:22px; flex-shrink:0; margin-top:1px; }
-.coffee-full { background:#FEF3E2; border:1.5px solid #E8C48A; color:#6B3F00; border-radius:12px; padding:14px 16px; font-weight:600; }
-.coffee-full[hidden], .coffee-card[hidden] { display:none; }
-.coffee-form [hidden], .coffee-page [hidden] { display:none; }
-@media (max-width:768px) {
-  .coffee-card { flex-direction:column-reverse; align-items:flex-start; padding:28px 22px; }
-  .coffee-photo { width:110px; height:110px; }
-}
-
-/* ═══ ADMIN: plans / follow-ups / coffee ═══ */
-.sj-ptable-wrap { overflow-x:auto; margin-top:14px; }
-.sj-ptable { width:100%; border-collapse:collapse; font-size:0.82rem; }
-.sj-ptable th, .sj-ptable td { padding:8px 10px; border-bottom:1px solid var(--gray-light); text-align:left; white-space:nowrap; }
-.sj-ptable th { font-weight:700; background:var(--gray-bg); }
-.sj-note { font-size:0.8rem; color:var(--gray-mid); margin:8px 0 14px; }
-.sj-range { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:8px; }
-.sj-range label { display:flex; flex-direction:column; gap:4px; font-size:0.78rem; font-weight:600; }
-.sj-pill { display:inline-block; padding:2px 8px; border-radius:100px; font-size:0.68rem; font-weight:700; background:#EEE; color:#333; }
-.sj-pill.ok { background:#E8F6F0; color:#1A7F64; }
-.sj-pill.warn { background:#FEF3E2; color:#9A5B00; }
-
 /* Reading guide — a horizontal line that follows mouse */
 #reading-guide {
   position: fixed;
@@ -3589,7 +3447,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
       <div class="nav-actions">
         <span id="user-display" style="display:none"></span>
         <button class="btn-outline-sm" onclick="showSection('explore')">Explore Places</button>
-        <button class="btn-red-sm" onclick="requireLogin('submit')" aria-label="Ask us to check a place">Ask Us to Check</button>
+        <button class="btn-red-sm" onclick="requireLogin('submit')">Submit a Place</button>
         <button class="nav-hamburger" id="nav-hamburger-btn" aria-label="Open menu" aria-expanded="false" onclick="toggleMobileMenu()">
           <span class="hamburger-icon" aria-hidden="true">
             <span></span><span></span><span></span>
@@ -3623,7 +3481,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
         <span class="mobile-nav-icon-svg" aria-hidden="true"><svg width="100%" height="100%"><use href="#i-mail"/></svg></span> Contact
       </a>
       <div class="mobile-nav-actions">
-        <button class="btn-red" style="width:100%;justify-content:center;font-size:0.95rem;" onclick="requireLogin('submit');toggleMobileMenu()">Ask Us to Check a Place</button>
+        <button class="btn-red" style="width:100%;justify-content:center;font-size:0.95rem;" onclick="requireLogin('submit');toggleMobileMenu()">Submit a Place</button>
       </div>
     </div>
   </div>
@@ -3648,7 +3506,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.8"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
             Explore Places
           </button>
-          <button class="btn-ghost" onclick="requireLogin('submit')">Ask Us to Check a Place</button>
+          <button class="btn-ghost" onclick="requireLogin('submit')">Submit a Place</button>
         </div>
         <div class="hero-stats" role="list">
           <div role="listitem">
@@ -3871,14 +3729,14 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           </span>
         </button>
 
-        <button class="help-card" type="button" onclick="requireLogin('submit')" aria-label="Ask us to check a place">
+        <button class="help-card" type="button" onclick="requireLogin('submit')" aria-label="Submit a place you know">
           <span class="help-card-icon" aria-hidden="true">
             <svg width="28" height="28"><use href="#i-pin"/></svg>
           </span>
-          <h3>Ask us to check a place</h3>
-          <p>Heading somewhere we haven't checked, or know an accessible place we've missed? Tell us, and our team will verify it.</p>
+          <h3>Submit a place</h3>
+          <p>Know a café, clinic, or shop with good (or bad) access? Send it in and our team will verify and publish it.</p>
           <span class="help-card-arrow">
-            Tell us where
+            Suggest a place
             <svg width="16" height="16"><use href="#i-arrow-right"/></svg>
           </span>
         </button>
@@ -3894,20 +3752,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
             <svg width="16" height="16"><use href="#i-arrow-right"/></svg>
           </span>
         </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- COFFEE WITH THE FOUNDER -->
-  <section class="coffee-section" id="coffee-home" aria-labelledby="coffee-home-title">
-    <div class="container">
-      <div class="coffee-card">
-        <div class="coffee-copy">
-          <h2 id="coffee-home-title">Coffee with the Founder</h2>
-          <p>Grab a coffee with me in Pune. I'd love to meet you, hear your story, and learn how we can make this work better for you.</p>
-          <button type="button" class="btn-red" onclick="showSection('coffee')">Request a coffee</button>
-        </div>
-        <img class="coffee-photo" id="coffee-photo" alt="Pratik, founder of StairlessJourney" hidden>
       </div>
     </div>
   </section>
@@ -3934,10 +3778,9 @@ a.is-red, .text-link-red { color: var(--red-strong); }
         <div class="footer-col">
           <h4>Platform</h4>
           <a onclick="showSection('explore')">Explore Places</a>
-          <a onclick="requireLogin('submit')">Ask Us to Check a Place</a>
+          <a onclick="requireLogin('submit')">Submit a Place</a>
           <a onclick="showSection('events')">Events</a>
           <a onclick="showSection('volunteer')">Volunteer</a>
-          <a href="#coffee" id="coffee-footer-link" onclick="showSection('coffee');return false;">Coffee with the Founder</a>
         </div>
         <div class="footer-col">
           <h4>About</h4>
@@ -4014,16 +3857,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
     </div>
   </div>
 
-  <!-- Coffee with the Founder: slim strip, shown only when the City filter is Pune -->
-  <div class="coffee-strip" id="coffee-strip" hidden>
-    <div class="container">
-      <div class="coffee-strip-inner">
-        <p>Grab a coffee with the founder in Pune. <a href="#coffee" onclick="showSection('coffee');return false;">Request a coffee</a></p>
-        <button type="button" class="coffee-strip-close" onclick="sjCoffeeStripClose()">Close</button>
-      </div>
-    </div>
-  </div>
-
   <!-- PLACES GRID -->
   <div class="container">
     <!-- View toggle: List ↔ Map -->
@@ -4057,32 +3890,97 @@ a.is-red, .text-link-red { color: var(--red-strong); }
   <div class="submit-section" id="submit-section">
     <div class="container">
       <div class="submit-inner">
-        <span class="section-label">Ask Us</span>
-        <h2 class="mb-12">Heading somewhere we haven't checked yet?</h2>
-        <p style="margin-bottom:12px;font-size:1.05rem;">Tell us where, or tell us about an accessible place we've missed. Our team will verify it and publish the details, so anyone can go with confidence.</p>
-        <p style="margin-bottom:28px;font-size:0.9rem;color:var(--gray-mid);">Our on-ground teams are active in Pune, Goa, and Kolkata today. Tell us about any city in India. It helps us decide where to go next.</p>
+        <span class="section-label">Contribute</span>
+        <h2 class="mb-12">Know an accessible place we've missed?</h2>
+        <p style="margin-bottom:12px;font-size:1.05rem;">Submit it. Our team will verify and publish it.</p>
+        <p style="margin-bottom:36px;font-size:0.9rem;color:var(--gray-mid);">Our on-ground teams are active in Pune, Goa, and Kolkata today. Submissions are open from anywhere in India, and coverage is growing city by city.</p>
 
         <div id="submit-form-wrap">
           <div class="form-grid" id="submit-form">
-            <div class="form-group">
+            <div class="form-group form-full">
               <label class="form-label" for="sub-name">Place Name *</label>
               <input class="form-input" id="sub-name" type="text" placeholder="e.g. Jehangir Art Gallery">
+            </div>
+            <div class="form-group form-full">
+              <label class="form-label" for="sub-address">Address *</label>
+              <input class="form-input" id="sub-address" type="text" placeholder="Full address">
             </div>
             <div class="form-group">
               <label class="form-label" for="sub-city">City *</label>
               <input class="form-input" id="sub-city" type="text" placeholder="e.g. Pune, Mumbai, Jaipur" list="sub-city-list">
               <datalist id="sub-city-list"></datalist>
             </div>
-            <div class="form-group form-full">
-              <label class="form-label" for="sub-address">Address or landmark</label>
-              <input class="form-input" id="sub-address" type="text" placeholder="Anything that helps us find it">
+            <div class="form-group">
+              <label class="form-label" for="sub-cat">Category *</label>
+              <input class="form-input" id="sub-cat" type="text" placeholder="e.g. Café, Government, F1 Race Track" list="sub-cat-list">
+              <datalist id="sub-cat-list"></datalist>
             </div>
-            <div class="form-group form-full">
-              <label class="form-label" for="sub-note">Anything you'd like to know, or tell us? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
-              <textarea class="form-input" id="sub-note" rows="4" maxlength="600" placeholder="e.g. Is the washroom big enough for a power wheelchair? Or: there's a ramp at the side entrance." style="resize:vertical;"></textarea>
+
+            <div class="form-group">
+              <label class="form-label">Step-free entrance?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'stepfree','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'stepfree','No')">No</button>
+                <button class="yn-btn" onclick="setYN(this,'stepfree','Partial')">Partial</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ramp?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'ramp','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'ramp','No')">No</button>
+                <button class="yn-btn" onclick="setYN(this,'ramp','Partial')">Partial</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Wide doorway?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'wideDoorway','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'wideDoorway','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Lift?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'lift','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'lift','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accessible Toilet?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'toilet','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'toilet','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Accessible seating?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'seating','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'seating','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Parking?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'parking','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'parking','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Staff Support?</label>
+              <div class="yn-group">
+                <button class="yn-btn" onclick="setYN(this,'staff','Yes')">Yes</button>
+                <button class="yn-btn" onclick="setYN(this,'staff','No')">No</button>
+              </div>
+            </div>
+            <div class="form-group form-full" style="background:#FAFAF8;border:1.5px dashed var(--gray-light);border-radius:12px;padding:16px;">
+              <div style="font-weight:700;font-size:0.9rem;margin-bottom:4px;">📷 Have photos or a video?</div>
+              <p style="font-size:0.82rem;color:var(--gray-mid);margin-bottom:10px;">Totally optional. Add them separately after submitting, so this form stays quick.</p>
+              <a href="#" id="sub-photo-form-link" onclick="return openPhotoForm(event)" class="btn-outline-sm" style="display:inline-block;">Add photos / video →</a>
             </div>
             <div class="form-full">
-              <button class="btn-red" id="submit-place-btn" onclick="handleSubmitPlace()" style="width:100%;justify-content:center;">Send to Our Team</button>
+              <button class="btn-red" id="submit-place-btn" onclick="handleSubmitPlace()" style="width:100%;justify-content:center;">Submit for Review</button>
             </div>
           </div>
         </div>
@@ -4091,9 +3989,9 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           <div style="width:56px;height:56px;margin:0 auto 16px;background:#E8F6F0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#1A7F64;">
             <svg width="32" height="32" aria-hidden="true"><use href="#i-check"/></svg>
           </div>
-          <h3>We've got it.</h3>
-          <p id="sub-success-text" style="color:#1A7F64;">Thank you for telling us. Our team will verify it, and once it's done you'll find its accessibility details on the Explore page.</p>
-          <button class="btn-red" style="margin-top:24px;" onclick="resetSubmitForm()">Tell us about another place</button>
+          <h3>Thank you for contributing!</h3>
+          <p style="color:#1A7F64;">Your submission is under review. Our team will verify and publish it shortly. We appreciate you helping make India more accessible.</p>
+          <button class="btn-red" style="margin-top:24px;" onclick="resetSubmitForm()">Submit another place</button>
         </div>
       </div>
     </div>
@@ -4114,43 +4012,8 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           Share
         </button>
       </div>
-      <div class="pp-title-row">
-        <div class="pp-title-col">
-          <h2 class="place-page-title" id="pp-name" style="font-size:clamp(2.4rem, 5vw, 4rem);">Place Name</h2>
-          <p class="place-page-meta" id="pp-meta">Category · City</p>
-        </div>
-        <div class="plan-hero" id="plan-hero">
-          <div class="plan-state">
-            <button type="button" class="btn-white plan-btn" id="plan-btn-hero" onclick="sjPlanTap('hero')" aria-haspopup="dialog" aria-controls="plan-sheet"></button>
-            <button type="button" class="plan-undo" id="plan-undo-hero" onclick="sjPlanUndo()" hidden>Undo</button>
-          </div>
-          <p class="sj-err" id="plan-tap-err-hero" role="alert"></p>
-          <div class="plan-sheet" id="plan-sheet" role="dialog" aria-modal="false" aria-labelledby="plan-sheet-title" tabindex="-1" hidden>
-            <button type="button" class="plan-sheet-close" onclick="sjPlanCloseSheet(true)">Close</button>
-            <div id="plan-sheet-form">
-              <h3 id="plan-sheet-title">Nice, we've saved this for you.</h3>
-              <p>Want this place's access details on WhatsApp? Entrance, ramp, washroom, parking, and a tip to call ahead if needed.</p>
-              <div class="form-group">
-                <label class="form-label" for="plan-wa">WhatsApp number</label>
-                <input class="form-input" id="plan-wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 98765 43210" oninput="sjPlanOnNumber()" aria-describedby="plan-wa-hint plan-wa-err">
-                <p class="sj-hint" id="plan-wa-hint">We'll only use your number to send this and one quick follow-up. Reply STOP anytime.</p>
-                <p class="sj-err" id="plan-wa-err" role="alert"></p>
-              </div>
-              <label class="plan-consent" id="plan-consent-row" hidden>
-                <input type="checkbox" id="plan-consent" aria-describedby="plan-consent-err">
-                <span>I agree that StairlessJourney may message me on WhatsApp about this place.</span>
-              </label>
-              <p class="sj-err" id="plan-consent-err" role="alert"></p>
-              <button type="button" class="btn-red" id="plan-send" onclick="sjPlanSend()">Send me the details</button>
-              <button type="button" class="plan-skip" onclick="sjPlanSkip()">No thanks, just save</button>
-              <p class="sj-err" id="plan-save-err" role="alert"></p>
-            </div>
-            <div id="plan-sheet-done" hidden>
-              <button type="button" class="plan-done" onclick="sjPlanCloseSheet(true)"><span id="plan-done-msg">Done. We'll send the details to your WhatsApp.</span><small>Tap to close</small></button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h2 class="place-page-title" id="pp-name" style="font-size:clamp(2.4rem, 5vw, 4rem);">Place Name</h2>
+      <p class="place-page-meta" id="pp-meta">Category · City</p>
       <div class="gallery-strip" id="gallery-strip" role="list" aria-label="Place photos and videos"></div>
     </div>
   </div>
@@ -4228,114 +4091,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
     </div>
   </div>
 </div><!-- END PLACE -->
-
-<!-- ══════════════ PAGE: COFFEE WITH THE FOUNDER ══════════════ -->
-<div id="section-coffee" class="section">
-  <div class="place-page-header">
-    <div class="container" style="padding-bottom:32px;">
-      <button class="back-btn" onclick="showSection('home')" aria-label="Back to home">← Back</button>
-      <span class="section-label" style="color:rgba(255,255,255,0.7);display:block;">Pune</span>
-      <h2 class="place-page-title" style="font-size:clamp(2.2rem, 5vw, 3.4rem);">Coffee with the Founder</h2>
-      <p class="place-page-meta" style="font-size:1.05rem;">Grab a coffee with me in Pune. I'd love to meet you, hear your story, and learn how we can make this work better for you.</p>
-    </div>
-  </div>
-  <div class="container">
-    <div class="coffee-page">
-      <div id="coffee-off" hidden>
-        <p>Coffee with the Founder isn't taking requests right now. Please check back soon.</p>
-        <button type="button" class="btn-red" onclick="showSection('home')">Back to home</button>
-      </div>
-      <div id="coffee-form-wrap">
-        <p>I'm Pratik, and I started StairlessJourney. It's built for people, so I'd love to meet some of you in person over a coffee. Tell me your story, what works for you and what doesn't. No slides, no pitch, just a good conversation. It would make me really happy to meet you.</p>
-        <p>Tell me a little about you below, and I'll message you on WhatsApp to fix a time.</p>
-        <div class="coffee-full" id="coffee-full" role="status" hidden>This week's coffees are taken. Join the waiting list.</div>
-        <div class="coffee-form" id="coffee-form">
-          <div class="form-group">
-            <label class="form-label" for="coffee-name">First name</label>
-            <input class="form-input" id="coffee-name" type="text" autocomplete="given-name" aria-required="true" aria-describedby="coffee-name-err">
-            <p class="sj-err" id="coffee-name-err" role="alert"></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="coffee-wa">WhatsApp number</label>
-            <input class="form-input" id="coffee-wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 98765 43210" aria-required="true" aria-describedby="coffee-wa-hint coffee-wa-err">
-            <p class="sj-hint" id="coffee-wa-hint">Only our team can see your number.</p>
-            <p class="sj-err" id="coffee-wa-err" role="alert"></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="coffee-area">Area of Pune you're closest to</label>
-            <input class="form-input" id="coffee-area" type="text" list="coffee-area-list" placeholder="e.g. Kothrud, Baner, Viman Nagar" aria-required="true" aria-describedby="coffee-area-err">
-            <datalist id="coffee-area-list">
-              <option value="Aundh"><option value="Baner"><option value="Bavdhan"><option value="Camp"><option value="Deccan"><option value="Hadapsar"><option value="Hinjewadi"><option value="Kalyani Nagar"><option value="Katraj"><option value="Kharadi"><option value="Koregaon Park"><option value="Kothrud"><option value="Magarpatta"><option value="Pashan"><option value="Pimpri-Chinchwad"><option value="Shivajinagar"><option value="Viman Nagar"><option value="Wakad">
-            </datalist>
-            <p class="sj-err" id="coffee-area-err" role="alert"></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="coffee-needs">Anything I should plan for? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
-            <textarea class="form-input" id="coffee-needs" rows="3" maxlength="500" aria-describedby="coffee-needs-hint" style="resize:vertical;"></textarea>
-            <p class="sj-hint" id="coffee-needs-hint">For example step-free entrance, quiet place, accessible washroom, or someone coming with you.</p>
-          </div>
-          <div>
-            <label class="coffee-check">
-              <input type="checkbox" id="coffee-consent" aria-required="true" aria-describedby="coffee-consent-err">
-              <span>I agree that Pratik may contact me on WhatsApp about this.</span>
-            </label>
-            <p class="sj-err" id="coffee-consent-err" role="alert"></p>
-          </div>
-          <p class="sj-hint" style="font-size:0.9rem;">I'll pick a public, verified place that works for your needs. You're welcome to bring a friend or family member.</p>
-          <p class="sj-err" id="coffee-form-err" role="alert"></p>
-          <button type="button" class="btn-red" id="coffee-submit" onclick="sjCoffeeSubmit()" style="width:100%;justify-content:center;">Request a coffee</button>
-        </div>
-      </div>
-      <div class="fu-card" id="coffee-success" role="status" tabindex="-1" hidden>
-        <h3 id="coffee-success-title" style="margin-bottom:8px;">Thank you!</h3>
-        <p id="coffee-success-text" style="margin:0;">Thank you! I'll message you on WhatsApp within 3 days to fix a time.</p>
-      </div>
-    </div>
-  </div>
-</div><!-- END COFFEE -->
-
-<!-- ══════════════ PAGE: FOLLOW-UP (opened from a WhatsApp link) ══════════════ -->
-<div id="section-followup" class="section">
-  <div class="place-page-header">
-    <div class="container" style="padding-bottom:32px;">
-      <h2 class="place-page-title" id="fu-title" tabindex="-1" style="font-size:clamp(2rem, 5vw, 3rem);">Did you get to this place?</h2>
-      <p class="place-page-meta" style="font-size:1.02rem;">One tap is all we need.</p>
-    </div>
-  </div>
-  <div class="container">
-    <div class="fu-wrap">
-      <div class="fu-step" id="fu-step1">
-        <div class="fu-choices" role="group" aria-label="Did you get there?">
-          <button type="button" class="fu-btn" id="fu-went" onclick="sjFuAnswer('went')"><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span>Yes, I went</span></button>
-          <button type="button" class="fu-btn" id="fu-notyet" onclick="sjFuAnswer('notyet')"><svg aria-hidden="true"><use href="#i-clock"/></svg><span>Not yet</span></button>
-          <button type="button" class="fu-btn" id="fu-couldnt" onclick="sjFuAnswer('couldnt')"><svg aria-hidden="true"><use href="#i-pin"/></svg><span>Couldn't go</span></button>
-        </div>
-        <p class="sj-err" id="fu-err1" role="alert"></p>
-      </div>
-      <div class="fu-step fu-card" id="fu-step2" hidden>
-        <fieldset class="fu-fieldset">
-          <legend>Was our information accurate?</legend>
-          <div class="fu-radios">
-            <label class="fu-radio"><input type="radio" name="fu-acc" value="yes"> Yes</label>
-            <label class="fu-radio"><input type="radio" name="fu-acc" value="mostly"> Mostly</label>
-            <label class="fu-radio"><input type="radio" name="fu-acc" value="no"> No</label>
-          </div>
-        </fieldset>
-        <div class="form-group">
-          <label class="form-label" for="fu-note">Anything we should fix? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
-          <textarea class="form-input" id="fu-note" rows="3" maxlength="600" style="resize:vertical;"></textarea>
-        </div>
-        <p class="sj-err" id="fu-err2" role="alert"></p>
-        <button type="button" class="btn-red" id="fu-send" onclick="sjFuSend()" style="width:100%;justify-content:center;min-height:var(--tap-min);margin-top:14px;">Send</button>
-      </div>
-      <div class="fu-step fu-card" id="fu-done" role="status" tabindex="-1" hidden>
-        <h3 id="fu-done-title" style="margin-bottom:8px;">Thank you.</h3>
-        <p id="fu-done-text" style="margin:0 0 16px;"></p>
-        <button type="button" class="btn-red" onclick="showSection('explore')">Explore places</button>
-      </div>
-    </div>
-  </div>
-</div><!-- END FOLLOW-UP -->
 
 <!-- ══════════════ PAGE: ABOUT ══════════════ -->
 <div id="section-about" class="section">
@@ -5948,8 +5703,6 @@ function showSection(name) {
   if (name === 'events') { renderEventsPage(); setTimeout(testimonialInit, 100); }
   if (name === 'explore') { renderPlaces(); }
   if (name === 'volunteer') { setTimeout(reelInit, 100); }
-  if (typeof sjPlanBarSync === 'function') sjPlanBarSync(name);
-  if (name === 'coffee' && typeof sjCoffeeInit === 'function') sjCoffeeInit();
 }
 
 function toggleMobileMenu() {
@@ -6000,18 +5753,8 @@ function eventCardHTML(ev, isPast) {
         ? `<a href="${esc(ev.registerLink)}" target="_blank" rel="noopener noreferrer" class="btn-register" aria-label="Register for ${esc(ev.name)}">Register Now</a>`
         : `<button class="btn-register" onclick="openRegModal(${ev.id})" aria-label="Register for ${esc(ev.name)}">Register Now</button>`)
     : '';
-  // Sharing a past event to get someone to register makes no sense, so this
-  // mirrors regBtn: only ever shown on upcoming events.
-  const shareBtn = !isPast
-    ? `<button type="button" class="btn-cal" onclick="shareEventCurrent(${ev.id})" aria-label="Share ${esc(ev.name)}">
-        <svg style="width:13px;height:13px;vertical-align:middle;margin-right:4px;" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="18" cy="5" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="19" r="2.6"/>
-          <line x1="8.3" y1="10.7" x2="15.7" y2="6.3"/><line x1="8.3" y1="13.3" x2="15.7" y2="17.7"/>
-        </svg> Share
-      </button>`
-    : '';
   return `
-  <div class="event-card${pastClass}" id="event-card-${ev.id}" role="listitem">
+  <div class="event-card${pastClass}" role="listitem">
     <div class="event-date-block" aria-label="${ev.date}">
       <div class="event-date-day">${ev.day}</div>
       <div class="event-date-mon">${ev.month}</div>
@@ -6026,7 +5769,6 @@ function eventCardHTML(ev, isPast) {
     </div>
     <div class="event-actions">
       ${regBtn}
-      ${shareBtn}
       ${calBtn}
     </div>
   </div>`;
@@ -6155,7 +5897,6 @@ function updateSavedCountBadge() {
 }
 
 function renderPlaces() {
-  if (typeof sjCoffeeStripSync === 'function') sjCoffeeStripSync();
   const city = document.getElementById('filter-city')?.value || '';
   const cat = document.getElementById('filter-cat')?.value || '';
   const dis = document.getElementById('filter-disability')?.value || '';
@@ -6163,7 +5904,6 @@ function renderPlaces() {
   if (!grid) return;
 
   let filtered = PLACES.filter(p => {
-    if (p.active === false) return false;
     if (city && p.city !== city) return false;
     if (cat && !p.category.toLowerCase().includes(cat.toLowerCase())) return false;
     if (dis && !p.disability.includes(dis)) return false;
@@ -6189,16 +5929,9 @@ function renderPlaces() {
 
   grid.innerHTML = filtered.map(p => {
     const cardThumb = placeCardThumb(p);
-    // A real href (not just an onclick) so Google's crawler — and anyone
-    // ctrl/cmd-clicking or right-clicking "open in new tab" — has an actual
-    // link to follow to this place's own page, not just a JS click handler.
-    // The onclick still intercepts a plain left-click for the fast in-app
-    // navigation visitors already get; modified clicks fall through to the
-    // browser's normal link behavior.
-    const sjCardClick = `if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();openPlacePage(${p.id})`;
     return `
-    <a class="place-card" role="listitem" tabindex="0" href="${placeUrlPath(p)}"
-         onclick="${sjCardClick}"
+    <div class="place-card" role="listitem" tabindex="0"
+         onclick="openPlacePage(${p.id})"
          onkeypress="if(event.key==='Enter')openPlacePage(${p.id})"
          aria-label="${esc(p.name)}, ${esc(p.category)}, ${esc(p.city)}. ${p.verified ? 'Community Visited' : 'Submitted by Community'}.">
       <div class="place-img" aria-hidden="true" style="${cardThumb ? `background-image:url('${cardThumb}');background-size:cover;background-position:center;` : ''}">
@@ -6222,7 +5955,7 @@ function renderPlaces() {
           <button class="btn-view" onclick="event.stopPropagation();openPlacePage(${p.id})">View Details</button>
         </div>
       </div>
-    </a>`;
+    </div>`;
   }).join('');
 }
 
@@ -6247,17 +5980,14 @@ const SJ_CAT_ICONS = {
   'Shopping': 'i-shopping'
 };
 function sjRenderBrowseGrids() {
-  // Inactive places (admin "Inactive" toggle) stay out of every public count
-  // and listing here — they're only visible/editable from the admin panel.
-  const activePlaces = PLACES.filter(p => p.active !== false);
   const cityEl = document.getElementById('browse-cities-grid');
   if (cityEl) {
-    const cities = [...new Set(activePlaces.map(p => (p.city||'').trim()).filter(Boolean))].sort((a,b) => a.localeCompare(b));
+    const cities = sjUniquePlaceValues('city');
     cityEl.innerHTML = cities.length ? cities.map(city => {
-      // Counts every active place in this city, regardless of badge
-      // (Community Visited vs Submitted by Community) — both are published,
-      // verified listings on Explore, so both count here the same way.
-      const n = activePlaces.filter(p => p.city === city).length;
+      // Counts every place in this city, regardless of badge (Community
+      // Visited vs Submitted by Community) — both are published, verified
+      // listings on Explore, so both count here the same way.
+      const n = PLACES.filter(p => p.city === city).length;
       const label = n === 0 ? 'No verified listings yet · audits in progress' : `${n} verified listing${n === 1 ? '' : 's'}`;
       return `
       <div class="city-card" role="listitem button" tabindex="0" onclick="showSection('explore');filterByCity('${esc(city)}')" onkeypress="if(event.key==='Enter'){showSection('explore');filterByCity('${esc(city)}')}">
@@ -6269,7 +5999,7 @@ function sjRenderBrowseGrids() {
   }
   const catEl = document.getElementById('browse-categories-grid');
   if (catEl) {
-    const cats = [...new Set(activePlaces.map(p => (p.category||'').trim()).filter(Boolean))].sort((a,b) => a.localeCompare(b));
+    const cats = sjUniquePlaceValues('category');
     catEl.innerHTML = cats.length ? cats.map(cat => `
       <button class="cat-card" type="button" role="listitem" onclick="showSection('explore');filterByCat('${esc(cat)}')" aria-label="Browse ${esc(cat)}">
         <span class="cat-icon-svg" aria-hidden="true"><svg width="100%" height="100%"><use href="#${SJ_CAT_ICONS[cat] || 'i-pin'}"/></svg></span>
@@ -6282,20 +6012,15 @@ function syncHomeCounters() {
   sjRenderBrowseGrids();
   // Both badge types — Community Visited and Submitted by Community — are
   // published, counted listings. The badge only credits how a place was
-  // found; it was never meant to gate whether it counts. Places switched to
-  // "Inactive" in the admin panel are excluded from every count here, same
-  // as everywhere else on the public site.
-  const visiblePlaces = PLACES.filter(p => p.active !== false);
-  const total = visiblePlaces.length;
-  // "Active" here means "we have a presence there at all" (verified or
-  // audits still in progress), same idea as a city card showing up in
-  // Browse by City before its first verified listing exists — not to be
-  // confused with the per-place Active/Inactive publish toggle above. Not
-  // just the cities with 16+ hardcoded — this was previously a hand-typed
-  // number that had to be remembered and updated by hand every time a new
-  // city launched.
-  const activeCities = new Set(visiblePlaces.map(p => p.city).filter(Boolean)).size;
-  const countFor = city => visiblePlaces.filter(p => p.city === city).length;
+  // found; it was never meant to gate whether it counts.
+  const total = PLACES.length;
+  // "Active" = we have a presence there at all (verified or audits still in
+  // progress), same idea as a city card showing up in Browse by City before
+  // its first verified listing exists. Not just the cities with 16+ hardcoded
+  // — this was previously a hand-typed number that had to be remembered and
+  // updated by hand every time a new city launched.
+  const activeCities = new Set(PLACES.map(p => p.city).filter(Boolean)).size;
+  const countFor = city => PLACES.filter(p => p.city === city).length;
   const label = n => n === 0
     ? 'No verified listings yet · audits in progress'
     : `${n} verified listing${n === 1 ? '' : 's'}`;
@@ -6315,16 +6040,10 @@ function syncHomeCounters() {
 }
 
 function openPlacePage(id) {
-  // Resolves either a real place id (loose comparison handles string/number
-  // ID mismatches from Firebase) or a URL slug (/places/<slug> links) —
-  // same entry point either way.
-  const p = findPlaceByIdOrSlug(id);
+  // Use loose comparison to handle string/number ID mismatches from Firebase
+  const p = PLACES.find(x => x.id == id);
   if (!p) { console.warn('Place not found:', id, PLACES.map(x=>x.id)); return; }
-  // Inactive places are hidden everywhere, including direct links — unless
-  // an admin is logged in and previewing it on purpose.
-  if (p.active === false && !adminActive) { console.warn('Place is inactive:', id); return; }
   currentPlaceId = p.id;
-  if (typeof sjPlanOnOpenPlace === 'function') sjPlanOnOpenPlace();
   sjTrackPlaceView(p.id);
 
   document.getElementById('pp-name').textContent = p.name || '—';
@@ -6385,10 +6104,8 @@ function openPlacePage(id) {
     mapWrap.style.display = 'block';
     const mapsLink = (p.mapsUrl && p.mapsUrl.length > 30) ? p.mapsUrl : `https://maps.google.com/maps?q=${query}`;
     mapOpenBtn.onclick = () => { sjTrackMapsClick(p.id); window.open(mapsLink, '_blank', 'noopener'); };
-    window._ppMapsLink = mapsLink; if (typeof sjPlanRender === 'function') sjPlanRender();
   } else {
     mapWrap.style.display = 'none';
-    window._ppMapsLink = null; if (typeof sjPlanRender === 'function') sjPlanRender();
   }
 
   // Reviews — baked-in/volunteer note shows immediately; community-submitted
@@ -6437,14 +6154,10 @@ function openPlacePage(id) {
   if (auditBody) auditBody.classList.remove('open');
 
   showSection('place');
-  // Give this specific place its own real, shareable, crawlable URL
-  // (/places/<slug>) — so a copied link, the browser's own address bar, a
-  // search engine, or a WhatsApp preview all point at exactly this place,
-  // not just the generic Explore page. The old #place-<id> hash links still
-  // resolve correctly (see the page-load handler) — this only changes what
-  // NEW navigation to a place shows in the address bar going forward.
-  history.replaceState({ section: 'place', placeId: p.id }, '', placeUrlPath(p));
-  if (typeof sjSetPlaceMeta === 'function') sjSetPlaceMeta(p);
+  // Give this specific place its own shareable URL (#place-123), so a
+  // copied link — or the browser's own address bar — reopens this exact
+  // place, not just the generic Explore page.
+  history.replaceState({ section: 'place', placeId: p.id }, '', '#place-' + p.id);
 }
 
 // Shares the currently-open place specifically (not just the site) —
@@ -6457,54 +6170,11 @@ function sharePlaceCurrent() {
     alert("Sharing only works on the real website (stairlessjourney.com), not a local file open on your computer. A link to a file on your Mac can't open on anyone else's device. Try this once it's live.");
     return;
   }
-  // A real path-based URL (not the old #place-<id> hash) — this is what
-  // actually lets Google index this place on its own and lets WhatsApp show
-  // this place's real name/photo in the link preview instead of the site's
-  // generic one.
-  const shareUrl = `${location.origin}${placeUrlPath(p)}`;
+  const shareUrl = `${location.origin}${location.pathname}#place-${p.id}`;
   const shareText = `Check out ${p.name} on StairlessJourney, a verified accessible place.`;
   sjTrackShare(p.id);
-  const titleEl = document.getElementById('share-modal-title');
-  if (titleEl) titleEl.textContent = 'Share this place'; // the share-modal is reused for events too — see shareEventCurrent
   if (navigator.share) {
     navigator.share({ title: p.name, text: shareText, url: shareUrl }).catch(() => {}); // cancelling isn't an error
-    return;
-  }
-  window._sjShareUrl = shareUrl;
-  const waLink = document.getElementById('share-whatsapp-link');
-  if (waLink) waLink.href = `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
-  ModalManager.open('share-modal');
-}
-
-// Builds a short, genuinely enticing WhatsApp/share-sheet message for one
-// event — not just a dry restatement of its fields. Opens with a curiosity
-// hook, then the concrete when/where, then a low-friction call to register.
-// The admin's own description is folded in only when it's short enough to
-// read as a teaser rather than a wall of text pasted into a chat message.
-function sjEventShareText(ev) {
-  const whenCity = [ev.date, ev.time, ev.city].filter(Boolean).join(' · ');
-  const desc = (ev.description && ev.description.length <= 140) ? ` ${ev.description}` : '';
-  return `👀 Something worth showing up for — ${ev.name}${whenCity ? ` (${whenCity})` : ''}.${desc} Come be part of it — register now:`;
-}
-
-// Shares one specific event — same mechanism as sharePlaceCurrent (native OS
-// share sheet where available, Copy Link / WhatsApp modal otherwise), but
-// with event-appropriate copy and a #event-<id> link instead of #place-<id>.
-// That link is handled the same way a shared place link is: see
-// _pendingSharedEventId and sjGoToSharedEvent below.
-function shareEventCurrent(id) {
-  const ev = [...EVENTS, ...PAST_EVENTS].find(e => e.id === id);
-  if (!ev) return;
-  if (location.protocol === 'file:') {
-    alert("Sharing only works on the real website (stairlessjourney.com), not a local file open on your computer. A link to a file on your Mac can't open on anyone else's device. Try this once it's live.");
-    return;
-  }
-  const shareUrl = `${location.origin}${location.pathname}#event-${ev.id}`;
-  const shareText = sjEventShareText(ev);
-  const titleEl = document.getElementById('share-modal-title');
-  if (titleEl) titleEl.textContent = 'Share this event';
-  if (navigator.share) {
-    navigator.share({ title: ev.name, text: shareText, url: shareUrl }).catch(() => {});
     return;
   }
   window._sjShareUrl = shareUrl;
@@ -6838,29 +6508,33 @@ function handleRegister() {
 
 async function handleSubmitPlace() {
   if (!currentUser) { requireLogin('submit'); return; }
-  const val = id => (document.getElementById(id)?.value || '').trim();
-  const name = val('sub-name');
-  const city = val('sub-city');
-  if (!name || !city) { alert('Please add the place name and the city.'); return; }
+  const name = document.getElementById('sub-name')?.value.trim();
+  const city = document.getElementById('sub-city')?.value;
+  const cat = document.getElementById('sub-cat')?.value;
+  if (!name || !city || !cat) { alert('Please fill in the required fields: Place Name, City, and Category.'); return; }
   const btn = document.getElementById('submit-place-btn');
-  const prevLabel = btn ? btn.textContent : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+  if (btn) { btn.disabled = true; btn.textContent = 'Submitting…'; }
   const ok = await saveSub('place_submissions', {
-    kind: 'request',
     name,
     city,
-    address: val('sub-address'),
-    requestNote: val('sub-note').slice(0, 600),
+    category: cat,
+    address: document.getElementById('sub-address')?.value || '',
+    stepfree: ynValues['stepfree'] || '',
+    ramp: ynValues['ramp'] || '',
+    wideDoorway: ynValues['wideDoorway'] || '',
+    lift: ynValues['lift'] || '',
+    toilet: ynValues['toilet'] || '',
+    seating: ynValues['seating'] || '',
+    parking: ynValues['parking'] || '',
+    staff: ynValues['staff'] || '',
     submittedBy: currentUser?.name || 'Anonymous',
     submittedByEmail: currentUser?.email || ''
   });
-  if (btn) { btn.disabled = false; btn.textContent = prevLabel; }
+  if (btn) { btn.disabled = false; btn.textContent = 'Submit Place'; }
   if (!ok) {
     alert("Couldn't reach the server to save this right now. Check your connection and try again. (A copy was kept on this device so nothing is lost, but it won't show up for the team until it's re-submitted with a connection.)");
     return;
   }
-  const msg = document.getElementById('sub-success-text');
-  if (msg) msg.textContent = 'Thank you for telling us about ' + name + '. Our team will verify it, and once it\'s done you\'ll find its accessibility details on the Explore page.';
   document.getElementById('submit-form-wrap').style.display = 'none';
   document.getElementById('submit-success').style.display = 'block';
 }
@@ -6868,9 +6542,7 @@ async function handleSubmitPlace() {
 function resetSubmitForm() {
   document.getElementById('submit-form-wrap').style.display = 'block';
   document.getElementById('submit-success').style.display = 'none';
-  // #submit-form is a <div>, so it has no reset(): clear the fields directly
-  // so "another place" starts blank.
-  ['sub-name','sub-city','sub-address','sub-note'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  document.getElementById('submit-form').reset?.();
 }
 
 function setYN(btn, field, val) {
@@ -7297,7 +6969,6 @@ function getFilteredPlaces() {
   const lift     = document.getElementById('filter-lift-btn')?.getAttribute('aria-pressed') === 'true';
   const toilet   = document.getElementById('filter-toilet-btn')?.getAttribute('aria-pressed') === 'true';
   return PLACES.filter(p => {
-    if (p.active === false) return false;
     if (city && p.city !== city) return false;
     if (cat && !(p.category||'').toLowerCase().includes(cat.toLowerCase())) return false;
     if (stepfree && !(p.stepFree && p.stepFree !== 'No')) return false;
@@ -7521,7 +7192,6 @@ function sjApplyImages(images) {
     el.innerHTML = `<img src="${images.logo}" alt="StairlessJourney logo" style="width:100%;height:100%;object-fit:contain;border-radius:6px;">`;
   });
   if (images.founder) {
-    if (typeof sjCoffeePhoto === 'function') sjCoffeePhoto(images.founder);
     const av = document.querySelector('.founder-avatar');
     if (av) { av.style.background = 'none'; av.innerHTML = `<img src="${images.founder}" alt="Pratik Shingare, Founder of StairlessJourney" style="width:90px;height:90px;border-radius:50%;object-fit:cover;">`; }
   }
@@ -7638,18 +7308,7 @@ function sjStartRealtimeSync() {
       EVENTS.length = 0; PAST_EVENTS.length = 0;
       d.events.forEach(e => (e.past ? PAST_EVENTS : EVENTS).push(e));
       if (typeof renderHomeEvents === 'function') renderHomeEvents();
-      if (typeof renderEventsPage === 'function') renderEventsPage();
       if (adminActive && typeof renderEventsList === 'function') renderEventsList();
-      // Mirrors the _pendingSharedPlaceId handling below for places: a
-      // shared #event-<id> link may have arrived before real event data did
-      // (EVENTS still showing baked-in defaults), so the actual scroll-to-card
-      // happens here, once real data is in and the matching card can exist.
-      if (typeof _pendingSharedEventId !== 'undefined' && _pendingSharedEventId != null) {
-        const sharedEventId = _pendingSharedEventId;
-        _pendingSharedEventId = null;
-        const foundEvent = [...EVENTS, ...PAST_EVENTS].find(e => String(e.id) === String(sharedEventId));
-        if (foundEvent && typeof sjGoToSharedEvent === 'function') sjGoToSharedEvent(foundEvent.id);
-      }
     }
   }, err => console.warn('events sync error:', err));
 
@@ -7668,7 +7327,6 @@ function sjStartRealtimeSync() {
     if (typeof sjPopulatePlaceDatalists === 'function') sjPopulatePlaceDatalists();
     if (typeof renderPlaces === 'function') renderPlaces();
     if (typeof syncHomeCounters === 'function') syncHomeCounters();
-    if (typeof sjRenderPlacesJsonLd === 'function') sjRenderPlacesJsonLd();
     if (adminActive && typeof renderPlacesList === 'function') renderPlacesList();
     if (adminActive && typeof renderDashboard === 'function') renderDashboard();
     if (typeof _pendingSharedPlaceId !== 'undefined' && _pendingSharedPlaceId != null && typeof openPlacePage === 'function') {
@@ -7942,181 +7600,6 @@ function placeCardThumb(p) {
   return null;
 }
 
-// ── SEO: real, crawlable per-place URLs ──────────────────────────────────
-// Turns free text into a clean, URL-safe slug ("Cafe Bloom" -> "cafe-bloom").
-function sjSlugify(s) {
-  return String(s || '').toLowerCase().trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-}
-
-// Every place gets a short, human-readable, PERMANENT URL slug so it can be
-// found by Google and previewed properly when shared (instead of only the
-// old #place-<id> hash, which neither search engines nor link-preview
-// crawlers like WhatsApp's treat as a distinct page). A place's slug is
-// generated once, the first time it's saved (see aeSavePlace), and never
-// regenerated after that — even if the name is edited later — so a link
-// already shared or indexed never breaks. This function is only the
-// fallback for places saved before this feature existed (no stored slug
-// yet): it computes the same kind of slug on the fly, falling back to the
-// place's id if another place would collide on the exact same name+city.
-function placeSlug(p) {
-  if (p && p.slug) return p.slug;
-  if (!p) return '';
-  const base = sjSlugify(`${p.name || ''} ${p.city || ''}`);
-  if (!base) return String(p.id);
-  const all = (typeof PLACES !== 'undefined' ? PLACES : []);
-  const collision = all.some(x => x.id !== p.id && !x.slug && sjSlugify(`${x.name || ''} ${x.city || ''}`) === base);
-  return collision ? `${base}-${p.id}` : base;
-}
-
-// Generates a brand-new, collision-safe slug for a place being saved for
-// the first time — checks against every OTHER place's already-stored slug
-// (not just the live fallback above), so two places can never end up
-// sharing one real URL.
-function sjGenerateUniqueSlug(name, city, ownId) {
-  const base = sjSlugify(`${name || ''} ${city || ''}`);
-  if (!base) return String(ownId);
-  const all = (typeof PLACES !== 'undefined' ? PLACES : []);
-  const taken = new Set(all.filter(x => x.id !== ownId).map(x => x.slug || placeSlug(x)));
-  if (!taken.has(base)) return base;
-  return `${base}-${ownId}`;
-}
-
-function placeUrlPath(p) { return `/places/${placeSlug(p)}`; }
-
-// Resolves a place from either its real id (numeric, from the old #place-<id>
-// hash links and from internal calls like card clicks) or its URL slug (from
-// the new /places/<slug> links) — whichever the caller happens to have.
-function findPlaceByIdOrSlug(key) {
-  if (key == null || typeof PLACES === 'undefined') return null;
-  const byId = PLACES.find(x => x.id == key);
-  if (byId) return byId;
-  const keyStr = String(key);
-  return PLACES.find(x => placeSlug(x) === keyStr) || null;
-}
-
-// ── SEO: per-place <title>/meta/Open Graph tags ───────────────────────────
-// Google, WhatsApp, Facebook etc. all read these tags straight out of the
-// page, not out of whatever's currently on screen — keeping them in sync
-// with whichever place is open means a shared place link actually previews
-// with THAT place's name/description/photo, instead of always showing the
-// generic homepage text, and gives search engines a real distinct title per
-// place instead of one title shared by the whole site.
-let _sjDefaultMeta = null; // captured once, from whatever's really in <head>, so it can always be restored exactly
-function sjSetMetaTag(selector, attr, value) {
-  const el = document.querySelector(selector);
-  if (el) el.setAttribute(attr, value || '');
-}
-function sjCaptureDefaultMeta() {
-  if (_sjDefaultMeta) return _sjDefaultMeta;
-  const get = sel => document.querySelector(sel)?.getAttribute(sel.startsWith('link') ? 'href' : 'content') || '';
-  _sjDefaultMeta = {
-    title: document.title,
-    description: get('meta[name="description"]'),
-    canonical: get('link[rel="canonical"]'),
-    ogTitle: get('meta[property="og:title"]'),
-    ogDescription: get('meta[property="og:description"]'),
-    ogUrl: get('meta[property="og:url"]'),
-    ogImage: get('meta[property="og:image"]'),
-    twitterTitle: get('meta[name="twitter:title"]'),
-    twitterDescription: get('meta[name="twitter:description"]')
-  };
-  return _sjDefaultMeta;
-}
-function sjSetPlaceMeta(p) {
-  sjCaptureDefaultMeta(); // always save the real defaults before the first overwrite
-  const title = `${p.name} — Wheelchair Accessible ${p.category || 'Place'} in ${p.city || ''} | StairlessJourney`;
-  const desc = (p.suited && p.suited.trim())
-    ? p.suited.trim()
-    : `${p.name} in ${p.city || 'India'} — physically verified for wheelchair accessibility by StairlessJourney.`;
-  const url = `${location.origin}${placeUrlPath(p)}`;
-  const img = placeCardThumb(p);
-  const usableImg = (img && !img.startsWith('data:')) ? img : ''; // a data: URI isn't fetchable by link-preview crawlers, so skip it rather than publish a broken image
-  document.title = title;
-  sjSetMetaTag('meta[name="description"]', 'content', desc);
-  sjSetMetaTag('link[rel="canonical"]', 'href', url);
-  sjSetMetaTag('meta[property="og:title"]', 'content', title);
-  sjSetMetaTag('meta[property="og:description"]', 'content', desc);
-  sjSetMetaTag('meta[property="og:url"]', 'content', url);
-  sjSetMetaTag('meta[property="og:image"]', 'content', usableImg);
-  sjSetMetaTag('meta[name="twitter:title"]', 'content', title);
-  sjSetMetaTag('meta[name="twitter:description"]', 'content', desc);
-}
-function sjResetSiteMeta() {
-  if (!_sjDefaultMeta) return; // never left the defaults, nothing to restore
-  const d = _sjDefaultMeta;
-  document.title = d.title;
-  sjSetMetaTag('meta[name="description"]', 'content', d.description);
-  sjSetMetaTag('link[rel="canonical"]', 'href', d.canonical);
-  sjSetMetaTag('meta[property="og:title"]', 'content', d.ogTitle);
-  sjSetMetaTag('meta[property="og:description"]', 'content', d.ogDescription);
-  sjSetMetaTag('meta[property="og:url"]', 'content', d.ogUrl);
-  sjSetMetaTag('meta[property="og:image"]', 'content', d.ogImage);
-  sjSetMetaTag('meta[name="twitter:title"]', 'content', d.twitterTitle);
-  sjSetMetaTag('meta[name="twitter:description"]', 'content', d.twitterDescription);
-}
-
-// ── SEO: structured data listing every active place ──────────────────────
-// A second JSON-LD block (the first, static one above describes the NGO
-// itself) listing every active place as an ItemList — gives Google real
-// place data to parse straight off the one page even for places whose own
-// /places/<slug> page it hasn't crawled/indexed yet. Rebuilt every time
-// PLACES changes (see the places onSnapshot listener) so it's never stale.
-function sjRenderPlacesJsonLd() {
-  if (typeof PLACES === 'undefined' || typeof document === 'undefined') return;
-  const visible = PLACES.filter(p => p.active !== false);
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": visible.map((p, i) => ({
-      "@type": "ListItem",
-      "position": i + 1,
-      "item": {
-        "@type": "LocalBusiness",
-        "name": p.name,
-        "url": `${location.origin}${placeUrlPath(p)}`,
-        "addressLocality": p.city || undefined,
-        "address": p.address || undefined,
-        "category": p.category || undefined
-      }
-    }))
-  };
-  let el = document.getElementById('sj-places-jsonld');
-  if (!el) {
-    el = document.createElement('script');
-    el.type = 'application/ld+json';
-    el.id = 'sj-places-jsonld';
-    document.head.appendChild(el);
-  }
-  el.textContent = JSON.stringify(data);
-}
-
-// One-click, always-accurate sitemap.xml — built from the real PLACES data
-// already loaded in the admin's own browser, since there's no backend here
-// to regenerate this automatically. Only lists URLs that actually resolve
-// to something on the real site: the homepage and every active place's own
-// /places/<slug> page — NOT the Explore/Events/etc. sections, which are
-// reached by a # hash from the homepage, not a real separate address, so
-// they'd be meaningless (and could even mislead Google) in a sitemap.
-// Pratik downloads this whenever he's added/removed places and uploads it
-// to stairlessjourney.com/sitemap.xml, replacing the one already there.
-function aeDownloadSitemap() {
-  const base = 'https://stairlessjourney.com';
-  const placePaths = PLACES.filter(p => p.active !== false).map(p => placeUrlPath(p));
-  const today = new Date().toISOString().slice(0, 10);
-  const urlTag = path => `  <url>\n    <loc>${base}${path}</loc>\n    <lastmod>${today}</lastmod>\n  </url>`;
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${['/', ...placePaths].map(urlTag).join('\n')}\n</urlset>\n`;
-  const blob = new Blob([xml], { type: 'application/xml' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'sitemap.xml';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(a.href);
-}
-
 document.addEventListener('DOMContentLoaded', async () => {
   sjStartRealtimeSync();
   renderHomeEvents();
@@ -8378,7 +7861,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div style="display:flex;gap:8px;">
           <button class="ap-btn ap-btn-ghost" id="places-migrate-btn" onclick="aeMigratePlacesToCollection()" style="display:none;">🔧 Move Places to Individual Storage</button>
-          <button class="ap-btn ap-btn-ghost" onclick="aeDownloadSitemap()" title="Download an up-to-date sitemap.xml listing every active place's real URL — upload it to replace the one at stairlessjourney.com/sitemap.xml whenever you've added or removed places">🗺️ Download Sitemap</button>
           <button class="ap-btn ap-btn-ghost" onclick="aeOpenChainForm(null)">+ Add Chain</button>
           <button class="ap-btn ap-btn-primary" onclick="aeOpenPlaceForm(null)">+ Add Place</button>
         </div>
@@ -8387,10 +7869,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="ap-inline-form" id="place-form-wrap">
         <div class="ap-card-title" id="place-form-title">New Place</div>
         <input type="hidden" id="pf-id">
-        <div class="ap-form-group">
-          <label class="ap-label">Place Status <span style="font-weight:400;color:var(--gray-mid);">(Inactive places stay saved and editable here, but won't appear anywhere on the public site until switched back to Active)</span></label>
-          <div class="ap-yn" id="pf-yn-active"><button class="ap-yn-btn" onclick="pfSetActive(true,this)">Active</button><button class="ap-yn-btn" onclick="pfSetActive(false,this)">Inactive</button></div>
-        </div>
         <div class="ap-row">
           <div class="ap-form-group"><label class="ap-label">Place Name *</label><input type="text" class="ap-input" id="pf-name" placeholder="e.g. Koregaon Park Café"></div>
           <div class="ap-form-group"><label class="ap-label">Emoji</label><input type="text" class="ap-input" id="pf-emoji" placeholder="☕" maxlength="4"></div>
@@ -8606,9 +8084,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         <button class="ap-tab" data-subtab="issues" onclick="aeSubTab('issues',this)">🚩 Issues</button>
         <button class="ap-tab" data-subtab="bizupdates" onclick="aeSubTab('bizupdates',this)">📝 Business Updates</button>
         <button class="ap-tab" data-subtab="contact" onclick="aeSubTab('contact',this)">✉️ Contact Messages</button>
-        <button class="ap-tab" data-subtab="plans" onclick="aeSubTab('plans',this)">📍 Planning to go</button>
-        <button class="ap-tab" data-subtab="followups" onclick="aeSubTab('followups',this)">💬 Follow up today</button>
-        <button class="ap-tab" data-subtab="coffee" onclick="aeSubTab('coffee',this)">☕ Coffee requests</button>
       </div>
       <div id="ap-sub-content"></div>
     </div>
@@ -11035,7 +10510,6 @@ function apPlaceRowHTML(p, reviewCounts) {
         <div class="ap-item-sub">${p.city} · ${p.category} · ⭐${p.rating} · ${totalReviews} review${totalReviews===1?'':'s'} · 👁 ${p.views||0} views (${p.viewsThisWeek||0} this wk)</div>
       </div>
       <span class="ap-badge ${p.verified?'ap-badge-green':'ap-badge-blue'}">${p.verified?'✓':'⊕'}</span>
-      ${p.active === false ? '<span class="ap-badge ap-badge-red">Inactive</span>' : ''}
       <div class="ap-item-actions">
         <button class="ap-btn ap-btn-ghost ap-btn-sm" onclick="openBizDashboard(${p.id})">📊 Dashboard</button>
         <button class="ap-btn ap-btn-ghost ap-btn-sm" onclick="aeOpenPlaceForm(${p.id})">Edit</button>
@@ -11217,10 +10691,6 @@ function aeOpenPlaceForm(id) {
     pfBuildPhotoGrid();
     pfPinned = false;
     document.querySelectorAll('#pf-yn-pinned .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
-    pfActive = true;
-    document.querySelectorAll('#pf-yn-active .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
-    const newActiveBtns = document.querySelectorAll('#pf-yn-active .ap-yn-btn');
-    if (newActiveBtns.length === 2) newActiveBtns[0].classList.add('y');
     document.getElementById('pf-biz-username').value = '';
     document.getElementById('pf-biz-password').value = '';
     document.getElementById('pf-biz-email').value = '';
@@ -11266,10 +10736,6 @@ function aeOpenPlaceForm(id) {
     document.querySelectorAll('#pf-yn-pinned .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
     const pinnedBtns = document.querySelectorAll('#pf-yn-pinned .ap-yn-btn');
     if (pinnedBtns.length === 2) pinnedBtns[pfPinned ? 0 : 1].classList.add(pfPinned ? 'y' : 'n');
-    pfActive = p.active !== false;
-    document.querySelectorAll('#pf-yn-active .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
-    const activeBtns = document.querySelectorAll('#pf-yn-active .ap-yn-btn');
-    if (activeBtns.length === 2) activeBtns[pfActive ? 0 : 1].classList.add(pfActive ? 'y' : 'n');
     pfYN = { stepfree:p.stepFree, ramp:p.ramp, lift:p.lift, toilet:p.toilet, parking:p.parking, staff:p.staff };
     ['stepfree','ramp','lift','toilet','parking','staff'].forEach(f => {
       const val = pfYN[f];
@@ -11331,13 +10797,6 @@ function pfSetPinned(val, btn) {
   btn.classList.add(val ? 'y' : 'n');
 }
 
-let pfActive = true;
-function pfSetActive(val, btn) {
-  pfActive = val;
-  document.querySelectorAll('#pf-yn-active .ap-yn-btn').forEach(b => b.classList.remove('y','n'));
-  btn.classList.add(val ? 'y' : 'n');
-}
-
 async function aeSavePlace() {
   const name = document.getElementById('pf-name').value.trim();
   if (!name) { alert('Place name is required.'); return false; }
@@ -11360,20 +10819,12 @@ async function aeSavePlace() {
   if (!chainId && bizUsername && bizPasswordTyped) {
     bizHash = await sjHashPassword(bizPasswordTyped);
   }
-  const newId = existingId ? Number(existingId) : Date.now();
-  const cityVal = document.getElementById('pf-city').value;
-  // A place's URL slug is generated once and kept forever once set — even if
-  // the name is edited later — so an already-shared or Google-indexed link
-  // never breaks. Only a brand-new place (or a legacy one that somehow still
-  // has none) gets a fresh one here.
-  const slug = existingPlace?.slug || sjGenerateUniqueSlug(name, cityVal, newId);
   const p = {
-    id: newId,
-    slug,
+    id: existingId ? Number(existingId) : Date.now(),
     name,
     emoji: document.getElementById('pf-emoji').value.trim() || '📍',
     category: document.getElementById('pf-cat').value,
-    city: cityVal,
+    city: document.getElementById('pf-city').value,
     area: document.getElementById('pf-area').value.trim(),
     address: document.getElementById('pf-address').value.trim(),
     phone: document.getElementById('pf-phone').value.trim(),
@@ -11404,7 +10855,6 @@ async function aeSavePlace() {
     photoCategoryNames: pfCategoryNames,
     photoCategoryMap: pfPhotoCategory,
     pinned: pfPinned,
-    active: pfActive,
     photo: pfPhotosList.find(s => s !== '__processing__' && !pfIsLink(s) && !(typeof ppIsVideo === 'function' && ppIsVideo(s))) || document.getElementById('pf-photo-data').value || null,
     reviewItems: volNote ? [{ name: volName || 'Community Volunteer', rating: 5, text: volNote }] : [],
     audit: { "Getting There":"See volunteer notes.", "Entrance": pfYN.stepfree==='Yes'?'Step-free.':'Check before visiting.', "Toilets": pfYN.toilet==='Yes'?'Accessible toilet available.':'No accessible toilet.', "Staff Awareness": pfYN.staff==='Yes'?'Staff helpful.':'Limited support.' },
@@ -11776,9 +11226,6 @@ function aeSubTab(tab, btn) {
   // submissions — separate fetch/render path so owners' posts are visible
   // here without needing to open each place's business dashboard by hand.
   if (tab === 'bizupdates') { renderBizUpdatesAdmin(el); return; }
-  if (tab === 'plans') { aeRenderPlans(el); return; }
-  if (tab === 'followups') { aeRenderFollowups(el); return; }
-  if (tab === 'coffee') { aeRenderCoffee(el); return; }
 
   const fbType = tab === 'volunteers' ? 'volunteer' : tab === 'leaders' ? 'leader' : tab === 'places' ? 'place' : tab === 'issues' ? 'issue' : 'contact';
   const localKey = tab === 'volunteers' ? 'vol_submissions' : tab === 'leaders' ? 'lead_submissions' : tab === 'places' ? 'place_submissions' : tab === 'issues' ? 'issue_submissions' : 'contact_submissions';
@@ -11865,19 +11312,6 @@ function renderSubItems(items, tab, el, localKey) {
     const delBtn = `<button class="ap-btn ap-btn-danger ap-btn-sm" onclick="${delAttr}" title="Delete this submission" style="flex-shrink:0;">Delete</button>`;
     const photoCount = s.photos ? Object.values(s.photos).reduce((sum, arr) => sum + (arr?.length||0), 0) : null;
 
-    if (tab === 'places' && s.kind === 'request') {
-      return `<div class="sub-card">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-          <div class="sub-name">${escH(s.name||'—')}</div>
-          <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;"><div class="sub-time">${s.time||''}</div>${delBtn}</div>
-        </div>
-        ${s.address?`<div class="sub-row">📍 <strong>${escH(s.address)}</strong></div>`:''}
-        <div class="sub-row">🏙️ <strong>${escH(s.city||'—')}</strong></div>
-        ${s.submittedBy?`<div class="sub-row">👤 <strong>${escH(s.submittedBy)}</strong>${s.submittedByEmail?` · ${escH(s.submittedByEmail)}`:''}</div>`:''}
-        ${s.requestNote?`<p style="font-size:0.88rem;margin:6px 0;">${escH(s.requestNote)}</p>`:''}
-        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#FEF3E2;color:#9A5B00;font-size:0.68rem;font-weight:700;margin-top:8px;">To Verify</span>
-      </div>`;
-    }
     if (tab === 'places') {
       return `<div class="sub-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
@@ -12257,7 +11691,6 @@ const esc = escH;   // alias: hardened, backward-compatible
 let _historyNavigating = false;
 let _pendingSharedPlaceId = null; // set on load if the URL points at one specific place
 let _pendingReferralSource = null; // set on load if that same URL also carries ?ref=<partner>
-let _pendingSharedEventId = null; // set on load if the URL points at one specific event (#event-<id>)
 
 // ══════════════════════════════════════════════════
 // DIRECT-LINK EXPLORE NUDGE
@@ -12294,10 +11727,10 @@ function sjShowReferralBanner(placeId, source) {
     return;
   }
   const p = (typeof PLACES !== 'undefined' ? PLACES : []).find(x => x.id == placeId);
-  if (!p || !p.city || p.active === false) return; // nothing sensible to say without knowing the city, and an inactive place shouldn't drive any traffic
+  if (!p || !p.city) return; // nothing sensible to say without knowing the city
   const banner = document.getElementById('referral-banner');
   if (!banner) return;
-  const cityCount = PLACES.filter(x => x.city === p.city && x.active !== false).length;
+  const cityCount = PLACES.filter(x => x.city === p.city).length;
   _referralBannerShown = true;
   document.getElementById('referral-banner-text').textContent =
     `You're exploring StairlessJourney. We have ${cityCount} verified accessible place${cityCount === 1 ? '' : 's'} in ${p.city} — from cafes to parks.`;
@@ -12314,27 +11747,10 @@ function sjDismissReferralBanner() {
   if (banner) banner.hidden = true;
 }
 
-// Scrolls to and briefly highlights one specific event's card — used when
-// someone arrives via a shared #event-<id> link (see shareEventCurrent and
-// _pendingSharedEventId), so they land on the right card instead of having
-// to find it themselves in the full Events list.
-function sjGoToSharedEvent(id) {
-  const card = document.getElementById('event-card-' + id);
-  if (!card) return false;
-  card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  card.classList.add('event-card-highlight');
-  setTimeout(() => card.classList.remove('event-card-highlight'), 2500);
-  return true;
-}
-
 // Push state when navigating sections
 const _origShowSection = window.showSection;
 window.showSection = function(name) {
   _origShowSection(name);
-  // Leaving the place page for anywhere else — put the generic site
-  // title/description/OG tags back so they don't stick around for whatever
-  // section is now showing (openPlacePage sets its own when going TO a place).
-  if (name !== 'place' && typeof sjResetSiteMeta === 'function') sjResetSiteMeta();
   if (!_historyNavigating) {
     history.pushState({ section: name }, '', '#' + name);
   }
@@ -12343,14 +11759,8 @@ window.showSection = function(name) {
 // Listen for back/forward button
 window.addEventListener('popstate', (e) => {
   _historyNavigating = true;
-  // Reset first; if we're actually headed back to a place, openPlacePage
-  // (called just below) immediately re-applies that place's own meta tags.
-  if (typeof sjResetSiteMeta === 'function') sjResetSiteMeta();
   if (e.state?.placeId != null && typeof openPlacePage === 'function') {
     openPlacePage(e.state.placeId);
-  } else if (e.state?.eventId != null) {
-    _origShowSection('events');
-    if (typeof sjGoToSharedEvent === 'function') sjGoToSharedEvent(e.state.eventId);
   } else {
     const section = e.state?.section || 'home';
     _origShowSection(section);
@@ -12360,27 +11770,6 @@ window.addEventListener('popstate', (e) => {
 
 // Set initial history state on load
 window.addEventListener('load', () => {
-  // Real, crawlable place links (/places/<slug>) take priority over the old
-  // #place-<id> hash — a hard load on one of these is handled the same way
-  // a shared hash link always has been (see _pendingSharedPlaceId below),
-  // just reached from the real path instead of the hash. Old shared/indexed
-  // #place-<id> links keep working forever via the hash branch further down
-  // — this is purely additive.
-  const _fuQ = new URLSearchParams(location.search);
-  if (_fuQ.get('followup')) {
-    sjOpenFollowup(_fuQ.get('followup'), _fuQ.get('p') || '', _fuQ.get('n') || '');
-    history.replaceState({ section: 'followup' }, '', location.pathname + location.search + '#followup');
-    return;
-  }
-  const pathPlaceMatch = location.pathname.match(/^\/places\/([^/]+)\/?$/);
-  if (pathPlaceMatch) {
-    const slugOrId = decodeURIComponent(pathPlaceMatch[1]);
-    _pendingSharedPlaceId = slugOrId;
-    history.replaceState({ section: 'place', placeId: slugOrId }, '', location.pathname + location.search);
-    const refParam = new URLSearchParams(location.search).get('ref');
-    if (refParam) _pendingReferralSource = { placeId: slugOrId, source: refParam };
-    return;
-  }
   const hashRaw = location.hash.replace('#', '');
   // A partner link's ?ref= can legitimately end up in two different places
   // depending on how it's built: as a real query string before the hash
@@ -12392,7 +11781,6 @@ window.addEventListener('load', () => {
   // to work.
   const [hashPath, hashQuery] = hashRaw.split('?');
   const placeMatch = hashPath.match(/^place-(.+)$/);
-  const eventMatch = hashPath.match(/^event-(.+)$/);
   if (placeMatch) {
     // PLACES may not have loaded from Firestore yet — the onSnapshot
     // listener checks _pendingSharedPlaceId once real data arrives.
@@ -12405,14 +11793,6 @@ window.addEventListener('load', () => {
     const refParam = new URLSearchParams(location.search).get('ref')
       || (hashQuery ? new URLSearchParams(hashQuery).get('ref') : null);
     if (refParam) _pendingReferralSource = { placeId: placeMatch[1], source: refParam };
-  } else if (eventMatch) {
-    // Same idea as a shared place link above, but for one specific event —
-    // EVENTS may still be showing baked-in defaults at this point, so the
-    // actual scroll-to-card happens once real data arrives, in the events
-    // onSnapshot listener.
-    _pendingSharedEventId = eventMatch[1];
-    history.replaceState({ section: 'events', eventId: eventMatch[1] }, '', '#' + hashPath);
-    _origShowSection('events');
   } else {
     const startSection = hashPath || 'home';
     history.replaceState({ section: startSection }, '', '#' + startSection);
@@ -12689,51 +12069,6 @@ let pfPhotosList = []; // array of compressed-photo data URLs and/or link URLs (
 let pfPhotoCaptions = {}; // keyed by photo src: { title, description } — optional, per photo
 let pfCategoryNames = []; // admin-defined category names for this place, e.g. ['Entrance','Ramp','Washroom']
 let pfPhotoCategory = {}; // keyed by photo src: which category name (from pfCategoryNames) it belongs to, if any
-let pfDragFromIdx = null; // index currently being dragged in the photo grid, or null when not dragging
-let pfDragActive = false;
-
-// ── Drag-to-reorder for the admin photo grid ──
-// Pointer Events (not the native HTML5 drag-and-drop API) so this works
-// identically with a mouse or a finger — native HTML5 DnD is mouse-only on
-// most touch browsers. pfBuildPhotoGrid() re-renders the whole grid on every
-// cell crossed while dragging (that's how the live reorder is shown), which
-// destroys and recreates the DOM node the pointer first went down on — so
-// drag tracking lives in plain variables + document-level listeners, never
-// relying on that original node (or its pointer capture) surviving a rebuild.
-function pfPhotoDragStart(e, idx) {
-  if (e.pointerType === 'mouse' && e.button !== 0) return; // left-click only
-  e.preventDefault();
-  try { e.target.releasePointerCapture(e.pointerId); } catch(_) {} // see note above — force plain hit-testing for every later move
-  pfDragFromIdx = idx;
-  pfDragActive = true;
-  pfBuildPhotoGrid();
-  document.addEventListener('pointermove', pfPhotoDragMove);
-  document.addEventListener('pointerup', pfPhotoDragEnd);
-  document.addEventListener('pointercancel', pfPhotoDragEnd);
-}
-
-function pfPhotoDragMove(e) {
-  if (!pfDragActive || pfDragFromIdx == null) return;
-  e.preventDefault();
-  const el = document.elementFromPoint(e.clientX, e.clientY);
-  const cell = el && el.closest ? el.closest('.pf-photo-cell') : null;
-  if (!cell) return;
-  const overIdx = Number(cell.dataset.idx);
-  if (Number.isNaN(overIdx) || overIdx === pfDragFromIdx) return;
-  const [moved] = pfPhotosList.splice(pfDragFromIdx, 1);
-  pfPhotosList.splice(overIdx, 0, moved);
-  pfDragFromIdx = overIdx;
-  pfBuildPhotoGrid();
-}
-
-function pfPhotoDragEnd() {
-  pfDragActive = false;
-  pfDragFromIdx = null;
-  document.removeEventListener('pointermove', pfPhotoDragMove);
-  document.removeEventListener('pointerup', pfPhotoDragEnd);
-  document.removeEventListener('pointercancel', pfPhotoDragEnd);
-  pfBuildPhotoGrid();
-}
 
 // Each place has its own Firestore document (its own ~1024KB budget, totally
 // independent of every other place). A DIRECTLY UPLOADED photo costs real
@@ -12810,9 +12145,6 @@ function pfBuildPhotoGrid() {
   const container = document.getElementById('pf-photos-grid');
   if (!container) return;
   const directCount = pfPhotosList.filter(s => s !== '__processing__' && !pfIsLink(s)).length;
-  // Only worth offering a drag handle once there's something to reorder
-  // against, and never on the "still compressing" placeholder below.
-  const canReorder = pfPhotosList.filter(s => s !== '__processing__').length > 1;
   let html = pfPhotosList.map((src, i) => {
     if (src === '__processing__') {
       return `<div class="pp-photo-thumb" style="display:flex;align-items:center;justify-content:center;background:var(--gray-bg);"><span style="font-size:0.72rem;color:var(--gray-mid);">Compressing…</span></div>`;
@@ -12834,21 +12166,10 @@ function pfBuildPhotoGrid() {
           ${pfCategoryNames.map(name => `<option value="${escH(name)}" ${pfPhotoCategory[src]===name ? 'selected' : ''}>${escH(name)}</option>`).join('')}
         </select>`
       : '';
-    const dragHandle = canReorder
-      ? `<button type="button" class="pp-photo-drag-handle" title="Drag to reorder" aria-label="Drag to move this photo to a different position" onpointerdown="pfPhotoDragStart(event, ${i})">
-          <svg width="10" height="14" viewBox="0 0 10 14" aria-hidden="true">
-            <circle cx="2.5" cy="2.5" r="1.4" fill="currentColor"/><circle cx="7.5" cy="2.5" r="1.4" fill="currentColor"/>
-            <circle cx="2.5" cy="7" r="1.4" fill="currentColor"/><circle cx="7.5" cy="7" r="1.4" fill="currentColor"/>
-            <circle cx="2.5" cy="11.5" r="1.4" fill="currentColor"/><circle cx="7.5" cy="11.5" r="1.4" fill="currentColor"/>
-          </svg>
-        </button>`
-      : '';
-    const draggingClass = (pfDragActive && pfDragFromIdx === i) ? ' pf-dragging' : '';
     return `
-    <div class="pf-photo-cell${draggingClass}" data-idx="${i}">
+    <div class="pf-photo-cell">
       <div class="pp-photo-thumb">
         ${media}
-        ${dragHandle}
         <button class="pp-photo-caption-btn" onclick="pfEditCaption(${i})" title="Add title & description">${pfPhotoCaptions[src]?.title || pfPhotoCaptions[src]?.description ? '✏️ Captioned' : '✏️ Add caption'}</button>
         <button class="pp-photo-del" onclick="pfRemovePhoto(${i})" title="Remove">✕</button>
       </div>
@@ -13318,652 +12639,6 @@ document.addEventListener('consentchange', (e) => {
 /* Legal-page TOC scrollspy (Privacy + Terms) */
 (function initLegalSpy(){
 })();
-</script>
-<script>
-/* ════════ GOOGLE ANALYTICS 4: page views for this single-page site ════════
-   Sends one page_view per screen (Home, Explore, a specific place, etc.),
-   only after the visitor has agreed on the consent banner, and never from a
-   device marked "Exclude this device" in the admin Users panel. */
-(function sjGA4(){
-  const TITLES = { home:'Home', explore:'Explore Places', about:'About', events:'Events',
-    a11y:'Accessibility', volunteer:'Volunteer', contact:'Contact', bizdash:'Business Dashboard' };
-  let lastKey = null, lastAt = 0;
-
-  function allowed(){
-    return typeof gtag === 'function'
-      && typeof Consent !== 'undefined' && Consent.has('analytics')
-      && !(typeof sjIsInternalVisitor === 'function' && sjIsInternalVisitor());
-  }
-  function send(path, title){
-    if (!allowed()) return;
-    const now = Date.now();
-    if (path === lastKey && now - lastAt < 1500) return; // skip accidental duplicates
-    lastKey = path; lastAt = now;
-    gtag('event', 'page_view', {
-      page_location: location.origin + path,
-      page_path: path,
-      page_title: title + ' | StairlessJourney'
-    });
-  }
-  function trackSection(name){
-    if (!name || name === 'place') return; // place pages are tracked with their name below
-    send(name === 'home' ? '/' : '/' + name, TITLES[name] || name);
-  }
-  function trackPlace(p){ if (p) send(typeof placeUrlPath === 'function' ? placeUrlPath(p) : '/place/' + p.id, p.name); }
-  function trackCurrent(){
-    const active = document.querySelector('.section.active')?.id?.replace('section-', '') || 'home';
-    if (active === 'place') {
-      const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == currentPlaceId) : null;
-      trackPlace(p);
-    } else trackSection(active);
-  }
-
-  // Menu / button navigation
-  const prevShow = window.showSection;
-  window.showSection = function(name){ const r = prevShow.apply(this, arguments); trackSection(name); return r; };
-
-  // Individual place pages (from cards, map pins, shared links, back button)
-  const prevOpen = window.openPlacePage;
-  window.openPlacePage = function(id){
-    const r = prevOpen.apply(this, arguments);
-    // id may be a real id OR a /places/<slug> value by this point — resolve
-    // the same way openPlacePage itself does, so a slug-based open is still
-    // tracked under the right place name.
-    const p = (typeof findPlaceByIdOrSlug === 'function') ? findPlaceByIdOrSlug(id)
-      : ((typeof PLACES !== 'undefined') ? PLACES.find(x => x.id == id) : null);
-    trackPlace(p);
-    return r;
-  };
-
-  // Browser back/forward buttons (they bypass showSection's wrappers)
-  window.addEventListener('popstate', (e) => {
-    if (e.state?.placeId != null) return; // handled by openPlacePage above
-    setTimeout(trackCurrent, 0);
-  });
-
-  // First page view once the page has loaded (shared place links are tracked
-  // when the place itself opens).
-  window.addEventListener('load', () => {
-    setTimeout(() => { if (!/^#place-/.test(location.hash)) trackCurrent(); }, 0);
-  });
-
-  // Visitor answers the consent banner (or "Near me" location prompt) now
-  let wasGranted = allowed();
-  document.addEventListener('consentchange', (e) => {
-    const granted = !!e.detail.analytics && !(typeof sjIsInternalVisitor === 'function' && sjIsInternalVisitor());
-    gtag('consent', 'update', { analytics_storage: granted ? 'granted' : 'denied' });
-    if (granted && !wasGranted) { lastKey = null; trackCurrent(); } // count the page they're on right now
-    wasGranted = granted;
-  });
-})();
-</script>
-<!-- ══════════════ "I'M PLANNING TO GO": mobile bar + announcer ══════════════ -->
-<div class="plan-live" id="plan-live" role="status" aria-live="polite" aria-atomic="true"></div>
-<div class="plan-bar" id="plan-bar" role="region" aria-label="Plan your visit">
-  <p class="sj-err" id="plan-tap-err-bar" role="alert"></p>
-  <div class="plan-bar-main">
-    <button type="button" class="btn-red plan-btn" id="plan-btn-bar" onclick="sjPlanTap('bar')" aria-haspopup="dialog" aria-controls="plan-sheet"></button>
-    <button type="button" class="plan-undo plan-undo-bar" id="plan-undo-bar" onclick="sjPlanUndo()" hidden>Undo</button>
-  </div>
-  <button type="button" class="btn-outline-sm plan-dir" id="plan-dir-bar" onclick="sjPlanDirections()">Directions</button>
-</div>
-
-<script>
-/* ═══════════════════════════════════════════════════════════════════
-   I'M PLANNING TO GO · FOLLOW-UP · COFFEE WITH THE FOUNDER
-   Everything is saved through the same "submissions" collection the other
-   public forms already use (type: plan / plan_details / followup / coffee),
-   so no new database rules are needed. Phone numbers are never shown on the
-   public site; they can only be read from the admin panel.
-   ═══════════════════════════════════════════════════════════════════ */
-const SJ_SITE = (location.protocol === 'http:' || location.protocol === 'https:') ? location.origin : 'https://stairlessjourney.com';
-const SJ_TIME_FMT = { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' };
-function sjNowStr() { return new Date().toLocaleString('en-IN', SJ_TIME_FMT); }
-function sjLocalDay(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-function sjById(id) { return document.getElementById(id); }
-function sjVisible(el) { return !!el && el.getClientRects().length > 0; }
-function sjDeviceId() {
-  try {
-    let id = localStorage.getItem('sj_plan_device');
-    if (!id) { id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('dev_' + Date.now() + '_' + Math.random().toString(36).slice(2)); localStorage.setItem('sj_plan_device', id); }
-    return id;
-  } catch (e) { return window.__sjMemDev || (window.__sjMemDev = 'mem_' + Math.random().toString(36).slice(2)); }
-}
-function sjDeviceType() {
-  const ua = navigator.userAgent || '';
-  if (/iPad|Tablet/i.test(ua)) return 'tablet';
-  if (/Mobi|Android|iPhone/i.test(ua)) return 'mobile';
-  return 'desktop';
-}
-// Announces a short message to screen readers (polite live region).
-function sjLive(msg) {
-  const el = sjById('plan-live'); if (!el) return;
-  el.textContent = '';
-  setTimeout(() => { el.textContent = msg; }, 30);
-}
-// Returns digits only, with country code (e.g. 919876543210), or null if it doesn't look like a real number.
-function sjNormalizePhone(raw) {
-  let s = String(raw || '').replace(/[\s\-().]/g, '');
-  if (!/^\+?\d+$/.test(s)) return null;
-  const plus = s[0] === '+';
-  s = s.replace(/^\+/, '');
-  if (!plus) {
-    if (s.length === 11 && s[0] === '0') s = s.slice(1);
-    if (s.length === 12 && s.startsWith('91') && /^[6-9]/.test(s.slice(2))) return s;
-    if (s.length === 10 && /^[6-9]/.test(s)) return '91' + s;
-    return null;
-  }
-  if (s.startsWith('91')) return (s.length === 12 && /^[6-9]/.test(s.slice(2))) ? s : null;
-  return (s.length >= 10 && s.length <= 15) ? s : null;
-}
-function sjCsv(rows) {
-  return rows.map(r => r.map(c => {
-    let s = c == null ? '' : String(c);
-    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;           // stop spreadsheet formulas from running
-    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-  }).join(',')).join('\r\n');
-}
-function sjDownloadCsv(name, rows) {
-  const blob = new Blob(['﻿' + sjCsv(rows)], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = name;
-  document.body.appendChild(a); a.click();
-  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-}
-
-/* ───────────────────────── I'M PLANNING TO GO ───────────────────────── */
-let _planOpener = null, _planCloseTimer = null;
-function sjPlanPlace() { return (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(currentPlaceId)) : null; }
-// Per-device convenience only (so the button shows "Planning to go" on this
-// device today). The plans themselves are saved to the backend.
-function sjPlanLoad() { try { return JSON.parse(localStorage.getItem('sj_plans_v1') || '{}'); } catch (e) { return window.__sjPlanMem || {}; } }
-function sjPlanSave(o) { try { localStorage.setItem('sj_plans_v1', JSON.stringify(o)); } catch (e) { window.__sjPlanMem = o; } }
-function sjPlanState(placeId) { const s = sjPlanLoad()[String(placeId)]; return (s && s.planned && s.day === sjLocalDay()) ? s : null; }
-function sjPlanSet(placeId, st) { const o = sjPlanLoad(); if (st) o[String(placeId)] = st; else delete o[String(placeId)]; sjPlanSave(o); }
-
-function sjPlanRender() {
-  const p = sjPlanPlace();
-  const planned = !!(p && sjPlanState(p.id));
-  ['hero', 'bar'].forEach(k => {
-    const btn = sjById('plan-btn-' + k), undo = sjById('plan-undo-' + k);
-    if (!btn) return;
-    btn.innerHTML = planned
-      ? '<svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Planning to go</span>'
-      : '<svg width="18" height="18" aria-hidden="true"><use href="#i-pin"/></svg><span>I\'m planning to go</span>';
-    if (undo) undo.hidden = !planned;
-  });
-  const dir = sjById('plan-dir-bar'); if (dir) dir.hidden = !window._ppMapsLink;
-}
-function sjPlanTapError(msg) { ['hero', 'bar'].forEach(k => { const e = sjById('plan-tap-err-' + k); if (e) e.textContent = msg || ''; }); }
-function sjPlanWrite(action, p, day) {
-  if (!db) return Promise.reject(new Error('Not connected'));
-  const u = (typeof currentUser !== 'undefined') ? currentUser : null;
-  return FS_SUBS().add({
-    type: 'plan', action, placeRef: String(p.id), placeName: p.name || '', city: p.city || '',
-    deviceId: sjDeviceId(), deviceType: sjDeviceType(), day,
-    userName: (u && u.name) || '', userEmail: (u && u.email) || '',
-    time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
-}
-async function sjPlanTap(source) {
-  const p = sjPlanPlace(); if (!p) return;
-  _planOpener = sjById('plan-btn-' + source);
-  sjPlanTapError('');
-  if (sjPlanState(p.id)) { sjPlanOpenSheet(); return; }         // already planned today: just reopen the sheet, never count twice
-  const day = sjLocalDay();
-  sjPlanSet(p.id, { planned: true, day });                       // the button changes straight away
-  sjPlanRender(); sjPlanOpenSheet();
-  sjLive('Saved. You are planning to go to ' + (p.name || 'this place') + '.');
-  try { await sjPlanWrite('go', p, day); }
-  catch (e) {
-    console.warn('Could not save plan:', e);
-    sjPlanSet(p.id, null); sjPlanRender(); sjPlanCloseSheet(false);
-    sjPlanTapError("Couldn't save. Please try again.");
-    if (_planOpener) _planOpener.focus();
-  }
-}
-async function sjPlanUndo() {
-  const p = sjPlanPlace(); const st = p && sjPlanState(p.id); if (!p || !st) return;
-  sjPlanSet(p.id, null); sjPlanCloseSheet(false); sjPlanRender(); sjPlanTapError('');
-  sjLive('Removed. You are no longer marked as planning to go.');
-  const target = sjVisible(sjById('plan-btn-hero')) ? sjById('plan-btn-hero') : sjById('plan-btn-bar');
-  if (target) target.focus();
-  try { await sjPlanWrite('undo', p, st.day); }
-  catch (e) { console.warn('Could not save undo:', e); sjPlanSet(p.id, st); sjPlanRender(); sjPlanTapError("Couldn't undo. Please try again."); }
-}
-function sjPlanOpenSheet() {
-  const sh = sjById('plan-sheet'); if (!sh) return;
-  const p = sjPlanPlace(); const st = p && sjPlanState(p.id);
-  const sent = !!(st && st.detailsSent);
-  sjById('plan-sheet-form').hidden = sent;
-  sjById('plan-sheet-done').hidden = !sent;
-  if (sent) sjById('plan-done-msg').textContent = "We've got your number. The details are on their way to your WhatsApp.";
-  clearTimeout(_planCloseTimer);
-  sh.hidden = false; sh.focus();
-}
-function sjPlanCloseSheet(returnFocus) {
-  const sh = sjById('plan-sheet'); if (!sh || sh.hidden) return;
-  clearTimeout(_planCloseTimer);
-  sh.hidden = true;
-  if (returnFocus !== false) {
-    const cands = [_planOpener, sjById('plan-btn-hero'), sjById('plan-btn-bar')];
-    const btn = cands.find(sjVisible);
-    if (btn) btn.focus();
-  }
-}
-function sjPlanOnNumber() { const row = sjById('plan-consent-row'); if (row) row.hidden = !sjById('plan-wa').value.trim(); }
-function sjPlanSkip() { sjPlanCloseSheet(true); sjLive('Saved.'); }
-async function sjPlanSend() {
-  const p = sjPlanPlace(); const st = p && sjPlanState(p.id); if (!p || !st) return;
-  const input = sjById('plan-wa'), consent = sjById('plan-consent');
-  const werr = sjById('plan-wa-err'), cerr = sjById('plan-consent-err'), serr = sjById('plan-save-err');
-  werr.textContent = ''; cerr.textContent = ''; serr.textContent = ''; input.removeAttribute('aria-invalid');
-  const raw = input.value.trim();
-  if (!raw) { werr.textContent = 'Add your WhatsApp number, or choose "No thanks, just save".'; input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
-  const num = sjNormalizePhone(raw);
-  if (!num) { werr.textContent = "That number doesn't look right. Try a 10-digit mobile number, like 98765 43210."; input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
-  if (!consent.checked) { cerr.textContent = 'Please tick the box so we can message you.'; consent.focus(); return; }
-  const btn = sjById('plan-send'); const label = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Sending…';
-  try {
-    if (!db) throw new Error('Not connected');
-    const u = (typeof currentUser !== 'undefined') ? currentUser : null;
-    const ref = await FS_SUBS().add({
-      type: 'plan_details', placeRef: String(p.id), placeName: p.name || '', city: p.city || '', day: st.day,
-      whatsapp: num, name: (u && u.name) || '', userEmail: (u && u.email) || '', consent: true,
-      deviceId: sjDeviceId(), deviceType: sjDeviceType(), detailsStatus: 'pending', followStatus: 'pending',
-      time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    sjPlanSet(p.id, { ...st, detailsSent: true, detailsId: ref.id });
-    sjById('plan-sheet-form').hidden = true; sjById('plan-sheet-done').hidden = false;
-    sjById('plan-done-msg').textContent = "Done. We'll send the details to your WhatsApp.";
-    sjLive("Done. We'll send the details to your WhatsApp.");
-    _planCloseTimer = setTimeout(() => sjPlanCloseSheet(true), 3500);
-  } catch (e) {
-    console.warn('Could not save details request:', e);
-    serr.textContent = "Couldn't save. Please try again.";        // what they typed stays in the field
-  } finally { btn.disabled = false; btn.textContent = label; }
-}
-function sjPlanDirections() {
-  const p = sjPlanPlace(); if (!p || !window._ppMapsLink) return;
-  sjTrackMapsClick(p.id);
-  window.open(window._ppMapsLink, '_blank', 'noopener');
-}
-function sjPlanOnOpenPlace() {
-  sjPlanCloseSheet(false);
-  const w = sjById('plan-wa'); if (w) { w.value = ''; w.removeAttribute('aria-invalid'); }
-  const c = sjById('plan-consent'); if (c) c.checked = false;
-  const row = sjById('plan-consent-row'); if (row) row.hidden = true;
-  ['plan-wa-err', 'plan-consent-err', 'plan-save-err'].forEach(i => { const e = sjById(i); if (e) e.textContent = ''; });
-  sjPlanTapError('');
-  sjPlanRender();
-}
-function sjPlanBarSync(name) {
-  document.body.classList.toggle('on-place', name === 'place');
-  if (name !== 'place') sjPlanCloseSheet(false);
-}
-function sjPlanBarMeasure() {
-  const bar = sjById('plan-bar'); if (!bar) return;
-  const h = bar.getBoundingClientRect().height;
-  if (h > 0) document.documentElement.style.setProperty('--plan-bar-h', Math.ceil(h) + 'px');
-}
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  const sh = sjById('plan-sheet');
-  if (sh && !sh.hidden) { e.preventDefault(); sjPlanCloseSheet(true); }
-});
-if ('ResizeObserver' in window && sjById('plan-bar')) new ResizeObserver(sjPlanBarMeasure).observe(sjById('plan-bar'));
-
-/* ───────────────────────── FOLLOW-UP PAGE ───────────────────────── */
-let _fu = null;
-function sjOpenFollowup(detailsId, placeRef, name) {
-  _fu = { detailsId: detailsId || '', placeRef: placeRef || '', name: name || '' };
-  const place = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(placeRef)) : null;
-  const nm = (place && place.name) || name || 'this place';
-  _fu.placeName = nm;
-  sjById('fu-title').textContent = 'Did you get to ' + nm + '?';
-  sjById('fu-step1').hidden = false; sjById('fu-step2').hidden = true; sjById('fu-done').hidden = true;
-  ['fu-went', 'fu-notyet', 'fu-couldnt', 'fu-send'].forEach(i => { sjById(i).disabled = false; });
-  ['fu-err1', 'fu-err2'].forEach(i => { sjById(i).textContent = ''; });
-  (typeof _origShowSection === 'function' ? _origShowSection : showSection)('followup');
-  sjById('fu-title').focus();
-}
-function sjFuFinish(title, text) {
-  sjById('fu-step1').hidden = true; sjById('fu-step2').hidden = true;
-  sjById('fu-done-title').textContent = title; sjById('fu-done-text').textContent = text;
-  sjById('fu-done').hidden = false; sjById('fu-done').focus();
-}
-function sjFuWrite(extra) {
-  if (!db) return Promise.reject(new Error('Not connected'));
-  return FS_SUBS().add({
-    type: 'followup', detailsId: _fu.detailsId, placeRef: _fu.placeRef, placeName: _fu.placeName,
-    day: sjLocalDay(), time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp(), ...extra
-  });
-}
-async function sjFuAnswer(ans) {
-  if (!_fu) return;
-  const err = sjById('fu-err1'); err.textContent = '';
-  ['fu-went', 'fu-notyet', 'fu-couldnt'].forEach(i => { sjById(i).disabled = true; });
-  try { await sjFuWrite({ stage: 'answer', answer: ans }); }
-  catch (e) { console.warn('Could not save follow-up:', e); err.textContent = "Couldn't save. Please try again."; ['fu-went', 'fu-notyet', 'fu-couldnt'].forEach(i => { sjById(i).disabled = false; }); return; }
-  if (ans === 'went') {
-    sjById('fu-step1').hidden = true; sjById('fu-step2').hidden = false;
-    const first = document.querySelector('input[name="fu-acc"]'); if (first) first.focus();
-  } else if (ans === 'notyet') sjFuFinish('No problem.', "Thanks for letting us know. We hope you get there soon.");
-  else sjFuFinish('Thanks for telling us.', "We're sorry it didn't work out this time. We hope you can go another day.");
-}
-async function sjFuSend() {
-  if (!_fu) return;
-  const err = sjById('fu-err2'); err.textContent = '';
-  const picked = document.querySelector('input[name="fu-acc"]:checked');
-  if (!picked) { err.textContent = 'Please choose Yes, Mostly or No.'; const f = document.querySelector('input[name="fu-acc"]'); if (f) f.focus(); return; }
-  const acc = picked.value; const note = sjById('fu-note').value.trim().slice(0, 600);
-  const btn = sjById('fu-send'); btn.disabled = true;
-  try {
-    await sjFuWrite({ stage: 'accuracy', answer: 'went', accuracy: acc, note });
-    if (acc === 'mostly' || acc === 'no') {
-      // Anything less than "Yes" goes into the same list as Flag an Issue.
-      const place = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(_fu.placeRef)) : null;
-      await FS_SUBS().add({
-        type: 'issue', placeId: place ? place.id : _fu.placeRef, placeName: _fu.placeName || 'Unknown place',
-        issue: 'Follow-up reply: our information was ' + (acc === 'no' ? 'not accurate' : 'mostly accurate') + (note ? '. ' + note : '. No details added.'),
-        submittedBy: 'Visitor (follow-up)', submittedByEmail: '', source: 'followup',
-        time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    }
-    sjFuFinish('Thank you.', acc === 'yes' ? "Glad it matched. Your reply helps us keep every listing honest." : "Thank you. We'll look into it and fix the listing.");
-  } catch (e) { console.warn('Could not save follow-up:', e); err.textContent = "Couldn't save. Please try again."; btn.disabled = false; }
-}
-
-/* ───────────────────────── COFFEE WITH THE FOUNDER ───────────────────────── */
-let _coffeeCfg = { enabled: true, slots: 3, taken: 0 }, _coffeeCfgLoaded = false;
-async function sjCoffeeLoadCfg(force) {
-  if ((_coffeeCfgLoaded && !force) || !db) return _coffeeCfg;
-  try {
-    const s = await db.collection('siteData').doc('coffee').get();
-    if (s.exists) {
-      const d = s.data() || {};
-      if (typeof d.enabled === 'boolean') _coffeeCfg.enabled = d.enabled;
-      if (d.slots != null && !isNaN(Number(d.slots))) _coffeeCfg.slots = Math.max(0, Number(d.slots));
-      _coffeeCfg.taken = (d.takenWeek === sjWeekKey()) ? (Number(d.taken) || 0) : 0;
-    }
-    _coffeeCfgLoaded = true;
-  } catch (e) { /* settings unreadable: stay on the safe defaults (on, 3 a week) */ }
-  sjCoffeeApplyVisibility();
-  return _coffeeCfg;
-}
-function sjCoffeeIsFull() { return _coffeeCfg.taken >= _coffeeCfg.slots; }
-function sjCoffeeApplyVisibility() {
-  const on = !!_coffeeCfg.enabled;
-  const home = sjById('coffee-home'); if (home) home.hidden = !on;
-  const fl = sjById('coffee-footer-link'); if (fl) fl.hidden = !on;
-  sjCoffeeStripSync();
-  if (sjById('section-coffee') && sjById('section-coffee').classList.contains('active')) sjCoffeeRenderPage();
-}
-// "Close" means "not now": it only lasts until the page is reloaded, so someone
-// who closes it today still sees it the next time they come back.
-let _coffeeStripClosed = false;
-function sjCoffeeStripSync() {
-  const s = sjById('coffee-strip'); if (!s) return;
-  const city = (sjById('filter-city') || {}).value || '';
-  // Shown for All Cities and Pune; hidden once someone picks any other city (Kolkata, Goa).
-  s.hidden = !((city === '' || city === 'Pune') && _coffeeCfg.enabled && !_coffeeStripClosed);
-}
-function sjCoffeeStripClose() {
-  _coffeeStripClosed = true;
-  sjCoffeeStripSync();
-  const f = sjById('filter-city'); if (f) f.focus();
-}
-function sjCoffeePhoto(src) { const img = sjById('coffee-photo'); if (img && src) { img.src = src; img.hidden = false; } }
-function sjCoffeeInit() { sjCoffeeRenderPage(); sjCoffeeLoadCfg().then(sjCoffeeRenderPage); }
-function sjCoffeeRenderPage() {
-  const off = !_coffeeCfg.enabled, full = sjCoffeeIsFull();
-  sjById('coffee-off').hidden = !off;
-  sjById('coffee-form-wrap').hidden = off || !sjById('coffee-success').hidden;
-  sjById('coffee-full').hidden = off || !full;
-  sjById('coffee-submit').textContent = full ? 'Join the waiting list' : 'Request a coffee';
-}
-async function sjCoffeeSubmit() {
-  const g = id => sjById(id);
-  const errs = { name: g('coffee-name-err'), wa: g('coffee-wa-err'), area: g('coffee-area-err'), consent: g('coffee-consent-err'), form: g('coffee-form-err') };
-  Object.values(errs).forEach(e => { e.textContent = ''; });
-  ['coffee-name', 'coffee-wa', 'coffee-area', 'coffee-consent'].forEach(i => g(i).removeAttribute('aria-invalid'));
-  const name = g('coffee-name').value.trim(), waRaw = g('coffee-wa').value.trim(), area = g('coffee-area').value.trim();
-  const needs = g('coffee-needs').value.trim().slice(0, 500);
-  const num = waRaw ? sjNormalizePhone(waRaw) : null;
-  let firstBad = null;
-  const bad = (id, errEl, msg) => { errEl.textContent = msg; g(id).setAttribute('aria-invalid', 'true'); if (!firstBad) firstBad = g(id); };
-  if (!name) bad('coffee-name', errs.name, 'Please tell me your first name.');
-  if (!waRaw) bad('coffee-wa', errs.wa, 'Please add your WhatsApp number, for example 98765 43210.');
-  else if (!num) bad('coffee-wa', errs.wa, "That number doesn't look right. Try a 10-digit mobile number, like 98765 43210.");
-  if (!area) bad('coffee-area', errs.area, "Please tell me which area of Pune you're closest to.");
-  if (!g('coffee-consent').checked) bad('coffee-consent', errs.consent, 'Please tick the box so I can message you.');
-  if (firstBad) { firstBad.focus(); return; }
-  const wk = sjWeekKey();
-  let already = false; try { already = localStorage.getItem('sj_coffee_week') === wk; } catch (e) { already = window.__sjCoffeeWeek === wk; }
-  if (already) { errs.form.textContent = "You've already asked this week. I'll message you soon."; return; }
-  const full = sjCoffeeIsFull();
-  const btn = g('coffee-submit'); const label = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Sending…';
-  try {
-    if (!db) throw new Error('Not connected');
-    await FS_SUBS().add({
-      type: 'coffee', name, whatsapp: num, area, needs, consent: true, waitlist: full, weekKey: wk,
-      status: 'New', adminNote: '', city: 'Pune', time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    try { localStorage.setItem('sj_coffee_week', wk); } catch (e) { window.__sjCoffeeWeek = wk; }
-    g('coffee-form-wrap').hidden = true;
-    g('coffee-success-title').textContent = full ? "You're on the list." : 'Thank you!';
-    g('coffee-success-text').textContent = full
-      ? "Thank you! You're on the waiting list. I'll message you on WhatsApp as soon as a spot opens."
-      : "Thank you! I'll message you on WhatsApp within 3 days to fix a time.";
-    g('coffee-success').hidden = false; g('coffee-success').focus();
-  } catch (e) {
-    console.warn('Could not save coffee request:', e);
-    errs.form.textContent = "Couldn't send. Please try again.";   // everything they typed stays in place
-  } finally { btn.disabled = false; btn.textContent = label; }
-}
-(function sjCoffeeBoot() { let tries = 0; const t = setInterval(() => { if (db) { clearInterval(t); sjCoffeeLoadCfg(); } else if (++tries > 40) clearInterval(t); }, 500); })();
-
-/* ───────────────────────── ADMIN: shared helpers ───────────────────────── */
-const SJ_FU_ANS = { went: 'Went', notyet: 'Not yet', couldnt: "Couldn't go" };
-const SJ_ACC = { yes: 'Yes', mostly: 'Mostly', no: 'No' };
-const SJ_COFFEE_STATUSES = ['New', 'Contacted', 'Scheduled', 'Done', 'Cancelled'];
-const _ts = d => (d.createdAt && d.createdAt.seconds) || 0;
-function sjCopyText(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
-  return new Promise((res, rej) => {
-    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } ta.remove();
-  });
-}
-function sjFirstName(n) { return String(n || '').trim().split(/\s+/)[0] || 'there'; }
-function sjDetailsMessage(d) {
-  const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(d.placeRef)) : null;
-  const nm = d.placeName || (p && p.name) || 'the place';
-  const v = x => x || 'Not checked';
-  const lines = ['Hi ' + sjFirstName(d.name) + ', here are the access details for ' + nm + ', from StairlessJourney:'];
-  if (p) {
-    lines.push('• Step-free entrance: ' + v(p.stepFree), '• Ramp: ' + v(p.ramp), '• Accessible toilet: ' + v(p.toilet), '• Parking: ' + v(p.parking));
-  }
-  lines.push('Tip: it\'s worth a quick call ahead' + (p && p.phone ? ' (' + p.phone + ')' : '') + ' to confirm before you go.');
-  if (p && typeof placeUrlPath === 'function') lines.push('Full details: ' + SJ_SITE + placeUrlPath(p));
-  lines.push('Reply STOP anytime and we won\'t message you again.');
-  return lines.join('\n');
-}
-function sjFollowupLink(d) { return SJ_SITE + '/?followup=' + encodeURIComponent(d.id) + '&p=' + encodeURIComponent(d.placeRef || '') + '&n=' + encodeURIComponent(d.placeName || ''); }
-function sjFollowupMessage(d) { return 'Hi ' + sjFirstName(d.name) + ', it\'s StairlessJourney. Did you get to ' + (d.placeName || 'the place') + '? Tell us in one tap: ' + sjFollowupLink(d); }
-
-/* ───────────────────────── ADMIN: Planning to go ───────────────────────── */
-async function aeRenderPlans(el) {
-  const [plans, details, fups] = await Promise.all([sjGetSubmissions('plan'), sjGetSubmissions('plan_details'), sjGetSubmissions('followup')]);
-  window._aePlanData = { plans, details, fups };
-  const today = new Date(), from = new Date(); from.setDate(from.getDate() - 29);
-  el.innerHTML = `
-    <div class="sj-range">
-      <label>From<input type="date" class="form-input" id="ae-plan-from" value="${sjLocalDay(from)}" onchange="aePlansCompute()"></label>
-      <label>To<input type="date" class="form-input" id="ae-plan-to" value="${sjLocalDay(today)}" onchange="aePlansCompute()"></label>
-      <button type="button" class="ap-btn" onclick="aePlansCsv()">Export CSV</button>
-    </div>
-    <p class="sj-note">Everything here is <strong>planning to go</strong> or <strong>self-reported</strong>. It is what people tell us, not proof of a visit. Each device counts once per place per day.</p>
-    <div id="ae-plan-out"></div>`;
-  aePlansCompute();
-}
-function aePlansRows() {
-  const { plans, details, fups } = window._aePlanData;
-  const from = sjById('ae-plan-from').value || '0000-00-00', to = sjById('ae-plan-to').value || '9999-99-99';
-  const inRange = d => d.day >= from && d.day <= to;
-  const byKey = {};
-  plans.filter(inRange).sort((a, b) => (_ts(a) - _ts(b)) || ((a.action === 'undo') - (b.action === 'undo')))
-    .forEach(e => { byKey[e.placeRef + '|' + e.deviceId + '|' + e.day] = e; });          // last tap of the day wins
-  const rows = {};
-  const row = (ref, name, city) => rows[ref] || (rows[ref] = { ref, name: name || ref, city: city || '', plans: 0, details: 0, went: 0, notyet: 0, couldnt: 0, yes: 0, mostly: 0, no: 0 });
-  Object.values(byKey).filter(e => e.action === 'go').forEach(e => { row(e.placeRef, e.placeName, e.city).plans++; });
-  details.filter(inRange).forEach(d => { row(d.placeRef, d.placeName, d.city).details++; });
-  const ansBy = {}, accBy = {};
-  fups.filter(inRange).sort((a, b) => _ts(a) - _ts(b)).forEach(f => { (f.stage === 'accuracy' ? accBy : ansBy)[f.detailsId + '|' + f.stage] = f; });
-  Object.values(ansBy).forEach(f => { const r = row(f.placeRef, f.placeName); if (r[f.answer] != null) r[f.answer]++; });
-  Object.values(accBy).forEach(f => { const r = row(f.placeRef, f.placeName); if (r[f.accuracy] != null) r[f.accuracy]++; });
-  const list = Object.values(rows).map(r => {
-    const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(r.ref)) : null;
-    if (p) { r.name = p.name || r.name; r.city = p.city || r.city; }
-    r.directions = (p && p.mapsClicks) || 0;
-    return r;
-  }).sort((a, b) => b.plans - a.plans || a.name.localeCompare(b.name));
-  return { list, from, to };
-}
-function aePlansCompute() {
-  const { list } = aePlansRows();
-  const sum = k => list.reduce((s, r) => s + r[k], 0);
-  const tile = (n, l) => `<div class="ap-stat-box"><div class="ap-stat-num">${n}</div><div class="ap-stat-lbl">${l}</div></div>`;
-  const out = sjById('ae-plan-out');
-  out.innerHTML = `<div class="ap-stats-row">
-      ${tile(sum('plans'), 'Planning to go')}${tile(sum('details'), 'Asked for WhatsApp details')}
-      ${tile(sum('went'), 'Went (self-reported)')}${tile(sum('notyet'), 'Not yet')}${tile(sum('couldnt'), "Couldn't go")}
-    </div>
-    <div class="ap-stats-row">
-      ${tile(sum('yes'), 'Info accurate: Yes')}${tile(sum('mostly'), 'Mostly')}${tile(sum('no'), 'No')}
-    </div>
-    ${list.length ? `<div class="sj-ptable-wrap"><table class="sj-ptable"><thead><tr>
-      <th>Place</th><th>City</th><th>Planning to go</th><th>Details asked</th><th>Went</th><th>Not yet</th><th>Couldn't go</th><th>Accurate: Yes / Mostly / No</th><th>Directions clicks (all time)</th></tr></thead><tbody>
-      ${list.map(r => `<tr><td>${escH(r.name)}</td><td>${escH(r.city)}</td><td>${r.plans}</td><td>${r.details}</td><td>${r.went}</td><td>${r.notyet}</td><td>${r.couldnt}</td><td>${r.yes} / ${r.mostly} / ${r.no}</td><td>${r.directions}</td></tr>`).join('')}
-      </tbody></table></div>
-      <p class="sj-note">Replies are counted on the day they were sent. Phone and website clicks aren't tracked yet; directions clicks are the only click counter that exists today, and it isn't date-filtered.</p>`
-      : '<p class="sj-note">Nothing in this date range yet.</p>'}`;
-}
-function aePlansCsv() {
-  const { list, from, to } = aePlansRows();
-  const rows = [['Place', 'City', 'Planning to go (self-reported)', 'Asked for WhatsApp details', 'Went (self-reported)', 'Not yet', "Couldn't go", 'Info accurate: Yes', 'Info accurate: Mostly', 'Info accurate: No', 'Directions clicks (all time)', 'From', 'To']];
-  list.forEach(r => rows.push([r.name, r.city, r.plans, r.details, r.went, r.notyet, r.couldnt, r.yes, r.mostly, r.no, r.directions, from, to]));
-  sjDownloadCsv('planning-to-go_' + from + '_to_' + to + '.csv', rows);
-}
-
-/* ───────────────────────── ADMIN: Follow up today ───────────────────────── */
-let _aeFu = {};
-async function aeRenderFollowups(el) {
-  const [details, fups, plans] = await Promise.all([sjGetSubmissions('plan_details'), sjGetSubmissions('followup'), sjGetSubmissions('plan')]);
-  const today = sjLocalDay(); const cut = new Date(); cut.setDate(cut.getDate() - 14); const cutDay = sjLocalDay(cut);
-  const last = {};
-  plans.sort((a, b) => (_ts(a) - _ts(b)) || ((a.action === 'undo') - (b.action === 'undo'))).forEach(e => { last[e.placeRef + '|' + e.deviceId + '|' + e.day] = e.action; });
-  const replied = {};
-  fups.filter(f => f.stage === 'answer').forEach(f => { replied[f.detailsId] = f.answer; });
-  _aeFu = {}; details.forEach(d => { _aeFu[d.id] = d; });
-  const newest = (a, b) => _ts(b) - _ts(a);
-  const toSend = details.filter(d => d.detailsStatus !== 'sent').sort(newest);
-  const due = details.filter(d => d.day < today && d.day >= cutDay && last[d.placeRef + '|' + d.deviceId + '|' + d.day] !== 'undo').sort((a, b) => {
-    const rank = d => replied[d.id] ? 2 : (d.followStatus === 'sent' ? 1 : 0); return rank(a) - rank(b) || newest(a, b);
-  });
-  const card = (d, kind) => {
-    const status = kind === 'follow'
-      ? (replied[d.id] ? `<span class="sj-pill ok">Replied: ${escH(SJ_FU_ANS[replied[d.id]] || replied[d.id])}</span>` : d.followStatus === 'sent' ? '<span class="sj-pill warn">Sent</span>' : '<span class="sj-pill">Not sent</span>')
-      : '<span class="sj-pill">Not sent</span>';
-    const msg = kind === 'follow' ? sjFollowupMessage(d) : sjDetailsMessage(d);
-    const canMark = !(kind === 'follow' && (replied[d.id] || d.followStatus === 'sent'));
-    return `<div class="sub-card">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;"><div class="sub-name">${escH(d.name || 'Visitor')} · ${escH(d.placeName || '')}</div><div class="sub-time">${escH(d.day || '')}</div></div>
-      <div class="sub-row">📱 <strong>+${escH(d.whatsapp || '')}</strong> ${status}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
-        <button type="button" class="ap-btn ap-btn-sm" onclick="aeFuCopy('${escH(d.id)}','${kind}',this)">Copy message</button>
-        <a class="ap-btn ap-btn-sm" style="text-decoration:none;" href="https://wa.me/${escH(d.whatsapp || '')}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener noreferrer">Open WhatsApp</a>
-        ${canMark ? `<button type="button" class="ap-btn ap-btn-sm" onclick="aeFuMark('${escH(d.id)}','${kind}')">Mark sent</button>` : ''}
-      </div></div>`;
-  };
-  el.innerHTML = `
-    <p class="sj-note">Nothing is sent automatically. Copy each message, or open it straight in WhatsApp, then mark it sent. When someone replies to the follow-up link it turns to <strong>Replied</strong> by itself.</p>
-    <h4 style="margin:6px 0 8px;">Follow up today (${due.length})</h4>
-    ${due.length ? due.map(d => card(d, 'follow')).join('') : '<p class="sj-note">No follow-ups due. People who shared a number appear here the day after they planned to go.</p>'}
-    <h4 style="margin:22px 0 8px;">Details to send (${toSend.length})</h4>
-    ${toSend.length ? toSend.map(d => card(d, 'details')).join('') : '<p class="sj-note">No one is waiting for details.</p>'}`;
-}
-async function aeFuCopy(id, kind, btn) {
-  const d = _aeFu[id]; if (!d) return;
-  try { await sjCopyText(kind === 'follow' ? sjFollowupMessage(d) : sjDetailsMessage(d)); if (btn) { const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = t; }, 1500); } }
-  catch (e) { alert('Could not copy. Use "Open WhatsApp" instead.'); }
-}
-async function aeFuMark(id, kind) {
-  const field = kind === 'follow' ? 'followStatus' : 'detailsStatus';
-  try { await FS_SUBS().doc(id).update({ [field]: 'sent', [field + 'At']: firebase.firestore.FieldValue.serverTimestamp() }); }
-  catch (e) { alert('Could not update. Check your connection and try again.'); return; }
-  aeRenderFollowups(sjById('ap-sub-content'));
-}
-
-/* ───────────────────────── ADMIN: Coffee requests ───────────────────────── */
-async function aeRenderCoffee(el) {
-  const items = (await sjGetSubmissions('coffee')).sort((a, b) => _ts(b) - _ts(a));
-  let cfg = { enabled: true, slots: 3 };
-  try { const s = await db.collection('siteData').doc('coffee').get(); if (s.exists) { const d = s.data() || {}; if (typeof d.enabled === 'boolean') cfg.enabled = d.enabled; if (d.slots != null && !isNaN(Number(d.slots))) cfg.slots = Number(d.slots); } } catch (e) {}
-  const wk = sjWeekKey();
-  const taken = items.filter(i => i.weekKey === wk && !i.waitlist && i.status !== 'Cancelled').length;
-  // Keep the public "this week is full" state in step with the real requests.
-  try { await db.collection('siteData').doc('coffee').set({ enabled: cfg.enabled, slots: cfg.slots, takenWeek: wk, taken }, { merge: true }); _coffeeCfg.taken = taken; } catch (e) { console.warn('Could not sync coffee slots:', e); }
-  window._aeCoffee = items;
-  el.innerHTML = `
-    <div class="ap-card" style="margin-bottom:14px;">
-      <div class="ap-card-title">Settings</div>
-      <label style="display:flex;gap:10px;align-items:center;margin:8px 0;"><input type="checkbox" id="ae-coffee-on" ${cfg.enabled ? 'checked' : ''} style="width:20px;height:20px;"> Show Coffee with the Founder on the site</label>
-      <label style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0;">Coffees per week <input type="number" min="0" max="50" id="ae-coffee-slots" class="form-input" value="${cfg.slots}" style="width:90px;"></label>
-      <p class="sj-note">This week: ${taken} of ${cfg.slots} taken. Once full, new requests join the waiting list. Cancelled ones free up a slot.</p>
-      <button type="button" class="ap-btn" onclick="aeCoffeeSaveSettings()">Save settings</button>
-      <button type="button" class="ap-btn" onclick="aeCoffeeCsv()" style="margin-left:6px;">Export CSV</button>
-    </div>
-    ${items.length ? items.map(i => `<div class="sub-card">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
-        <div class="sub-name">${escH(i.name || '—')} ${i.waitlist ? '<span class="sj-pill warn">Waiting list</span>' : ''}</div>
-        <div class="sub-time">${escH(i.time || '')}</div>
-      </div>
-      <div class="sub-row">📱 <a href="https://wa.me/${escH(i.whatsapp || '')}" target="_blank" rel="noopener noreferrer"><strong>+${escH(i.whatsapp || '')}</strong></a></div>
-      <div class="sub-row">📍 <strong>${escH(i.area || '—')}</strong></div>
-      ${i.needs ? `<p style="font-size:0.88rem;margin:6px 0;">${escH(i.needs)}</p>` : ''}
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:8px;">
-        <label style="font-size:0.78rem;font-weight:600;display:flex;flex-direction:column;gap:4px;">Status
-          <select class="form-input" onchange="aeCoffeeStatus('${escH(i.id)}',this.value)">${SJ_COFFEE_STATUSES.map(s => `<option${(i.status || 'New') === s ? ' selected' : ''}>${s}</option>`).join('')}</select></label>
-        <label style="font-size:0.78rem;font-weight:600;display:flex;flex-direction:column;gap:4px;flex:1 1 200px;">Notes
-          <textarea class="form-input" rows="2" id="ae-cn-${escH(i.id)}" maxlength="1000">${escH(i.adminNote || '')}</textarea></label>
-        <button type="button" class="ap-btn ap-btn-sm" onclick="aeCoffeeNote('${escH(i.id)}')">Save note</button>
-        <button type="button" class="ap-btn ap-btn-danger ap-btn-sm" onclick="deleteSubmission('${escH(i.id)}','coffee',null,null)">Delete</button>
-      </div></div>`).join('') : '<p class="sj-note">No coffee requests yet.</p>'}`;
-}
-async function aeCoffeeSaveSettings() {
-  const on = sjById('ae-coffee-on').checked; const slots = Math.max(0, Math.min(50, parseInt(sjById('ae-coffee-slots').value, 10) || 0));
-  try { await db.collection('siteData').doc('coffee').set({ enabled: on, slots }, { merge: true }); }
-  catch (e) { alert('Could not save settings. Check your connection and try again.'); return; }
-  _coffeeCfg.enabled = on; _coffeeCfg.slots = slots; sjCoffeeApplyVisibility();
-  aeRenderCoffee(sjById('ap-sub-content'));
-}
-async function aeCoffeeStatus(id, status) {
-  try { await FS_SUBS().doc(id).update({ status }); } catch (e) { alert('Could not update the status. Try again.'); }
-  aeRenderCoffee(sjById('ap-sub-content'));
-}
-async function aeCoffeeNote(id) {
-  const t = sjById('ae-cn-' + id); if (!t) return;
-  try { await FS_SUBS().doc(id).update({ adminNote: t.value.trim().slice(0, 1000) }); alert('Note saved.'); } catch (e) { alert('Could not save the note. Try again.'); }
-}
-function aeCoffeeCsv() {
-  const rows = [['Name', 'WhatsApp', 'Area', 'Needs note', 'Date requested', 'Waiting list', 'Status', 'Notes']];
-  (window._aeCoffee || []).forEach(i => rows.push([i.name, i.whatsapp, i.area, i.needs, i.time, i.waitlist ? 'Yes' : 'No', i.status || 'New', i.adminNote]));
-  sjDownloadCsv('coffee-requests_' + sjLocalDay() + '.csv', rows);
-}
 </script>
 </body>
 </html>
