@@ -2825,108 +2825,6 @@ html.focus-boost *:focus-visible {
   border-radius: 4px;
 }
 
-/* ═══ I'M PLANNING TO GO (place page) ═══ */
-.pp-title-row { display:flex; align-items:center; justify-content:space-between; gap:12px 24px; flex-wrap:wrap; position:relative; }
-.pp-title-col { min-width:0; flex:1 1 320px; }
-.plan-hero { position:relative; flex:0 0 auto; }
-.plan-state { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-.plan-btn { min-height:var(--tap-min); justify-content:center; }
-.plan-btn svg { width:18px; height:18px; flex-shrink:0; }
-.plan-hero .plan-state :focus-visible { outline:3px solid #fff; outline-offset:3px; border-radius:10px; }
-.plan-undo { background:none; border:none; color:#fff; text-decoration:underline; font-size:0.92rem; font-weight:500; cursor:pointer; min-height:var(--tap-min); min-width:var(--tap-min); padding:0 6px; }
-.plan-undo[hidden] { display:none; }
-.plan-sheet { position:absolute; right:0; top:calc(100% + 10px); width:min(380px, 92vw); background:#fff; color:var(--near-black); border-radius:var(--radius); box-shadow:var(--shadow-lg); padding:20px 20px 18px; z-index:60; text-align:left; }
-.plan-sheet[hidden] { display:none; }
-.plan-sheet:focus, .plan-sheet:focus-visible, #fu-title:focus, #fu-title:focus-visible, #fu-done:focus, #fu-done:focus-visible, #coffee-success:focus, #coffee-success:focus-visible { outline:none; }  /* script-moved focus on non-interactive containers: no frame */
-.plan-sheet :focus-visible { outline:2px solid var(--red-strong); outline-offset:2px; }
-.plan-sheet h3 { font-size:1.2rem; margin:0 76px 8px 0; color:var(--near-black); }
-.plan-sheet p { font-size:0.9rem; margin:0 0 12px; }
-.plan-sheet-close { position:absolute; top:6px; right:8px; min-height:var(--tap-min); padding:0 10px; background:none; border:none; color:var(--gray-mid); font-weight:600; font-size:0.88rem; text-decoration:underline; cursor:pointer; }
-.plan-sheet .form-group { margin-bottom:4px; }
-.plan-sheet .btn-red { width:100%; justify-content:center; min-height:var(--tap-min); margin-top:12px; }
-.sj-hint { font-size:0.8rem; color:var(--gray-mid); margin:0; }
-.sj-err { color:var(--red-strong); font-size:0.85rem; font-weight:600; margin:6px 0 0; }
-.sj-err:empty { display:none; }
-.plan-consent { display:flex; gap:10px; align-items:flex-start; font-size:0.88rem; margin:12px 0 0; cursor:pointer; }
-.plan-consent[hidden] { display:none; }
-.plan-consent input { width:22px; height:22px; flex-shrink:0; margin-top:1px; }
-.plan-skip { display:block; background:none; border:none; color:var(--red-strong); text-decoration:underline; font-size:0.92rem; font-weight:500; min-height:var(--tap-min); margin:6px auto 0; cursor:pointer; }
-.plan-done { display:block; width:100%; background:none; border:none; text-align:center; padding:12px 0 4px; font-size:1rem; font-weight:600; color:var(--near-black); cursor:pointer; }
-.plan-done small { display:block; font-weight:400; font-size:0.8rem; color:var(--gray-mid); margin-top:4px; }
-.plan-live { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-.plan-bar { display:none; position:fixed; left:0; right:0; bottom:0; z-index:1400; background:#fff; border-top:1px solid var(--gray-light); box-shadow:0 -4px 16px rgba(26,23,20,0.08); padding:10px 14px calc(10px + env(safe-area-inset-bottom)); gap:8px; align-items:center; flex-wrap:wrap; }
-.plan-bar-main { flex:2 1 170px; display:flex; align-items:center; gap:4px; min-width:0; }
-.plan-bar-main .plan-btn { flex:1 1 auto; padding:12px 14px; font-size:0.95rem; }
-.plan-undo-bar { color:var(--red-strong); }
-.plan-bar .sj-err { flex-basis:100%; margin:0; }
-.plan-dir { flex:1 1 100px; min-height:var(--tap-min); padding:10px 14px; font-size:0.95rem; font-weight:600; display:inline-flex; align-items:center; justify-content:center; }
-.plan-dir[hidden] { display:none; }
-.plan-hero .sj-err { color:#fff; background:rgba(0,0,0,0.25); padding:6px 10px; border-radius:8px; }
-@media (max-width:768px) {
-  .plan-hero .plan-state { display:none; }
-  .plan-hero .sj-err { display:none; }
-  .plan-sheet { position:fixed; left:0; right:0; bottom:0; top:auto; width:auto; max-height:88vh; overflow:auto; border-radius:18px 18px 0 0; padding:20px 18px calc(18px + env(safe-area-inset-bottom)); z-index:3000; }
-  body.on-place .plan-bar { display:flex; }
-  body.on-place #section-place { padding-bottom:calc(var(--plan-bar-h, 76px) + 16px); }
-  body.on-place #a11y-widget { bottom:calc(var(--plan-bar-h, 76px) + 12px); }
-  body.on-place .referral-banner { bottom:calc(var(--plan-bar-h, 76px) + 10px); }
-}
-
-/* ═══ FOLLOW-UP PAGE ═══ */
-.fu-wrap { max-width:640px; margin:0 auto; padding:32px 0 64px; }
-.fu-choices { display:grid; gap:14px; }
-.fu-btn { display:flex; align-items:center; gap:14px; width:100%; min-height:72px; padding:16px 22px; background:var(--gray-bg); border:2px solid var(--red); border-radius:var(--radius); color:var(--near-black); font-size:1.15rem; font-weight:600; text-align:left; cursor:pointer; font-family:inherit; }
-.fu-btn:hover { background:var(--red-tint); }
-.fu-btn:disabled { opacity:0.6; cursor:default; }
-.fu-btn svg { width:26px; height:26px; color:var(--red-strong); flex-shrink:0; }
-.fu-fieldset { border:none; padding:0; margin:0 0 20px; }
-.fu-fieldset legend { font-size:1.05rem; font-weight:600; margin-bottom:10px; padding:0; }
-.fu-radios { display:grid; gap:10px; }
-.fu-radio { display:flex; align-items:center; gap:12px; min-height:56px; padding:12px 16px; background:#fff; border:2px solid var(--gray-light); border-radius:12px; cursor:pointer; font-weight:600; }
-.fu-radio input { width:22px; height:22px; flex-shrink:0; }
-.fu-radio:has(input:checked) { border-color:var(--red-strong); background:var(--red-tint); }
-.fu-card { background:var(--gray-bg); border:1.5px solid var(--gray-light); border-radius:var(--radius); padding:24px; }
-.fu-card[hidden], .fu-step[hidden] { display:none; }
-
-/* ═══ COFFEE WITH THE FOUNDER ═══ */
-.coffee-section { padding:64px 0; }
-.coffee-card { display:flex; align-items:center; justify-content:space-between; gap:32px; background:var(--gray-bg); border:1.5px solid var(--gray-light); border-radius:20px; padding:40px; }
-.coffee-copy { flex:1 1 auto; max-width:560px; }
-.coffee-copy h2 { margin-bottom:10px; }
-.coffee-copy p { font-size:1.05rem; margin-bottom:22px; }
-.coffee-photo { flex:0 0 auto; width:160px; height:160px; border-radius:50%; object-fit:cover; border:4px solid #fff; box-shadow:var(--shadow-md); }
-.coffee-photo[hidden], .coffee-section[hidden] { display:none; }
-.coffee-strip { background:#fff; border-bottom:1px solid var(--gray-light); }
-.coffee-strip[hidden] { display:none; }
-.coffee-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:4px 0; }
-.coffee-strip p { margin:0; font-size:0.9rem; }
-.coffee-strip a { display:inline-flex; align-items:center; min-height:var(--tap-min); color:var(--red-strong); font-weight:600; text-decoration:underline; }
-.coffee-strip-close { flex-shrink:0; min-height:var(--tap-min); padding:0 14px; background:none; border:1.5px solid var(--gray-light); border-radius:8px; font-size:0.85rem; font-weight:600; color:var(--near-black); cursor:pointer; }
-.coffee-page { max-width:640px; margin:0 auto; padding:40px 0 72px; }
-.coffee-page > p { font-size:1.02rem; margin-bottom:14px; }
-.coffee-form { display:grid; gap:18px; margin-top:24px; }
-.coffee-check { display:flex; gap:12px; align-items:flex-start; font-size:0.92rem; cursor:pointer; }
-.coffee-check input { width:22px; height:22px; flex-shrink:0; margin-top:1px; }
-.coffee-full { background:#FEF3E2; border:1.5px solid #E8C48A; color:#6B3F00; border-radius:12px; padding:14px 16px; font-weight:600; }
-.coffee-full[hidden], .coffee-card[hidden] { display:none; }
-.coffee-form [hidden], .coffee-page [hidden] { display:none; }
-@media (max-width:768px) {
-  .coffee-card { flex-direction:column-reverse; align-items:flex-start; padding:28px 22px; }
-  .coffee-photo { width:110px; height:110px; }
-}
-
-/* ═══ ADMIN: plans / follow-ups / coffee ═══ */
-.sj-ptable-wrap { overflow-x:auto; margin-top:14px; }
-.sj-ptable { width:100%; border-collapse:collapse; font-size:0.82rem; }
-.sj-ptable th, .sj-ptable td { padding:8px 10px; border-bottom:1px solid var(--gray-light); text-align:left; white-space:nowrap; }
-.sj-ptable th { font-weight:700; background:var(--gray-bg); }
-.sj-note { font-size:0.8rem; color:var(--gray-mid); margin:8px 0 14px; }
-.sj-range { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:8px; }
-.sj-range label { display:flex; flex-direction:column; gap:4px; font-size:0.78rem; font-weight:600; }
-.sj-pill { display:inline-block; padding:2px 8px; border-radius:100px; font-size:0.68rem; font-weight:700; background:#EEE; color:#333; }
-.sj-pill.ok { background:#E8F6F0; color:#1A7F64; }
-.sj-pill.warn { background:#FEF3E2; color:#9A5B00; }
-
 /* Reading guide — a horizontal line that follows mouse */
 #reading-guide {
   position: fixed;
@@ -3898,20 +3796,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
     </div>
   </section>
 
-  <!-- COFFEE WITH THE FOUNDER -->
-  <section class="coffee-section" id="coffee-home" aria-labelledby="coffee-home-title">
-    <div class="container">
-      <div class="coffee-card">
-        <div class="coffee-copy">
-          <h2 id="coffee-home-title">Coffee with the Founder</h2>
-          <p>Grab a coffee with me in Pune. I'd love to meet you, hear your story, and learn how we can make this work better for you.</p>
-          <button type="button" class="btn-red" onclick="showSection('coffee')">Request a coffee</button>
-        </div>
-        <img class="coffee-photo" id="coffee-photo" alt="Pratik, founder of StairlessJourney" hidden>
-      </div>
-    </div>
-  </section>
-
   <!-- FOOTER -->
   <footer role="contentinfo">
     <div class="container">
@@ -3937,7 +3821,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           <a onclick="requireLogin('submit')">Ask Us to Check a Place</a>
           <a onclick="showSection('events')">Events</a>
           <a onclick="showSection('volunteer')">Volunteer</a>
-          <a href="#coffee" id="coffee-footer-link" onclick="showSection('coffee');return false;">Coffee with the Founder</a>
         </div>
         <div class="footer-col">
           <h4>About</h4>
@@ -4010,16 +3893,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
         <button class="pill" id="filter-saved-btn" onclick="toggleFilterPill('saved')" aria-pressed="false"><span class="ico ico-sm" aria-hidden="true"><svg width="100%" height="100%"><use href="#i-heart"/></svg></span> Saved <span class="saved-count-badge" style="display:none;"></span></button>
         <button class="btn-outline-sm" onclick="clearFilters()">Clear Filters</button>
         <a href="#" onclick="openBizLoginModal();return false;" style="margin-left:auto;font-size:0.78rem;color:var(--gray-mid);text-decoration:underline;align-self:center;">Business Login</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Coffee with the Founder: slim strip, shown only when the City filter is Pune -->
-  <div class="coffee-strip" id="coffee-strip" hidden>
-    <div class="container">
-      <div class="coffee-strip-inner">
-        <p>Grab a coffee with the founder in Pune. <a href="#coffee" onclick="showSection('coffee');return false;">Request a coffee</a></p>
-        <button type="button" class="coffee-strip-close" onclick="sjCoffeeStripClose()">Close</button>
       </div>
     </div>
   </div>
@@ -4114,43 +3987,8 @@ a.is-red, .text-link-red { color: var(--red-strong); }
           Share
         </button>
       </div>
-      <div class="pp-title-row">
-        <div class="pp-title-col">
-          <h2 class="place-page-title" id="pp-name" style="font-size:clamp(2.4rem, 5vw, 4rem);">Place Name</h2>
-          <p class="place-page-meta" id="pp-meta">Category · City</p>
-        </div>
-        <div class="plan-hero" id="plan-hero">
-          <div class="plan-state">
-            <button type="button" class="btn-white plan-btn" id="plan-btn-hero" onclick="sjPlanTap('hero')" aria-haspopup="dialog" aria-controls="plan-sheet"></button>
-            <button type="button" class="plan-undo" id="plan-undo-hero" onclick="sjPlanUndo()" hidden>Undo</button>
-          </div>
-          <p class="sj-err" id="plan-tap-err-hero" role="alert"></p>
-          <div class="plan-sheet" id="plan-sheet" role="dialog" aria-modal="false" aria-labelledby="plan-sheet-title" tabindex="-1" hidden>
-            <button type="button" class="plan-sheet-close" onclick="sjPlanCloseSheet(true)">Close</button>
-            <div id="plan-sheet-form">
-              <h3 id="plan-sheet-title">Nice, we've saved this for you.</h3>
-              <p>Want this place's access details on WhatsApp? Entrance, ramp, washroom, parking, and a tip to call ahead if needed.</p>
-              <div class="form-group">
-                <label class="form-label" for="plan-wa">WhatsApp number</label>
-                <input class="form-input" id="plan-wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 98765 43210" oninput="sjPlanOnNumber()" aria-describedby="plan-wa-hint plan-wa-err">
-                <p class="sj-hint" id="plan-wa-hint">We'll only use your number to send this and one quick follow-up. Reply STOP anytime.</p>
-                <p class="sj-err" id="plan-wa-err" role="alert"></p>
-              </div>
-              <label class="plan-consent" id="plan-consent-row" hidden>
-                <input type="checkbox" id="plan-consent" aria-describedby="plan-consent-err">
-                <span>I agree that StairlessJourney may message me on WhatsApp about this place.</span>
-              </label>
-              <p class="sj-err" id="plan-consent-err" role="alert"></p>
-              <button type="button" class="btn-red" id="plan-send" onclick="sjPlanSend()">Send me the details</button>
-              <button type="button" class="plan-skip" onclick="sjPlanSkip()">No thanks, just save</button>
-              <p class="sj-err" id="plan-save-err" role="alert"></p>
-            </div>
-            <div id="plan-sheet-done" hidden>
-              <button type="button" class="plan-done" onclick="sjPlanCloseSheet(true)"><span id="plan-done-msg">Done. We'll send the details to your WhatsApp.</span><small>Tap to close</small></button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <h2 class="place-page-title" id="pp-name" style="font-size:clamp(2.4rem, 5vw, 4rem);">Place Name</h2>
+      <p class="place-page-meta" id="pp-meta">Category · City</p>
       <div class="gallery-strip" id="gallery-strip" role="list" aria-label="Place photos and videos"></div>
     </div>
   </div>
@@ -4228,114 +4066,6 @@ a.is-red, .text-link-red { color: var(--red-strong); }
     </div>
   </div>
 </div><!-- END PLACE -->
-
-<!-- ══════════════ PAGE: COFFEE WITH THE FOUNDER ══════════════ -->
-<div id="section-coffee" class="section">
-  <div class="place-page-header">
-    <div class="container" style="padding-bottom:32px;">
-      <button class="back-btn" onclick="showSection('home')" aria-label="Back to home">← Back</button>
-      <span class="section-label" style="color:rgba(255,255,255,0.7);display:block;">Pune</span>
-      <h2 class="place-page-title" style="font-size:clamp(2.2rem, 5vw, 3.4rem);">Coffee with the Founder</h2>
-      <p class="place-page-meta" style="font-size:1.05rem;">Grab a coffee with me in Pune. I'd love to meet you, hear your story, and learn how we can make this work better for you.</p>
-    </div>
-  </div>
-  <div class="container">
-    <div class="coffee-page">
-      <div id="coffee-off" hidden>
-        <p>Coffee with the Founder isn't taking requests right now. Please check back soon.</p>
-        <button type="button" class="btn-red" onclick="showSection('home')">Back to home</button>
-      </div>
-      <div id="coffee-form-wrap">
-        <p>I'm Pratik, and I started StairlessJourney. It's built for people, so I'd love to meet some of you in person over a coffee. Tell me your story, what works for you and what doesn't. No slides, no pitch, just a good conversation. It would make me really happy to meet you.</p>
-        <p>Tell me a little about you below, and I'll message you on WhatsApp to fix a time.</p>
-        <div class="coffee-full" id="coffee-full" role="status" hidden>This week's coffees are taken. Join the waiting list.</div>
-        <div class="coffee-form" id="coffee-form">
-          <div class="form-group">
-            <label class="form-label" for="coffee-name">First name</label>
-            <input class="form-input" id="coffee-name" type="text" autocomplete="given-name" aria-required="true" aria-describedby="coffee-name-err">
-            <p class="sj-err" id="coffee-name-err" role="alert"></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="coffee-wa">WhatsApp number</label>
-            <input class="form-input" id="coffee-wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 98765 43210" aria-required="true" aria-describedby="coffee-wa-hint coffee-wa-err">
-            <p class="sj-hint" id="coffee-wa-hint">Only our team can see your number.</p>
-            <p class="sj-err" id="coffee-wa-err" role="alert"></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="coffee-area">Area of Pune you're closest to</label>
-            <input class="form-input" id="coffee-area" type="text" list="coffee-area-list" placeholder="e.g. Kothrud, Baner, Viman Nagar" aria-required="true" aria-describedby="coffee-area-err">
-            <datalist id="coffee-area-list">
-              <option value="Aundh"><option value="Baner"><option value="Bavdhan"><option value="Camp"><option value="Deccan"><option value="Hadapsar"><option value="Hinjewadi"><option value="Kalyani Nagar"><option value="Katraj"><option value="Kharadi"><option value="Koregaon Park"><option value="Kothrud"><option value="Magarpatta"><option value="Pashan"><option value="Pimpri-Chinchwad"><option value="Shivajinagar"><option value="Viman Nagar"><option value="Wakad">
-            </datalist>
-            <p class="sj-err" id="coffee-area-err" role="alert"></p>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="coffee-needs">Anything I should plan for? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
-            <textarea class="form-input" id="coffee-needs" rows="3" maxlength="500" aria-describedby="coffee-needs-hint" style="resize:vertical;"></textarea>
-            <p class="sj-hint" id="coffee-needs-hint">For example step-free entrance, quiet place, accessible washroom, or someone coming with you.</p>
-          </div>
-          <div>
-            <label class="coffee-check">
-              <input type="checkbox" id="coffee-consent" aria-required="true" aria-describedby="coffee-consent-err">
-              <span>I agree that Pratik may contact me on WhatsApp about this.</span>
-            </label>
-            <p class="sj-err" id="coffee-consent-err" role="alert"></p>
-          </div>
-          <p class="sj-hint" style="font-size:0.9rem;">I'll pick a public, verified place that works for your needs. You're welcome to bring a friend or family member.</p>
-          <p class="sj-err" id="coffee-form-err" role="alert"></p>
-          <button type="button" class="btn-red" id="coffee-submit" onclick="sjCoffeeSubmit()" style="width:100%;justify-content:center;">Request a coffee</button>
-        </div>
-      </div>
-      <div class="fu-card" id="coffee-success" role="status" tabindex="-1" hidden>
-        <h3 id="coffee-success-title" style="margin-bottom:8px;">Thank you!</h3>
-        <p id="coffee-success-text" style="margin:0;">Thank you! I'll message you on WhatsApp within 3 days to fix a time.</p>
-      </div>
-    </div>
-  </div>
-</div><!-- END COFFEE -->
-
-<!-- ══════════════ PAGE: FOLLOW-UP (opened from a WhatsApp link) ══════════════ -->
-<div id="section-followup" class="section">
-  <div class="place-page-header">
-    <div class="container" style="padding-bottom:32px;">
-      <h2 class="place-page-title" id="fu-title" tabindex="-1" style="font-size:clamp(2rem, 5vw, 3rem);">Did you get to this place?</h2>
-      <p class="place-page-meta" style="font-size:1.02rem;">One tap is all we need.</p>
-    </div>
-  </div>
-  <div class="container">
-    <div class="fu-wrap">
-      <div class="fu-step" id="fu-step1">
-        <div class="fu-choices" role="group" aria-label="Did you get there?">
-          <button type="button" class="fu-btn" id="fu-went" onclick="sjFuAnswer('went')"><svg aria-hidden="true"><use href="#i-check-circle"/></svg><span>Yes, I went</span></button>
-          <button type="button" class="fu-btn" id="fu-notyet" onclick="sjFuAnswer('notyet')"><svg aria-hidden="true"><use href="#i-clock"/></svg><span>Not yet</span></button>
-          <button type="button" class="fu-btn" id="fu-couldnt" onclick="sjFuAnswer('couldnt')"><svg aria-hidden="true"><use href="#i-pin"/></svg><span>Couldn't go</span></button>
-        </div>
-        <p class="sj-err" id="fu-err1" role="alert"></p>
-      </div>
-      <div class="fu-step fu-card" id="fu-step2" hidden>
-        <fieldset class="fu-fieldset">
-          <legend>Was our information accurate?</legend>
-          <div class="fu-radios">
-            <label class="fu-radio"><input type="radio" name="fu-acc" value="yes"> Yes</label>
-            <label class="fu-radio"><input type="radio" name="fu-acc" value="mostly"> Mostly</label>
-            <label class="fu-radio"><input type="radio" name="fu-acc" value="no"> No</label>
-          </div>
-        </fieldset>
-        <div class="form-group">
-          <label class="form-label" for="fu-note">Anything we should fix? <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
-          <textarea class="form-input" id="fu-note" rows="3" maxlength="600" style="resize:vertical;"></textarea>
-        </div>
-        <p class="sj-err" id="fu-err2" role="alert"></p>
-        <button type="button" class="btn-red" id="fu-send" onclick="sjFuSend()" style="width:100%;justify-content:center;min-height:var(--tap-min);margin-top:14px;">Send</button>
-      </div>
-      <div class="fu-step fu-card" id="fu-done" role="status" tabindex="-1" hidden>
-        <h3 id="fu-done-title" style="margin-bottom:8px;">Thank you.</h3>
-        <p id="fu-done-text" style="margin:0 0 16px;"></p>
-        <button type="button" class="btn-red" onclick="showSection('explore')">Explore places</button>
-      </div>
-    </div>
-  </div>
-</div><!-- END FOLLOW-UP -->
 
 <!-- ══════════════ PAGE: ABOUT ══════════════ -->
 <div id="section-about" class="section">
@@ -5948,8 +5678,6 @@ function showSection(name) {
   if (name === 'events') { renderEventsPage(); setTimeout(testimonialInit, 100); }
   if (name === 'explore') { renderPlaces(); }
   if (name === 'volunteer') { setTimeout(reelInit, 100); }
-  if (typeof sjPlanBarSync === 'function') sjPlanBarSync(name);
-  if (name === 'coffee' && typeof sjCoffeeInit === 'function') sjCoffeeInit();
 }
 
 function toggleMobileMenu() {
@@ -6155,7 +5883,6 @@ function updateSavedCountBadge() {
 }
 
 function renderPlaces() {
-  if (typeof sjCoffeeStripSync === 'function') sjCoffeeStripSync();
   const city = document.getElementById('filter-city')?.value || '';
   const cat = document.getElementById('filter-cat')?.value || '';
   const dis = document.getElementById('filter-disability')?.value || '';
@@ -6324,7 +6051,6 @@ function openPlacePage(id) {
   // an admin is logged in and previewing it on purpose.
   if (p.active === false && !adminActive) { console.warn('Place is inactive:', id); return; }
   currentPlaceId = p.id;
-  if (typeof sjPlanOnOpenPlace === 'function') sjPlanOnOpenPlace();
   sjTrackPlaceView(p.id);
 
   document.getElementById('pp-name').textContent = p.name || '—';
@@ -6385,10 +6111,8 @@ function openPlacePage(id) {
     mapWrap.style.display = 'block';
     const mapsLink = (p.mapsUrl && p.mapsUrl.length > 30) ? p.mapsUrl : `https://maps.google.com/maps?q=${query}`;
     mapOpenBtn.onclick = () => { sjTrackMapsClick(p.id); window.open(mapsLink, '_blank', 'noopener'); };
-    window._ppMapsLink = mapsLink; if (typeof sjPlanRender === 'function') sjPlanRender();
   } else {
     mapWrap.style.display = 'none';
-    window._ppMapsLink = null; if (typeof sjPlanRender === 'function') sjPlanRender();
   }
 
   // Reviews — baked-in/volunteer note shows immediately; community-submitted
@@ -7521,7 +7245,6 @@ function sjApplyImages(images) {
     el.innerHTML = `<img src="${images.logo}" alt="StairlessJourney logo" style="width:100%;height:100%;object-fit:contain;border-radius:6px;">`;
   });
   if (images.founder) {
-    if (typeof sjCoffeePhoto === 'function') sjCoffeePhoto(images.founder);
     const av = document.querySelector('.founder-avatar');
     if (av) { av.style.background = 'none'; av.innerHTML = `<img src="${images.founder}" alt="Pratik Shingare, Founder of StairlessJourney" style="width:90px;height:90px;border-radius:50%;object-fit:cover;">`; }
   }
@@ -8606,9 +8329,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         <button class="ap-tab" data-subtab="issues" onclick="aeSubTab('issues',this)">🚩 Issues</button>
         <button class="ap-tab" data-subtab="bizupdates" onclick="aeSubTab('bizupdates',this)">📝 Business Updates</button>
         <button class="ap-tab" data-subtab="contact" onclick="aeSubTab('contact',this)">✉️ Contact Messages</button>
-        <button class="ap-tab" data-subtab="plans" onclick="aeSubTab('plans',this)">📍 Planning to go</button>
-        <button class="ap-tab" data-subtab="followups" onclick="aeSubTab('followups',this)">💬 Follow up today</button>
-        <button class="ap-tab" data-subtab="coffee" onclick="aeSubTab('coffee',this)">☕ Coffee requests</button>
       </div>
       <div id="ap-sub-content"></div>
     </div>
@@ -11776,9 +11496,6 @@ function aeSubTab(tab, btn) {
   // submissions — separate fetch/render path so owners' posts are visible
   // here without needing to open each place's business dashboard by hand.
   if (tab === 'bizupdates') { renderBizUpdatesAdmin(el); return; }
-  if (tab === 'plans') { aeRenderPlans(el); return; }
-  if (tab === 'followups') { aeRenderFollowups(el); return; }
-  if (tab === 'coffee') { aeRenderCoffee(el); return; }
 
   const fbType = tab === 'volunteers' ? 'volunteer' : tab === 'leaders' ? 'leader' : tab === 'places' ? 'place' : tab === 'issues' ? 'issue' : 'contact';
   const localKey = tab === 'volunteers' ? 'vol_submissions' : tab === 'leaders' ? 'lead_submissions' : tab === 'places' ? 'place_submissions' : tab === 'issues' ? 'issue_submissions' : 'contact_submissions';
@@ -12366,12 +12083,6 @@ window.addEventListener('load', () => {
   // just reached from the real path instead of the hash. Old shared/indexed
   // #place-<id> links keep working forever via the hash branch further down
   // — this is purely additive.
-  const _fuQ = new URLSearchParams(location.search);
-  if (_fuQ.get('followup')) {
-    sjOpenFollowup(_fuQ.get('followup'), _fuQ.get('p') || '', _fuQ.get('n') || '');
-    history.replaceState({ section: 'followup' }, '', location.pathname + location.search + '#followup');
-    return;
-  }
   const pathPlaceMatch = location.pathname.match(/^\/places\/([^/]+)\/?$/);
   if (pathPlaceMatch) {
     const slugOrId = decodeURIComponent(pathPlaceMatch[1]);
@@ -13396,574 +13107,6 @@ document.addEventListener('consentchange', (e) => {
     wasGranted = granted;
   });
 })();
-</script>
-<!-- ══════════════ "I'M PLANNING TO GO": mobile bar + announcer ══════════════ -->
-<div class="plan-live" id="plan-live" role="status" aria-live="polite" aria-atomic="true"></div>
-<div class="plan-bar" id="plan-bar" role="region" aria-label="Plan your visit">
-  <p class="sj-err" id="plan-tap-err-bar" role="alert"></p>
-  <div class="plan-bar-main">
-    <button type="button" class="btn-red plan-btn" id="plan-btn-bar" onclick="sjPlanTap('bar')" aria-haspopup="dialog" aria-controls="plan-sheet"></button>
-    <button type="button" class="plan-undo plan-undo-bar" id="plan-undo-bar" onclick="sjPlanUndo()" hidden>Undo</button>
-  </div>
-  <button type="button" class="btn-outline-sm plan-dir" id="plan-dir-bar" onclick="sjPlanDirections()">Directions</button>
-</div>
-
-<script>
-/* ═══════════════════════════════════════════════════════════════════
-   I'M PLANNING TO GO · FOLLOW-UP · COFFEE WITH THE FOUNDER
-   Everything is saved through the same "submissions" collection the other
-   public forms already use (type: plan / plan_details / followup / coffee),
-   so no new database rules are needed. Phone numbers are never shown on the
-   public site; they can only be read from the admin panel.
-   ═══════════════════════════════════════════════════════════════════ */
-const SJ_SITE = (location.protocol === 'http:' || location.protocol === 'https:') ? location.origin : 'https://stairlessjourney.com';
-const SJ_TIME_FMT = { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' };
-function sjNowStr() { return new Date().toLocaleString('en-IN', SJ_TIME_FMT); }
-function sjLocalDay(d) { d = d || new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
-function sjById(id) { return document.getElementById(id); }
-function sjVisible(el) { return !!el && el.getClientRects().length > 0; }
-function sjDeviceId() {
-  try {
-    let id = localStorage.getItem('sj_plan_device');
-    if (!id) { id = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : ('dev_' + Date.now() + '_' + Math.random().toString(36).slice(2)); localStorage.setItem('sj_plan_device', id); }
-    return id;
-  } catch (e) { return window.__sjMemDev || (window.__sjMemDev = 'mem_' + Math.random().toString(36).slice(2)); }
-}
-function sjDeviceType() {
-  const ua = navigator.userAgent || '';
-  if (/iPad|Tablet/i.test(ua)) return 'tablet';
-  if (/Mobi|Android|iPhone/i.test(ua)) return 'mobile';
-  return 'desktop';
-}
-// Announces a short message to screen readers (polite live region).
-function sjLive(msg) {
-  const el = sjById('plan-live'); if (!el) return;
-  el.textContent = '';
-  setTimeout(() => { el.textContent = msg; }, 30);
-}
-// Returns digits only, with country code (e.g. 919876543210), or null if it doesn't look like a real number.
-function sjNormalizePhone(raw) {
-  let s = String(raw || '').replace(/[\s\-().]/g, '');
-  if (!/^\+?\d+$/.test(s)) return null;
-  const plus = s[0] === '+';
-  s = s.replace(/^\+/, '');
-  if (!plus) {
-    if (s.length === 11 && s[0] === '0') s = s.slice(1);
-    if (s.length === 12 && s.startsWith('91') && /^[6-9]/.test(s.slice(2))) return s;
-    if (s.length === 10 && /^[6-9]/.test(s)) return '91' + s;
-    return null;
-  }
-  if (s.startsWith('91')) return (s.length === 12 && /^[6-9]/.test(s.slice(2))) ? s : null;
-  return (s.length >= 10 && s.length <= 15) ? s : null;
-}
-function sjCsv(rows) {
-  return rows.map(r => r.map(c => {
-    let s = c == null ? '' : String(c);
-    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;           // stop spreadsheet formulas from running
-    return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
-  }).join(',')).join('\r\n');
-}
-function sjDownloadCsv(name, rows) {
-  const blob = new Blob(['﻿' + sjCsv(rows)], { type: 'text/csv;charset=utf-8' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = name;
-  document.body.appendChild(a); a.click();
-  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
-}
-
-/* ───────────────────────── I'M PLANNING TO GO ───────────────────────── */
-let _planOpener = null, _planCloseTimer = null;
-function sjPlanPlace() { return (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(currentPlaceId)) : null; }
-// Per-device convenience only (so the button shows "Planning to go" on this
-// device today). The plans themselves are saved to the backend.
-function sjPlanLoad() { try { return JSON.parse(localStorage.getItem('sj_plans_v1') || '{}'); } catch (e) { return window.__sjPlanMem || {}; } }
-function sjPlanSave(o) { try { localStorage.setItem('sj_plans_v1', JSON.stringify(o)); } catch (e) { window.__sjPlanMem = o; } }
-function sjPlanState(placeId) { const s = sjPlanLoad()[String(placeId)]; return (s && s.planned && s.day === sjLocalDay()) ? s : null; }
-function sjPlanSet(placeId, st) { const o = sjPlanLoad(); if (st) o[String(placeId)] = st; else delete o[String(placeId)]; sjPlanSave(o); }
-
-function sjPlanRender() {
-  const p = sjPlanPlace();
-  const planned = !!(p && sjPlanState(p.id));
-  ['hero', 'bar'].forEach(k => {
-    const btn = sjById('plan-btn-' + k), undo = sjById('plan-undo-' + k);
-    if (!btn) return;
-    btn.innerHTML = planned
-      ? '<svg width="18" height="18" aria-hidden="true"><use href="#i-check"/></svg><span>Planning to go</span>'
-      : '<svg width="18" height="18" aria-hidden="true"><use href="#i-pin"/></svg><span>I\'m planning to go</span>';
-    if (undo) undo.hidden = !planned;
-  });
-  const dir = sjById('plan-dir-bar'); if (dir) dir.hidden = !window._ppMapsLink;
-}
-function sjPlanTapError(msg) { ['hero', 'bar'].forEach(k => { const e = sjById('plan-tap-err-' + k); if (e) e.textContent = msg || ''; }); }
-function sjPlanWrite(action, p, day) {
-  if (!db) return Promise.reject(new Error('Not connected'));
-  const u = (typeof currentUser !== 'undefined') ? currentUser : null;
-  return FS_SUBS().add({
-    type: 'plan', action, placeRef: String(p.id), placeName: p.name || '', city: p.city || '',
-    deviceId: sjDeviceId(), deviceType: sjDeviceType(), day,
-    userName: (u && u.name) || '', userEmail: (u && u.email) || '',
-    time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  });
-}
-async function sjPlanTap(source) {
-  const p = sjPlanPlace(); if (!p) return;
-  _planOpener = sjById('plan-btn-' + source);
-  sjPlanTapError('');
-  if (sjPlanState(p.id)) { sjPlanOpenSheet(); return; }         // already planned today: just reopen the sheet, never count twice
-  const day = sjLocalDay();
-  sjPlanSet(p.id, { planned: true, day });                       // the button changes straight away
-  sjPlanRender(); sjPlanOpenSheet();
-  sjLive('Saved. You are planning to go to ' + (p.name || 'this place') + '.');
-  try { await sjPlanWrite('go', p, day); }
-  catch (e) {
-    console.warn('Could not save plan:', e);
-    sjPlanSet(p.id, null); sjPlanRender(); sjPlanCloseSheet(false);
-    sjPlanTapError("Couldn't save. Please try again.");
-    if (_planOpener) _planOpener.focus();
-  }
-}
-async function sjPlanUndo() {
-  const p = sjPlanPlace(); const st = p && sjPlanState(p.id); if (!p || !st) return;
-  sjPlanSet(p.id, null); sjPlanCloseSheet(false); sjPlanRender(); sjPlanTapError('');
-  sjLive('Removed. You are no longer marked as planning to go.');
-  const target = sjVisible(sjById('plan-btn-hero')) ? sjById('plan-btn-hero') : sjById('plan-btn-bar');
-  if (target) target.focus();
-  try { await sjPlanWrite('undo', p, st.day); }
-  catch (e) { console.warn('Could not save undo:', e); sjPlanSet(p.id, st); sjPlanRender(); sjPlanTapError("Couldn't undo. Please try again."); }
-}
-function sjPlanOpenSheet() {
-  const sh = sjById('plan-sheet'); if (!sh) return;
-  const p = sjPlanPlace(); const st = p && sjPlanState(p.id);
-  const sent = !!(st && st.detailsSent);
-  sjById('plan-sheet-form').hidden = sent;
-  sjById('plan-sheet-done').hidden = !sent;
-  if (sent) sjById('plan-done-msg').textContent = "We've got your number. The details are on their way to your WhatsApp.";
-  clearTimeout(_planCloseTimer);
-  sh.hidden = false; sh.focus();
-}
-function sjPlanCloseSheet(returnFocus) {
-  const sh = sjById('plan-sheet'); if (!sh || sh.hidden) return;
-  clearTimeout(_planCloseTimer);
-  sh.hidden = true;
-  if (returnFocus !== false) {
-    const cands = [_planOpener, sjById('plan-btn-hero'), sjById('plan-btn-bar')];
-    const btn = cands.find(sjVisible);
-    if (btn) btn.focus();
-  }
-}
-function sjPlanOnNumber() { const row = sjById('plan-consent-row'); if (row) row.hidden = !sjById('plan-wa').value.trim(); }
-function sjPlanSkip() { sjPlanCloseSheet(true); sjLive('Saved.'); }
-async function sjPlanSend() {
-  const p = sjPlanPlace(); const st = p && sjPlanState(p.id); if (!p || !st) return;
-  const input = sjById('plan-wa'), consent = sjById('plan-consent');
-  const werr = sjById('plan-wa-err'), cerr = sjById('plan-consent-err'), serr = sjById('plan-save-err');
-  werr.textContent = ''; cerr.textContent = ''; serr.textContent = ''; input.removeAttribute('aria-invalid');
-  const raw = input.value.trim();
-  if (!raw) { werr.textContent = 'Add your WhatsApp number, or choose "No thanks, just save".'; input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
-  const num = sjNormalizePhone(raw);
-  if (!num) { werr.textContent = "That number doesn't look right. Try a 10-digit mobile number, like 98765 43210."; input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
-  if (!consent.checked) { cerr.textContent = 'Please tick the box so we can message you.'; consent.focus(); return; }
-  const btn = sjById('plan-send'); const label = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Sending…';
-  try {
-    if (!db) throw new Error('Not connected');
-    const u = (typeof currentUser !== 'undefined') ? currentUser : null;
-    const ref = await FS_SUBS().add({
-      type: 'plan_details', placeRef: String(p.id), placeName: p.name || '', city: p.city || '', day: st.day,
-      whatsapp: num, name: (u && u.name) || '', userEmail: (u && u.email) || '', consent: true,
-      deviceId: sjDeviceId(), deviceType: sjDeviceType(), detailsStatus: 'pending', followStatus: 'pending',
-      time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    sjPlanSet(p.id, { ...st, detailsSent: true, detailsId: ref.id });
-    sjById('plan-sheet-form').hidden = true; sjById('plan-sheet-done').hidden = false;
-    sjById('plan-done-msg').textContent = "Done. We'll send the details to your WhatsApp.";
-    sjLive("Done. We'll send the details to your WhatsApp.");
-    _planCloseTimer = setTimeout(() => sjPlanCloseSheet(true), 3500);
-  } catch (e) {
-    console.warn('Could not save details request:', e);
-    serr.textContent = "Couldn't save. Please try again.";        // what they typed stays in the field
-  } finally { btn.disabled = false; btn.textContent = label; }
-}
-function sjPlanDirections() {
-  const p = sjPlanPlace(); if (!p || !window._ppMapsLink) return;
-  sjTrackMapsClick(p.id);
-  window.open(window._ppMapsLink, '_blank', 'noopener');
-}
-function sjPlanOnOpenPlace() {
-  sjPlanCloseSheet(false);
-  const w = sjById('plan-wa'); if (w) { w.value = ''; w.removeAttribute('aria-invalid'); }
-  const c = sjById('plan-consent'); if (c) c.checked = false;
-  const row = sjById('plan-consent-row'); if (row) row.hidden = true;
-  ['plan-wa-err', 'plan-consent-err', 'plan-save-err'].forEach(i => { const e = sjById(i); if (e) e.textContent = ''; });
-  sjPlanTapError('');
-  sjPlanRender();
-}
-function sjPlanBarSync(name) {
-  document.body.classList.toggle('on-place', name === 'place');
-  if (name !== 'place') sjPlanCloseSheet(false);
-}
-function sjPlanBarMeasure() {
-  const bar = sjById('plan-bar'); if (!bar) return;
-  const h = bar.getBoundingClientRect().height;
-  if (h > 0) document.documentElement.style.setProperty('--plan-bar-h', Math.ceil(h) + 'px');
-}
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Escape') return;
-  const sh = sjById('plan-sheet');
-  if (sh && !sh.hidden) { e.preventDefault(); sjPlanCloseSheet(true); }
-});
-if ('ResizeObserver' in window && sjById('plan-bar')) new ResizeObserver(sjPlanBarMeasure).observe(sjById('plan-bar'));
-
-/* ───────────────────────── FOLLOW-UP PAGE ───────────────────────── */
-let _fu = null;
-function sjOpenFollowup(detailsId, placeRef, name) {
-  _fu = { detailsId: detailsId || '', placeRef: placeRef || '', name: name || '' };
-  const place = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(placeRef)) : null;
-  const nm = (place && place.name) || name || 'this place';
-  _fu.placeName = nm;
-  sjById('fu-title').textContent = 'Did you get to ' + nm + '?';
-  sjById('fu-step1').hidden = false; sjById('fu-step2').hidden = true; sjById('fu-done').hidden = true;
-  ['fu-went', 'fu-notyet', 'fu-couldnt', 'fu-send'].forEach(i => { sjById(i).disabled = false; });
-  ['fu-err1', 'fu-err2'].forEach(i => { sjById(i).textContent = ''; });
-  (typeof _origShowSection === 'function' ? _origShowSection : showSection)('followup');
-  sjById('fu-title').focus();
-}
-function sjFuFinish(title, text) {
-  sjById('fu-step1').hidden = true; sjById('fu-step2').hidden = true;
-  sjById('fu-done-title').textContent = title; sjById('fu-done-text').textContent = text;
-  sjById('fu-done').hidden = false; sjById('fu-done').focus();
-}
-function sjFuWrite(extra) {
-  if (!db) return Promise.reject(new Error('Not connected'));
-  return FS_SUBS().add({
-    type: 'followup', detailsId: _fu.detailsId, placeRef: _fu.placeRef, placeName: _fu.placeName,
-    day: sjLocalDay(), time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp(), ...extra
-  });
-}
-async function sjFuAnswer(ans) {
-  if (!_fu) return;
-  const err = sjById('fu-err1'); err.textContent = '';
-  ['fu-went', 'fu-notyet', 'fu-couldnt'].forEach(i => { sjById(i).disabled = true; });
-  try { await sjFuWrite({ stage: 'answer', answer: ans }); }
-  catch (e) { console.warn('Could not save follow-up:', e); err.textContent = "Couldn't save. Please try again."; ['fu-went', 'fu-notyet', 'fu-couldnt'].forEach(i => { sjById(i).disabled = false; }); return; }
-  if (ans === 'went') {
-    sjById('fu-step1').hidden = true; sjById('fu-step2').hidden = false;
-    const first = document.querySelector('input[name="fu-acc"]'); if (first) first.focus();
-  } else if (ans === 'notyet') sjFuFinish('No problem.', "Thanks for letting us know. We hope you get there soon.");
-  else sjFuFinish('Thanks for telling us.', "We're sorry it didn't work out this time. We hope you can go another day.");
-}
-async function sjFuSend() {
-  if (!_fu) return;
-  const err = sjById('fu-err2'); err.textContent = '';
-  const picked = document.querySelector('input[name="fu-acc"]:checked');
-  if (!picked) { err.textContent = 'Please choose Yes, Mostly or No.'; const f = document.querySelector('input[name="fu-acc"]'); if (f) f.focus(); return; }
-  const acc = picked.value; const note = sjById('fu-note').value.trim().slice(0, 600);
-  const btn = sjById('fu-send'); btn.disabled = true;
-  try {
-    await sjFuWrite({ stage: 'accuracy', answer: 'went', accuracy: acc, note });
-    if (acc === 'mostly' || acc === 'no') {
-      // Anything less than "Yes" goes into the same list as Flag an Issue.
-      const place = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(_fu.placeRef)) : null;
-      await FS_SUBS().add({
-        type: 'issue', placeId: place ? place.id : _fu.placeRef, placeName: _fu.placeName || 'Unknown place',
-        issue: 'Follow-up reply: our information was ' + (acc === 'no' ? 'not accurate' : 'mostly accurate') + (note ? '. ' + note : '. No details added.'),
-        submittedBy: 'Visitor (follow-up)', submittedByEmail: '', source: 'followup',
-        time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    }
-    sjFuFinish('Thank you.', acc === 'yes' ? "Glad it matched. Your reply helps us keep every listing honest." : "Thank you. We'll look into it and fix the listing.");
-  } catch (e) { console.warn('Could not save follow-up:', e); err.textContent = "Couldn't save. Please try again."; btn.disabled = false; }
-}
-
-/* ───────────────────────── COFFEE WITH THE FOUNDER ───────────────────────── */
-let _coffeeCfg = { enabled: true, slots: 3, taken: 0 }, _coffeeCfgLoaded = false;
-async function sjCoffeeLoadCfg(force) {
-  if ((_coffeeCfgLoaded && !force) || !db) return _coffeeCfg;
-  try {
-    const s = await db.collection('siteData').doc('coffee').get();
-    if (s.exists) {
-      const d = s.data() || {};
-      if (typeof d.enabled === 'boolean') _coffeeCfg.enabled = d.enabled;
-      if (d.slots != null && !isNaN(Number(d.slots))) _coffeeCfg.slots = Math.max(0, Number(d.slots));
-      _coffeeCfg.taken = (d.takenWeek === sjWeekKey()) ? (Number(d.taken) || 0) : 0;
-    }
-    _coffeeCfgLoaded = true;
-  } catch (e) { /* settings unreadable: stay on the safe defaults (on, 3 a week) */ }
-  sjCoffeeApplyVisibility();
-  return _coffeeCfg;
-}
-function sjCoffeeIsFull() { return _coffeeCfg.taken >= _coffeeCfg.slots; }
-function sjCoffeeApplyVisibility() {
-  const on = !!_coffeeCfg.enabled;
-  const home = sjById('coffee-home'); if (home) home.hidden = !on;
-  const fl = sjById('coffee-footer-link'); if (fl) fl.hidden = !on;
-  sjCoffeeStripSync();
-  if (sjById('section-coffee') && sjById('section-coffee').classList.contains('active')) sjCoffeeRenderPage();
-}
-// "Close" means "not now": it only lasts until the page is reloaded, so someone
-// who closes it today still sees it the next time they come back.
-let _coffeeStripClosed = false;
-function sjCoffeeStripSync() {
-  const s = sjById('coffee-strip'); if (!s) return;
-  const city = (sjById('filter-city') || {}).value || '';
-  // Shown for All Cities and Pune; hidden once someone picks any other city (Kolkata, Goa).
-  s.hidden = !((city === '' || city === 'Pune') && _coffeeCfg.enabled && !_coffeeStripClosed);
-}
-function sjCoffeeStripClose() {
-  _coffeeStripClosed = true;
-  sjCoffeeStripSync();
-  const f = sjById('filter-city'); if (f) f.focus();
-}
-function sjCoffeePhoto(src) { const img = sjById('coffee-photo'); if (img && src) { img.src = src; img.hidden = false; } }
-function sjCoffeeInit() { sjCoffeeRenderPage(); sjCoffeeLoadCfg().then(sjCoffeeRenderPage); }
-function sjCoffeeRenderPage() {
-  const off = !_coffeeCfg.enabled, full = sjCoffeeIsFull();
-  sjById('coffee-off').hidden = !off;
-  sjById('coffee-form-wrap').hidden = off || !sjById('coffee-success').hidden;
-  sjById('coffee-full').hidden = off || !full;
-  sjById('coffee-submit').textContent = full ? 'Join the waiting list' : 'Request a coffee';
-}
-async function sjCoffeeSubmit() {
-  const g = id => sjById(id);
-  const errs = { name: g('coffee-name-err'), wa: g('coffee-wa-err'), area: g('coffee-area-err'), consent: g('coffee-consent-err'), form: g('coffee-form-err') };
-  Object.values(errs).forEach(e => { e.textContent = ''; });
-  ['coffee-name', 'coffee-wa', 'coffee-area', 'coffee-consent'].forEach(i => g(i).removeAttribute('aria-invalid'));
-  const name = g('coffee-name').value.trim(), waRaw = g('coffee-wa').value.trim(), area = g('coffee-area').value.trim();
-  const needs = g('coffee-needs').value.trim().slice(0, 500);
-  const num = waRaw ? sjNormalizePhone(waRaw) : null;
-  let firstBad = null;
-  const bad = (id, errEl, msg) => { errEl.textContent = msg; g(id).setAttribute('aria-invalid', 'true'); if (!firstBad) firstBad = g(id); };
-  if (!name) bad('coffee-name', errs.name, 'Please tell me your first name.');
-  if (!waRaw) bad('coffee-wa', errs.wa, 'Please add your WhatsApp number, for example 98765 43210.');
-  else if (!num) bad('coffee-wa', errs.wa, "That number doesn't look right. Try a 10-digit mobile number, like 98765 43210.");
-  if (!area) bad('coffee-area', errs.area, "Please tell me which area of Pune you're closest to.");
-  if (!g('coffee-consent').checked) bad('coffee-consent', errs.consent, 'Please tick the box so I can message you.');
-  if (firstBad) { firstBad.focus(); return; }
-  const wk = sjWeekKey();
-  let already = false; try { already = localStorage.getItem('sj_coffee_week') === wk; } catch (e) { already = window.__sjCoffeeWeek === wk; }
-  if (already) { errs.form.textContent = "You've already asked this week. I'll message you soon."; return; }
-  const full = sjCoffeeIsFull();
-  const btn = g('coffee-submit'); const label = btn.textContent;
-  btn.disabled = true; btn.textContent = 'Sending…';
-  try {
-    if (!db) throw new Error('Not connected');
-    await FS_SUBS().add({
-      type: 'coffee', name, whatsapp: num, area, needs, consent: true, waitlist: full, weekKey: wk,
-      status: 'New', adminNote: '', city: 'Pune', time: sjNowStr(), createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    try { localStorage.setItem('sj_coffee_week', wk); } catch (e) { window.__sjCoffeeWeek = wk; }
-    g('coffee-form-wrap').hidden = true;
-    g('coffee-success-title').textContent = full ? "You're on the list." : 'Thank you!';
-    g('coffee-success-text').textContent = full
-      ? "Thank you! You're on the waiting list. I'll message you on WhatsApp as soon as a spot opens."
-      : "Thank you! I'll message you on WhatsApp within 3 days to fix a time.";
-    g('coffee-success').hidden = false; g('coffee-success').focus();
-  } catch (e) {
-    console.warn('Could not save coffee request:', e);
-    errs.form.textContent = "Couldn't send. Please try again.";   // everything they typed stays in place
-  } finally { btn.disabled = false; btn.textContent = label; }
-}
-(function sjCoffeeBoot() { let tries = 0; const t = setInterval(() => { if (db) { clearInterval(t); sjCoffeeLoadCfg(); } else if (++tries > 40) clearInterval(t); }, 500); })();
-
-/* ───────────────────────── ADMIN: shared helpers ───────────────────────── */
-const SJ_FU_ANS = { went: 'Went', notyet: 'Not yet', couldnt: "Couldn't go" };
-const SJ_ACC = { yes: 'Yes', mostly: 'Mostly', no: 'No' };
-const SJ_COFFEE_STATUSES = ['New', 'Contacted', 'Scheduled', 'Done', 'Cancelled'];
-const _ts = d => (d.createdAt && d.createdAt.seconds) || 0;
-function sjCopyText(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text);
-  return new Promise((res, rej) => {
-    const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy') ? res() : rej(); } catch (e) { rej(e); } ta.remove();
-  });
-}
-function sjFirstName(n) { return String(n || '').trim().split(/\s+/)[0] || 'there'; }
-function sjDetailsMessage(d) {
-  const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(d.placeRef)) : null;
-  const nm = d.placeName || (p && p.name) || 'the place';
-  const v = x => x || 'Not checked';
-  const lines = ['Hi ' + sjFirstName(d.name) + ', here are the access details for ' + nm + ', from StairlessJourney:'];
-  if (p) {
-    lines.push('• Step-free entrance: ' + v(p.stepFree), '• Ramp: ' + v(p.ramp), '• Accessible toilet: ' + v(p.toilet), '• Parking: ' + v(p.parking));
-  }
-  lines.push('Tip: it\'s worth a quick call ahead' + (p && p.phone ? ' (' + p.phone + ')' : '') + ' to confirm before you go.');
-  if (p && typeof placeUrlPath === 'function') lines.push('Full details: ' + SJ_SITE + placeUrlPath(p));
-  lines.push('Reply STOP anytime and we won\'t message you again.');
-  return lines.join('\n');
-}
-function sjFollowupLink(d) { return SJ_SITE + '/?followup=' + encodeURIComponent(d.id) + '&p=' + encodeURIComponent(d.placeRef || '') + '&n=' + encodeURIComponent(d.placeName || ''); }
-function sjFollowupMessage(d) { return 'Hi ' + sjFirstName(d.name) + ', it\'s StairlessJourney. Did you get to ' + (d.placeName || 'the place') + '? Tell us in one tap: ' + sjFollowupLink(d); }
-
-/* ───────────────────────── ADMIN: Planning to go ───────────────────────── */
-async function aeRenderPlans(el) {
-  const [plans, details, fups] = await Promise.all([sjGetSubmissions('plan'), sjGetSubmissions('plan_details'), sjGetSubmissions('followup')]);
-  window._aePlanData = { plans, details, fups };
-  const today = new Date(), from = new Date(); from.setDate(from.getDate() - 29);
-  el.innerHTML = `
-    <div class="sj-range">
-      <label>From<input type="date" class="form-input" id="ae-plan-from" value="${sjLocalDay(from)}" onchange="aePlansCompute()"></label>
-      <label>To<input type="date" class="form-input" id="ae-plan-to" value="${sjLocalDay(today)}" onchange="aePlansCompute()"></label>
-      <button type="button" class="ap-btn" onclick="aePlansCsv()">Export CSV</button>
-    </div>
-    <p class="sj-note">Everything here is <strong>planning to go</strong> or <strong>self-reported</strong>. It is what people tell us, not proof of a visit. Each device counts once per place per day.</p>
-    <div id="ae-plan-out"></div>`;
-  aePlansCompute();
-}
-function aePlansRows() {
-  const { plans, details, fups } = window._aePlanData;
-  const from = sjById('ae-plan-from').value || '0000-00-00', to = sjById('ae-plan-to').value || '9999-99-99';
-  const inRange = d => d.day >= from && d.day <= to;
-  const byKey = {};
-  plans.filter(inRange).sort((a, b) => (_ts(a) - _ts(b)) || ((a.action === 'undo') - (b.action === 'undo')))
-    .forEach(e => { byKey[e.placeRef + '|' + e.deviceId + '|' + e.day] = e; });          // last tap of the day wins
-  const rows = {};
-  const row = (ref, name, city) => rows[ref] || (rows[ref] = { ref, name: name || ref, city: city || '', plans: 0, details: 0, went: 0, notyet: 0, couldnt: 0, yes: 0, mostly: 0, no: 0 });
-  Object.values(byKey).filter(e => e.action === 'go').forEach(e => { row(e.placeRef, e.placeName, e.city).plans++; });
-  details.filter(inRange).forEach(d => { row(d.placeRef, d.placeName, d.city).details++; });
-  const ansBy = {}, accBy = {};
-  fups.filter(inRange).sort((a, b) => _ts(a) - _ts(b)).forEach(f => { (f.stage === 'accuracy' ? accBy : ansBy)[f.detailsId + '|' + f.stage] = f; });
-  Object.values(ansBy).forEach(f => { const r = row(f.placeRef, f.placeName); if (r[f.answer] != null) r[f.answer]++; });
-  Object.values(accBy).forEach(f => { const r = row(f.placeRef, f.placeName); if (r[f.accuracy] != null) r[f.accuracy]++; });
-  const list = Object.values(rows).map(r => {
-    const p = (typeof PLACES !== 'undefined') ? PLACES.find(x => String(x.id) === String(r.ref)) : null;
-    if (p) { r.name = p.name || r.name; r.city = p.city || r.city; }
-    r.directions = (p && p.mapsClicks) || 0;
-    return r;
-  }).sort((a, b) => b.plans - a.plans || a.name.localeCompare(b.name));
-  return { list, from, to };
-}
-function aePlansCompute() {
-  const { list } = aePlansRows();
-  const sum = k => list.reduce((s, r) => s + r[k], 0);
-  const tile = (n, l) => `<div class="ap-stat-box"><div class="ap-stat-num">${n}</div><div class="ap-stat-lbl">${l}</div></div>`;
-  const out = sjById('ae-plan-out');
-  out.innerHTML = `<div class="ap-stats-row">
-      ${tile(sum('plans'), 'Planning to go')}${tile(sum('details'), 'Asked for WhatsApp details')}
-      ${tile(sum('went'), 'Went (self-reported)')}${tile(sum('notyet'), 'Not yet')}${tile(sum('couldnt'), "Couldn't go")}
-    </div>
-    <div class="ap-stats-row">
-      ${tile(sum('yes'), 'Info accurate: Yes')}${tile(sum('mostly'), 'Mostly')}${tile(sum('no'), 'No')}
-    </div>
-    ${list.length ? `<div class="sj-ptable-wrap"><table class="sj-ptable"><thead><tr>
-      <th>Place</th><th>City</th><th>Planning to go</th><th>Details asked</th><th>Went</th><th>Not yet</th><th>Couldn't go</th><th>Accurate: Yes / Mostly / No</th><th>Directions clicks (all time)</th></tr></thead><tbody>
-      ${list.map(r => `<tr><td>${escH(r.name)}</td><td>${escH(r.city)}</td><td>${r.plans}</td><td>${r.details}</td><td>${r.went}</td><td>${r.notyet}</td><td>${r.couldnt}</td><td>${r.yes} / ${r.mostly} / ${r.no}</td><td>${r.directions}</td></tr>`).join('')}
-      </tbody></table></div>
-      <p class="sj-note">Replies are counted on the day they were sent. Phone and website clicks aren't tracked yet; directions clicks are the only click counter that exists today, and it isn't date-filtered.</p>`
-      : '<p class="sj-note">Nothing in this date range yet.</p>'}`;
-}
-function aePlansCsv() {
-  const { list, from, to } = aePlansRows();
-  const rows = [['Place', 'City', 'Planning to go (self-reported)', 'Asked for WhatsApp details', 'Went (self-reported)', 'Not yet', "Couldn't go", 'Info accurate: Yes', 'Info accurate: Mostly', 'Info accurate: No', 'Directions clicks (all time)', 'From', 'To']];
-  list.forEach(r => rows.push([r.name, r.city, r.plans, r.details, r.went, r.notyet, r.couldnt, r.yes, r.mostly, r.no, r.directions, from, to]));
-  sjDownloadCsv('planning-to-go_' + from + '_to_' + to + '.csv', rows);
-}
-
-/* ───────────────────────── ADMIN: Follow up today ───────────────────────── */
-let _aeFu = {};
-async function aeRenderFollowups(el) {
-  const [details, fups, plans] = await Promise.all([sjGetSubmissions('plan_details'), sjGetSubmissions('followup'), sjGetSubmissions('plan')]);
-  const today = sjLocalDay(); const cut = new Date(); cut.setDate(cut.getDate() - 14); const cutDay = sjLocalDay(cut);
-  const last = {};
-  plans.sort((a, b) => (_ts(a) - _ts(b)) || ((a.action === 'undo') - (b.action === 'undo'))).forEach(e => { last[e.placeRef + '|' + e.deviceId + '|' + e.day] = e.action; });
-  const replied = {};
-  fups.filter(f => f.stage === 'answer').forEach(f => { replied[f.detailsId] = f.answer; });
-  _aeFu = {}; details.forEach(d => { _aeFu[d.id] = d; });
-  const newest = (a, b) => _ts(b) - _ts(a);
-  const toSend = details.filter(d => d.detailsStatus !== 'sent').sort(newest);
-  const due = details.filter(d => d.day < today && d.day >= cutDay && last[d.placeRef + '|' + d.deviceId + '|' + d.day] !== 'undo').sort((a, b) => {
-    const rank = d => replied[d.id] ? 2 : (d.followStatus === 'sent' ? 1 : 0); return rank(a) - rank(b) || newest(a, b);
-  });
-  const card = (d, kind) => {
-    const status = kind === 'follow'
-      ? (replied[d.id] ? `<span class="sj-pill ok">Replied: ${escH(SJ_FU_ANS[replied[d.id]] || replied[d.id])}</span>` : d.followStatus === 'sent' ? '<span class="sj-pill warn">Sent</span>' : '<span class="sj-pill">Not sent</span>')
-      : '<span class="sj-pill">Not sent</span>';
-    const msg = kind === 'follow' ? sjFollowupMessage(d) : sjDetailsMessage(d);
-    const canMark = !(kind === 'follow' && (replied[d.id] || d.followStatus === 'sent'));
-    return `<div class="sub-card">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;"><div class="sub-name">${escH(d.name || 'Visitor')} · ${escH(d.placeName || '')}</div><div class="sub-time">${escH(d.day || '')}</div></div>
-      <div class="sub-row">📱 <strong>+${escH(d.whatsapp || '')}</strong> ${status}</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;">
-        <button type="button" class="ap-btn ap-btn-sm" onclick="aeFuCopy('${escH(d.id)}','${kind}',this)">Copy message</button>
-        <a class="ap-btn ap-btn-sm" style="text-decoration:none;" href="https://wa.me/${escH(d.whatsapp || '')}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener noreferrer">Open WhatsApp</a>
-        ${canMark ? `<button type="button" class="ap-btn ap-btn-sm" onclick="aeFuMark('${escH(d.id)}','${kind}')">Mark sent</button>` : ''}
-      </div></div>`;
-  };
-  el.innerHTML = `
-    <p class="sj-note">Nothing is sent automatically. Copy each message, or open it straight in WhatsApp, then mark it sent. When someone replies to the follow-up link it turns to <strong>Replied</strong> by itself.</p>
-    <h4 style="margin:6px 0 8px;">Follow up today (${due.length})</h4>
-    ${due.length ? due.map(d => card(d, 'follow')).join('') : '<p class="sj-note">No follow-ups due. People who shared a number appear here the day after they planned to go.</p>'}
-    <h4 style="margin:22px 0 8px;">Details to send (${toSend.length})</h4>
-    ${toSend.length ? toSend.map(d => card(d, 'details')).join('') : '<p class="sj-note">No one is waiting for details.</p>'}`;
-}
-async function aeFuCopy(id, kind, btn) {
-  const d = _aeFu[id]; if (!d) return;
-  try { await sjCopyText(kind === 'follow' ? sjFollowupMessage(d) : sjDetailsMessage(d)); if (btn) { const t = btn.textContent; btn.textContent = 'Copied'; setTimeout(() => { btn.textContent = t; }, 1500); } }
-  catch (e) { alert('Could not copy. Use "Open WhatsApp" instead.'); }
-}
-async function aeFuMark(id, kind) {
-  const field = kind === 'follow' ? 'followStatus' : 'detailsStatus';
-  try { await FS_SUBS().doc(id).update({ [field]: 'sent', [field + 'At']: firebase.firestore.FieldValue.serverTimestamp() }); }
-  catch (e) { alert('Could not update. Check your connection and try again.'); return; }
-  aeRenderFollowups(sjById('ap-sub-content'));
-}
-
-/* ───────────────────────── ADMIN: Coffee requests ───────────────────────── */
-async function aeRenderCoffee(el) {
-  const items = (await sjGetSubmissions('coffee')).sort((a, b) => _ts(b) - _ts(a));
-  let cfg = { enabled: true, slots: 3 };
-  try { const s = await db.collection('siteData').doc('coffee').get(); if (s.exists) { const d = s.data() || {}; if (typeof d.enabled === 'boolean') cfg.enabled = d.enabled; if (d.slots != null && !isNaN(Number(d.slots))) cfg.slots = Number(d.slots); } } catch (e) {}
-  const wk = sjWeekKey();
-  const taken = items.filter(i => i.weekKey === wk && !i.waitlist && i.status !== 'Cancelled').length;
-  // Keep the public "this week is full" state in step with the real requests.
-  try { await db.collection('siteData').doc('coffee').set({ enabled: cfg.enabled, slots: cfg.slots, takenWeek: wk, taken }, { merge: true }); _coffeeCfg.taken = taken; } catch (e) { console.warn('Could not sync coffee slots:', e); }
-  window._aeCoffee = items;
-  el.innerHTML = `
-    <div class="ap-card" style="margin-bottom:14px;">
-      <div class="ap-card-title">Settings</div>
-      <label style="display:flex;gap:10px;align-items:center;margin:8px 0;"><input type="checkbox" id="ae-coffee-on" ${cfg.enabled ? 'checked' : ''} style="width:20px;height:20px;"> Show Coffee with the Founder on the site</label>
-      <label style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:8px 0;">Coffees per week <input type="number" min="0" max="50" id="ae-coffee-slots" class="form-input" value="${cfg.slots}" style="width:90px;"></label>
-      <p class="sj-note">This week: ${taken} of ${cfg.slots} taken. Once full, new requests join the waiting list. Cancelled ones free up a slot.</p>
-      <button type="button" class="ap-btn" onclick="aeCoffeeSaveSettings()">Save settings</button>
-      <button type="button" class="ap-btn" onclick="aeCoffeeCsv()" style="margin-left:6px;">Export CSV</button>
-    </div>
-    ${items.length ? items.map(i => `<div class="sub-card">
-      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start;">
-        <div class="sub-name">${escH(i.name || '—')} ${i.waitlist ? '<span class="sj-pill warn">Waiting list</span>' : ''}</div>
-        <div class="sub-time">${escH(i.time || '')}</div>
-      </div>
-      <div class="sub-row">📱 <a href="https://wa.me/${escH(i.whatsapp || '')}" target="_blank" rel="noopener noreferrer"><strong>+${escH(i.whatsapp || '')}</strong></a></div>
-      <div class="sub-row">📍 <strong>${escH(i.area || '—')}</strong></div>
-      ${i.needs ? `<p style="font-size:0.88rem;margin:6px 0;">${escH(i.needs)}</p>` : ''}
-      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;margin-top:8px;">
-        <label style="font-size:0.78rem;font-weight:600;display:flex;flex-direction:column;gap:4px;">Status
-          <select class="form-input" onchange="aeCoffeeStatus('${escH(i.id)}',this.value)">${SJ_COFFEE_STATUSES.map(s => `<option${(i.status || 'New') === s ? ' selected' : ''}>${s}</option>`).join('')}</select></label>
-        <label style="font-size:0.78rem;font-weight:600;display:flex;flex-direction:column;gap:4px;flex:1 1 200px;">Notes
-          <textarea class="form-input" rows="2" id="ae-cn-${escH(i.id)}" maxlength="1000">${escH(i.adminNote || '')}</textarea></label>
-        <button type="button" class="ap-btn ap-btn-sm" onclick="aeCoffeeNote('${escH(i.id)}')">Save note</button>
-        <button type="button" class="ap-btn ap-btn-danger ap-btn-sm" onclick="deleteSubmission('${escH(i.id)}','coffee',null,null)">Delete</button>
-      </div></div>`).join('') : '<p class="sj-note">No coffee requests yet.</p>'}`;
-}
-async function aeCoffeeSaveSettings() {
-  const on = sjById('ae-coffee-on').checked; const slots = Math.max(0, Math.min(50, parseInt(sjById('ae-coffee-slots').value, 10) || 0));
-  try { await db.collection('siteData').doc('coffee').set({ enabled: on, slots }, { merge: true }); }
-  catch (e) { alert('Could not save settings. Check your connection and try again.'); return; }
-  _coffeeCfg.enabled = on; _coffeeCfg.slots = slots; sjCoffeeApplyVisibility();
-  aeRenderCoffee(sjById('ap-sub-content'));
-}
-async function aeCoffeeStatus(id, status) {
-  try { await FS_SUBS().doc(id).update({ status }); } catch (e) { alert('Could not update the status. Try again.'); }
-  aeRenderCoffee(sjById('ap-sub-content'));
-}
-async function aeCoffeeNote(id) {
-  const t = sjById('ae-cn-' + id); if (!t) return;
-  try { await FS_SUBS().doc(id).update({ adminNote: t.value.trim().slice(0, 1000) }); alert('Note saved.'); } catch (e) { alert('Could not save the note. Try again.'); }
-}
-function aeCoffeeCsv() {
-  const rows = [['Name', 'WhatsApp', 'Area', 'Needs note', 'Date requested', 'Waiting list', 'Status', 'Notes']];
-  (window._aeCoffee || []).forEach(i => rows.push([i.name, i.whatsapp, i.area, i.needs, i.time, i.waitlist ? 'Yes' : 'No', i.status || 'New', i.adminNote]));
-  sjDownloadCsv('coffee-requests_' + sjLocalDay() + '.csv', rows);
-}
 </script>
 </body>
 </html>
