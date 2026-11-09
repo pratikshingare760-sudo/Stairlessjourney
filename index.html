@@ -13985,55 +13985,7 @@ function aeCoffeeCsv() {
   const rows = [['Name', 'WhatsApp', 'Area', 'Needs note', 'Date requested', 'Waiting list', 'Status', 'Notes']];
   (window._aeCoffee || []).forEach(i => rows.push([i.name, i.whatsapp, i.area, i.needs, i.time, i.waitlist ? 'Yes' : 'No', i.status || 'New', i.adminNote]));
   sjDownloadCsv('coffee-requests_' + sjLocalDay() + '.csv', rows);
-}<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>StairlessJourney</title>
-<script>
-// Old-style place links (/places/<name>) can't be served as separate pages here, so hand them
-// to the main page, which opens that place from its #place-<name> address.
-(function () {
-  var m = location.pathname.match(/^\/places\/([^\/]+)\/?$/);
-  if (m) location.replace('/' + location.search + '#place-' + m[1]);
-})();
+}
 </script>
-<style>
-  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #fff; color: #222; text-align: center; padding: 24px; box-sizing: border-box; }
-  a { color: #b3261e; font-weight: 600; }
-</style>
-</head>
-<body>
-  <p>Taking you to StairlessJourney… <br><a href="/">Open the homepage</a></p>
 </body>
 </html>
-
-</script>
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex">
-<title>StairlessJourney</title>
-<script>
-// Old-style place links (/places/<name>) can't be served as separate pages here, so hand them
-// to the main page, which opens that place from its #place-<name> address.
-(function () {
-  var m = location.pathname.match(/^\/places\/([^\/]+)\/?$/);
-  if (m) location.replace('/' + location.search + '#place-' + m[1]);
-})();
-</script>
-<style>
-  body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #fff; color: #222; text-align: center; padding: 24px; box-sizing: border-box; }
-  a { color: #b3261e; font-weight: 600; }
-</style>
-</head>
-<body>
-  <p>Taking you to StairlessJourney… <br><a href="/">Open the homepage</a></p>
-</body>
-</html>
-
