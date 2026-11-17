@@ -26,25 +26,25 @@
   // of <body>) because this site switches pages without reloading.
   gtag('config', 'G-HLPM2X71M2', { send_page_view: false });
 </script>
-<title>StairlessJourney: Move Freely, Know Before You Go.</title>
-<meta name="description" content="StairlessJourney is India's physically-verified wheelchair accessibility map. Every listed café, restaurant, and public space in Pune, Goa, and Kolkata is audited in person, not just crowdsourced, so you know before you go.">
+<title>StairlessJourney: Accessible Places in Pune, Goa &amp; Kolkata</title>
+<meta name="description" content="Find accessible places in Pune, Goa and Kolkata with photos and honest access details: step-free entry, ramps, lifts and accessible toilets. Move Freely, Know Before You Go.">
 <link rel="canonical" href="https://stairlessjourney.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="StairlessJourney">
-<meta property="og:title" content="StairlessJourney: Move Freely, Know Before You Go.">
-<meta property="og:description" content="India's physically-verified wheelchair accessibility map. Every place is audited in person across Pune, Goa, and Kolkata, so you know before you go.">
+<meta property="og:title" content="StairlessJourney: Accessible Places in Pune, Goa &amp; Kolkata">
+<meta property="og:description" content="Find accessible places in Pune, Goa and Kolkata with photos and honest access details: step-free entry, ramps, lifts and accessible toilets.">
 <meta property="og:url" content="https://stairlessjourney.com/">
 <meta property="og:locale" content="en_IN">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="StairlessJourney: Move Freely, Know Before You Go.">
-<meta name="twitter:description" content="India's physically-verified wheelchair accessibility map, audited in person across Pune, Goa, and Kolkata.">
+<meta name="twitter:description" content="India's physically-verified accessibility map, audited in person across Pune, Goa, and Kolkata.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "NGO",
   "name": "StairlessJourney",
   "url": "https://stairlessjourney.com/",
-  "description": "A physically-verified wheelchair accessibility mapping and audit initiative documenting accessible cafés, restaurants, and public spaces across Indian cities.",
+  "description": "A physically-verified accessibility mapping and audit initiative documenting accessible cafés, restaurants, and public spaces across Indian cities.",
   "areaServed": ["Pune", "Goa", "Kolkata", "India"],
   "sameAs": []
 }
@@ -59,11 +59,11 @@
 :root {
   /* ── BRAND RED — dual role (Phase 1) ──────────────────────
      --red         large decorative fills/elements
-     --red-strong  copy-bearing text + white-text buttons (about 6.5:1 on white). Brand red is #e3213b; the site shows it a touch softer (#c81d34, about 88% brightness, same hue, 5.7:1 with white) because the full brightness looked harsh on screens */
-  --red:        #c81d34;
-  --red-strong: #b11a2e;
-  --red-dark:   #961627;   /* hover/active for --red-strong */
-  --red-light:  #e24a5f;
+     --red-strong  copy-bearing text + white-text buttons (about 6.5:1 on white). Brand red #e3213b, measured from the brand's Instagram post (4.6:1 with white: fine for white text, not for small red text on tinted backgrounds) */
+  --red:        #e3213b;
+  --red-strong: #b81a30;
+  --red-dark:   #a8172c;   /* hover/active for --red-strong */
+  --red-light:  #f05a6e;
   --red-tint:   color-mix(in oklch, var(--red) 8%, white);
   --red-tint2:  color-mix(in oklch, var(--red) 16%, white);
 
@@ -593,13 +593,13 @@ footer {
   padding: 4px 10px; border-radius: 100px;
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
 }
-.badge-verified { background: #1A7F64; color: white; }
+.badge-verified { background: #14694F; color: white; }
 .badge-community { background: #1D5FA6; color: white; }
 .place-foundby-badge {
   position: absolute; top: 12px; right: 12px;
   padding: 4px 10px; border-radius: 100px;
   font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em;
-  background: linear-gradient(135deg, #F4AC4E, #E0862A); color: white;
+  background: linear-gradient(135deg, #945A00, #E0862A); color: white;
   max-width: 62%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   box-shadow: 0 2px 6px rgba(0,0,0,0.18);
 }
@@ -624,13 +624,13 @@ footer {
   display: flex; align-items: center; gap: 4px;
   font-size: 0.78rem; font-weight: 500;
 }
-.icon-yes { color: #1A7F64; }
-.icon-no { color:#b11a2e; }
-.icon-partial { color: #D68910; }
+.icon-yes { color: #14694F; }
+.icon-no { color:#b81a30; }
+.icon-partial { color: #8A5A00; }
 .place-footer {
   display: flex; justify-content: space-between; align-items: center;
 }
-.stars { color: #F4AC4E; font-size: 0.85rem; }
+.stars { color: #945A00; font-size: 0.85rem; }
 .btn-view {
   font-size: 0.82rem; font-weight: 600; color: var(--red-strong);
   background: var(--red-tint); padding: 5px 12px; border-radius: 6px;
@@ -651,7 +651,7 @@ footer {
   font-size: 0.85rem; font-weight: 600; color: var(--near-black);
 }
 .review-star { color: var(--gray-light); cursor: pointer; transition: color 0.1s ease; user-select: none; }
-.review-star.filled { color: #D68910; }
+.review-star.filled { color: #8A5A00; }
 .review-star:focus-visible { outline: 2px solid var(--red-strong); outline-offset: 2px; border-radius: 3px; }
 .form-input {
   padding: 10px 14px; border-radius: 8px;
@@ -685,15 +685,15 @@ footer {
   cursor: pointer; background: white;
   transition: all var(--transition);
 }
-.yn-btn.selected-yes { background: #E8F6F0; border-color: #1A7F64; color: #1A7F64; }
+.yn-btn.selected-yes { background: #E8F6F0; border-color: #14694F; color: #14694F; }
 .yn-btn.selected-no { background: #FDF2F1; border-color: var(--red); color: var(--red-strong); }
-.yn-btn.selected-partial { background: #FEF9E7; border-color: #D68910; color: #D68910; }
+.yn-btn.selected-partial { background: #FEF9E7; border-color: #8A5A00; color: #8A5A00; }
 .submit-success {
   text-align: center; padding: 40px;
   background: #E8F6F0; border-radius: var(--radius);
   display: none;
 }
-.submit-success h3 { color: #1A7F64; margin-bottom: 8px; }
+.submit-success h3 { color: #14694F; margin-bottom: 8px; }
 
 /* ── PLACE PAGE ── */
 .place-page-header { background: var(--red); color: white; padding: 40px 0 0; }
@@ -1114,7 +1114,7 @@ footer {
 .bizdash-star-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.82rem; }
 .bizdash-star-row span:first-child { width: 34px; flex-shrink: 0; color: var(--gray-mid); }
 .bizdash-star-track { flex: 1; height: 8px; background: var(--gray-light); border-radius: 100px; overflow: hidden; }
-.bizdash-star-fill { height: 100%; background: #D68910; border-radius: 100px; }
+.bizdash-star-fill { height: 100%; background: #8A5A00; border-radius: 100px; }
 .bizdash-star-row span:last-child { width: 22px; text-align: right; color: var(--gray-mid); flex-shrink: 0; }
 
 .bizdash-review-card { padding: 16px 0; border-bottom: 1px solid var(--gray-light); }
@@ -1311,8 +1311,8 @@ footer {
   font-size: 0.78rem; font-weight: 600;
 }
 .success-msg {
-  background: #E8F6F0; border: 1px solid #1A7F64;
-  color: #1A7F64; padding: 12px 16px; border-radius: 8px;
+  background: #E8F6F0; border: 1px solid #14694F;
+  color: #14694F; padding: 12px 16px; border-radius: 8px;
   font-size: 0.9rem; display: none;
 }
 .success-msg.show { display: block; }
@@ -1794,7 +1794,7 @@ body.admin-active #navbar { top: 54px; }
   border: 1px solid rgba(255,255,255,0.1);
 }
 .atb-nav-btn:hover { background:rgba(255,255,255,0.13); color:white; }
-.atb-nav-btn.active { background:rgba(200,29,52,0.25); color:#FF8F8F; border-color:rgba(200,29,52,0.4); }
+.atb-nav-btn.active { background:rgba(227,33,59,0.25); color:#FF8F8F; border-color:rgba(227,33,59,0.4); }
 .atb-btn-save { background:#22C55E !important; color:white !important; border-color:#22C55E !important; }
 .atb-btn-save:hover { background:#16A34A !important; }
 .atb-btn-exit { background:rgba(255,255,255,0.04) !important; color:rgba(255,255,255,0.4) !important; }
@@ -1869,18 +1869,18 @@ body.admin-active #navbar { top: 54px; }
 .ap-item-sub { font-size:0.75rem; color:var(--gray-mid); }
 .ap-item-actions { display:flex; gap:6px; flex-shrink:0; }
 .ap-badge { display:inline-flex; align-items:center; gap:3px; padding:2px 8px; border-radius:100px; font-size:0.68rem; font-weight:700; }
-.ap-badge-green { background:#E8F6F0; color:#1A7F64; }
+.ap-badge-green { background:#E8F6F0; color:#14694F; }
 .ap-badge-blue { background:#EBF3FF; color:#1D5FA6; }
-.ap-badge-orange { background:#FEF9E7; color:#D68910; }
+.ap-badge-orange { background:#FEF9E7; color:#8A5A00; }
 .ap-badge-purple { background:#F3F0FF; color:#6D28D9; }
 .ap-badge-red { background:var(--red-tint); color: var(--red-strong); }
 
 /* YN toggles */
 .ap-yn { display:flex; gap:5px; }
 .ap-yn-btn { padding:5px 12px; border-radius:6px; border:1.5px solid var(--gray-light); font-size:0.78rem; font-weight:600; cursor:pointer; background:white; font-family:'DM Sans',sans-serif; transition:all 0.15s; }
-.ap-yn-btn.y { background:#E8F6F0; border-color:#1A7F64; color:#1A7F64; }
+.ap-yn-btn.y { background:#E8F6F0; border-color:#14694F; color:#14694F; }
 .ap-yn-btn.n { background:var(--red-tint); border-color:var(--red); color: var(--red-strong); }
-.ap-yn-btn.p { background:#FEF9E7; border-color:#D68910; color:#D68910; }
+.ap-yn-btn.p { background:#FEF9E7; border-color:#8A5A00; color:#8A5A00; }
 
 /* Inline edit form (collapsible) */
 .ap-inline-form { background:var(--gray-bg); border-radius:10px; padding:14px; margin-top:8px; border:1px solid var(--gray-light); display:none; }
@@ -2078,7 +2078,7 @@ body.admin-mode #navbar { top: 52px; }
   background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5);
   border: 1px solid rgba(255,255,255,0.1);
 }
-.atb-btn-exit:hover { background: rgba(200,29,52,0.3); color:#FF8F8F; border-color:rgba(200,29,52,0.4); }
+.atb-btn-exit:hover { background: rgba(227,33,59,0.3); color:#FF8F8F; border-color:rgba(227,33,59,0.4); }
 
 /* Admin save flash */
 .save-flash {
@@ -2233,7 +2233,7 @@ body.admin-mode [data-eid-img]:not(#navbar *):hover {
 }
 .sub-badge-vol { background: #EBF3FF; color: #1D5FA6; }
 .sub-badge-lead { background: #F3F0FF; color: #6D28D9; }
-.sub-badge-place { background: #E8F6F0; color: #1A7F64; }
+.sub-badge-place { background: #E8F6F0; color: #14694F; }
 /* ── gallery admin item ends here ── */
 
 /* ══ VOLUNTEER PAGE — 2-col layout ══ */
@@ -2295,8 +2295,8 @@ body.admin-mode [data-eid-img]:not(#navbar *):hover {
 .pw-step-num { font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:20px; }
 .pw-volunteer-list { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-bottom:20px; }
 .pw-vol-chip { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); border-radius:10px; padding:8px 14px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:8px; color:rgba(255,255,255,0.7); font-size:0.85rem; font-weight:500; }
-.pw-vol-chip:hover { background:rgba(200,29,52,0.25); border-color:rgba(200,29,52,0.5); color:white; }
-.pw-vol-chip.selected { background:rgba(200,29,52,0.35); border-color:var(--red); color:white; }
+.pw-vol-chip:hover { background:rgba(227,33,59,0.25); border-color:rgba(227,33,59,0.5); color:white; }
+.pw-vol-chip.selected { background:rgba(227,33,59,0.35); border-color:var(--red); color:white; }
 .pw-vol-avatar { width:28px; height:28px; border-radius:50%; background:var(--red); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:white; flex-shrink:0; overflow:hidden; }
 .pw-vol-avatar img { width:100%; height:100%; object-fit:cover; }
 .pw-back-btn { background:none; border:none; color:rgba(255,255,255,0.4); font-size:0.8rem; cursor:pointer; font-family:'DM Sans',sans-serif; padding:4px; margin-top:8px; transition:color 0.2s; }
@@ -2320,7 +2320,7 @@ body.admin-mode [data-eid-img]:not(#navbar *):hover {
 .office-status-badge { padding:4px 12px; border-radius:100px; font-size:0.72rem; font-weight:700; }
 .office-tbtn { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.65); padding:5px 12px; border-radius:7px; cursor:pointer; font-size:0.76rem; font-weight:600; font-family:'DM Sans',sans-serif; transition:all 0.2s; display:flex; align-items:center; gap:5px; }
 .office-tbtn:hover { background:rgba(255,255,255,0.13); color:white; }
-.office-tbtn.active { background:rgba(200,29,52,0.3); color:#FF8F8F; border-color:rgba(200,29,52,0.4); }
+.office-tbtn.active { background:rgba(227,33,59,0.3); color:#FF8F8F; border-color:rgba(227,33,59,0.4); }
 
 /* Office canvas area */
 .office-canvas-wrap {
@@ -2487,7 +2487,7 @@ body.admin-mode [data-eid-img]:not(#navbar *):hover {
 .cctv-controls { display:flex; gap:6px; }
 .cctv-btn { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.65); padding:5px 10px; border-radius:6px; cursor:pointer; font-size:0.8rem; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
 .cctv-btn:hover { background:rgba(255,255,255,0.15); color:white; }
-.cctv-btn.playing { background:rgba(200,29,52,0.2); color:#FF8F8F; border-color:rgba(200,29,52,0.4); }
+.cctv-btn.playing { background:rgba(227,33,59,0.2); color:#FF8F8F; border-color:rgba(227,33,59,0.4); }
 .cctv-legend { background:#111; padding:8px 14px; display:flex; gap:10px; flex-wrap:wrap; flex-shrink:0; border-top:1px solid rgba(255,255,255,0.06); }
 .cctv-legend-item { display:flex; align-items:center; gap:5px; font-size:0.68rem; color:rgba(255,255,255,0.5); }
 .cctv-legend-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
@@ -2806,7 +2806,7 @@ html.link-highlight [role="button"] {
   text-underline-offset: 3px;
   text-decoration-thickness: 2px;
   text-decoration-color: var(--red);
-  outline: 1px dashed rgba(200,29,52, 0.4);
+  outline: 1px dashed rgba(227,33,59, 0.4);
   outline-offset: 2px;
 }
 
@@ -2814,7 +2814,7 @@ html.link-highlight [role="button"] {
 html.focus-boost *:focus-visible {
   outline: 3px solid var(--red) !important;
   outline-offset: 3px !important;
-  box-shadow: 0 0 0 6px rgba(200,29,52, 0.18) !important;
+  box-shadow: 0 0 0 6px rgba(227,33,59, 0.18) !important;
   border-radius: 4px !important;
 }
 
@@ -2924,7 +2924,7 @@ html.focus-boost *:focus-visible {
 .sj-range { display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; margin-bottom:8px; }
 .sj-range label { display:flex; flex-direction:column; gap:4px; font-size:0.78rem; font-weight:600; }
 .sj-pill { display:inline-block; padding:2px 8px; border-radius:100px; font-size:0.68rem; font-weight:700; background:#EEE; color:#333; }
-.sj-pill.ok { background:#E8F6F0; color:#1A7F64; }
+.sj-pill.ok { background:#E8F6F0; color:#14694F; }
 .sj-pill.warn { background:#FEF3E2; color:#9A5B00; }
 
 /* Reading guide — a horizontal line that follows mouse */
@@ -2932,9 +2932,9 @@ html.focus-boost *:focus-visible {
   position: fixed;
   left: 0; right: 0; top: 0;
   height: 32px;
-  background: rgba(200,29,52, 0.10);
-  border-top: 1px solid rgba(200,29,52, 0.35);
-  border-bottom: 1px solid rgba(200,29,52, 0.35);
+  background: rgba(227,33,59, 0.10);
+  border-top: 1px solid rgba(227,33,59, 0.35);
+  border-bottom: 1px solid rgba(227,33,59, 0.35);
   pointer-events: none;
   z-index: 9998;
   display: none;
@@ -3027,7 +3027,7 @@ html.reading-guide-on #reading-guide { display: block; }
   position: absolute;
   top: -200px; right: -200px;
   width: 500px; height: 500px;
-  background: radial-gradient(circle, rgba(200,29,52, 0.08) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(227,33,59, 0.08) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -3063,7 +3063,7 @@ html.reading-guide-on #reading-guide { display: block; }
 }
 .help-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(200,29,52, 0.12);
+  box-shadow: 0 20px 50px rgba(227,33,59, 0.12);
 }
 .help-card:hover::after { border-color: var(--red); }
 .help-card-icon {
@@ -3307,8 +3307,8 @@ a.is-red, .text-link-red { color: var(--red-strong); }
 
 
 /* ═══════════ UX PASS · Nov 2026 ═══════════
-   Brand red (softened #e3213b → #c81d34) = --red (big areas, icons, buttons with white text: 5.7:1).
-   --red-strong #b11a2e = red TEXT on light backgrounds and small text. */
+   Brand red #e3213b = --red (big areas, icons, buttons with white text: 4.6:1).
+   --red-strong #b81a30 = red TEXT on light backgrounds and small text. */
 [hidden]{ display:none !important; }
 
 /* ── Header: one-line buttons, account menu ── */
@@ -3343,7 +3343,7 @@ a.is-red, .text-link-red { color: var(--red-strong); }
 #browse-cities-grid.city-grid{ grid-template-columns:repeat(6,1fr); }
 .city-cell{ display:block; }
 .city-span-2{ grid-column:span 2; } .city-span-3{ grid-column:span 3; } .city-span-6{ grid-column:span 6; }
-.city-card{ padding:0; text-align:left; position:relative; overflow:hidden; display:block; width:100%; min-height:190px; border:2px solid transparent; font-family:inherit; color:#fff; background:var(--near-black); border-radius:var(--radius); cursor:pointer; }
+.city-card{ text-decoration:none; padding:0; text-align:left; position:relative; overflow:hidden; display:block; width:100%; min-height:190px; border:2px solid transparent; font-family:inherit; color:#fff; background:var(--near-black); border-radius:var(--radius); cursor:pointer; }
 .city-card.city-card-small{ min-height:120px; }
 .city-card-img{ position:absolute; inset:0; background-size:cover; background-position:center; background-color:var(--red-strong); }
 .city-card-pin{ position:absolute; top:16px; right:16px; width:28px; height:28px; color:#fff; }
@@ -3425,6 +3425,11 @@ footer p,.footer-brand p{ color:rgba(255,255,255,.85) !important; }
 .gal-lb-close:focus-visible,.gal-lb-nav:focus-visible{ outline:3px solid #fff; outline-offset:3px; }
 body.gal-lb-open{ overflow:hidden; }
 
+
+/* ── Contrast fixes from the WAVE report ── */
+.about-hero .section-label,.contact-page-header .section-label,.a11y-page-header .section-label,.vol-page-header .section-label,.events-page-header .section-label,.hero .section-label,[style*="background:var(--red)"] .section-label{ color:#fff !important; }
+.about-hero p,.contact-page-header p,.a11y-page-header p,.vol-page-header p,.events-page-header p{ color:#fff !important; }
+.place-page-header .back-btn,.place-page-meta{ color:#fff !important; }
 </style>
 <!-- Leaflet (OpenStreetMap) — open-source map, no API key needed -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
@@ -3526,7 +3531,6 @@ body.gal-lb-open{ overflow:hidden; }
     </symbol>
 
     <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
-    <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
     <symbol id="i-search-s" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
     <!-- Accessibility / feature icons -->
     <symbol id="i-wheelchair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -4058,6 +4062,7 @@ body.gal-lb-open{ overflow:hidden; }
         <div class="footer-col">
           <h4>Platform</h4>
           <a onclick="showSection('explore')">Explore Places</a>
+          <a href="/accessible-places/">All accessible places</a>
           <a onclick="requireLogin('submit')">Ask Us to Check a Place</a>
           <a onclick="showSection('events')">Events</a>
           <a onclick="showSection('volunteer')">Volunteer</a>
@@ -4074,9 +4079,9 @@ body.gal-lb-open{ overflow:hidden; }
         <div class="footer-col">
           <h4>Cities</h4>
           <div class="sj-footer-city-links">
-          <a onclick="showSection('explore');filterByCity('Pune')">Pune</a>
-          <a onclick="showSection('explore');filterByCity('Kolkata')">Kolkata</a>
-          <a onclick="showSection('explore');filterByCity('Goa')">Goa</a>
+          <a href="/pune/" onclick="showSection('explore');filterByCity('Pune');return false;">Pune</a>
+          <a href="/kolkata/" onclick="showSection('explore');filterByCity('Kolkata');return false;">Kolkata</a>
+          <a href="/goa/" onclick="showSection('explore');filterByCity('Goa');return false;">Goa</a>
           </div>
         </div>
       </div>
@@ -4214,11 +4219,11 @@ body.gal-lb-open{ overflow:hidden; }
         </div>
 
         <div id="submit-success" class="submit-success" role="alert">
-          <div style="width:56px;height:56px;margin:0 auto 16px;background:#E8F6F0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#1A7F64;">
+          <div style="width:56px;height:56px;margin:0 auto 16px;background:#E8F6F0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#14694F;">
             <svg width="32" height="32" aria-hidden="true"><use href="#i-check"/></svg>
           </div>
           <h3>We've got it.</h3>
-          <p id="sub-success-text" style="color:#1A7F64;">Thank you for telling us. Our team will verify it, and once it's done you'll find its accessibility details on the Explore page.</p>
+          <p id="sub-success-text" style="color:#14694F;">Thank you for telling us. Our team will verify it, and once it's done you'll find its accessibility details on the Explore page.</p>
           <button class="btn-red" style="margin-top:24px;" onclick="resetSubmitForm()">Tell us about another place</button>
         </div>
       </div>
@@ -4295,7 +4300,7 @@ body.gal-lb-open{ overflow:hidden; }
           <div style="background:var(--gray-bg);border-radius:var(--radius);padding:24px;margin-bottom:24px;">
             <h3 style="margin-bottom:16px;">Who is this place for?</h3>
             <div style="margin-bottom:12px;">
-              <span style="font-size:0.82rem;font-weight:600;color:#1A7F64;">✓ Best suited for:</span>
+              <span style="font-size:0.82rem;font-weight:600;color:#14694F;">✓ Best suited for:</span>
               <p style="margin-top:4px;" id="pp-suited">—</p>
             </div>
             <div>
@@ -5036,7 +5041,7 @@ body.gal-lb-open{ overflow:hidden; }
           <div class="bizdash-card-title">Printable report</div>
           <p style="font-size:0.82rem;color:var(--gray-mid);margin:0 0 10px;">Weekly view counts and a summary for whatever period you pick — opens your browser's print dialog, where "Save as PDF" gives you a file.</p>
           <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <select class="form-input" id="bizdash-report-range" style="flex:0 0 150px;">
+            <select class="form-input" id="bizdash-report-range" style="flex:0 0 150px;" aria-label="Report date range">
               <option value="1">Last 1 month</option>
               <option value="3">Last 3 months</option>
               <option value="6">Last 6 months</option>
@@ -5054,7 +5059,7 @@ body.gal-lb-open{ overflow:hidden; }
           <div class="bizdash-card-title">Saved reply</div>
           <p style="font-size:0.82rem;color:var(--gray-mid);margin:0 0 10px;">Write a starting reply once — a "Use saved reply" button will fill it in on any review, ready to edit before you send.</p>
           <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <textarea class="form-input" id="bizdash-reply-template" rows="2" placeholder="e.g. Thank you for visiting and for the detailed feedback — we're glad it was helpful!" style="flex:1;min-width:200px;resize:vertical;"></textarea>
+            <textarea class="form-input" id="bizdash-reply-template" rows="2" placeholder="e.g. Thank you for visiting and for the detailed feedback — we're glad it was helpful!" style="flex:1;min-width:200px;resize:vertical;" aria-label="Review reply template"></textarea>
             <button class="btn-outline-sm" onclick="bizSaveReplyTemplate()">Save</button>
           </div>
         </div>
@@ -5081,8 +5086,8 @@ body.gal-lb-open{ overflow:hidden; }
         <div class="bizdash-panel-sub">Post news — a new ramp, a discount, seasonal hours — for anyone viewing your listing.</div>
         <div class="bizdash-card">
           <div style="display:flex;gap:8px;margin-bottom:4px;flex-wrap:wrap;">
-            <select class="form-input" id="bizdash-update-outlet" style="display:none;flex:0 0 160px;"></select>
-            <input type="text" class="form-input" id="bizdash-update-text" placeholder="e.g. New ramp installed at the side entrance!" style="flex:1;">
+            <select class="form-input" id="bizdash-update-outlet" style="display:none;flex:0 0 160px;" aria-label="Which outlet this update is for"></select>
+            <input type="text" class="form-input" id="bizdash-update-text" placeholder="e.g. New ramp installed at the side entrance!" style="flex:1;" aria-label="Update text">
             <button class="btn-red" onclick="bizAddUpdate()">Post</button>
           </div>
           <p style="font-size:0.8rem;color:var(--gray-mid);margin:8px 0 0;">Have new photos or videos of your place? Send them to <strong>stairlessjourneyofficial@gmail.com</strong> and we'll get them added.</p>
@@ -5096,11 +5101,11 @@ body.gal-lb-open{ overflow:hidden; }
         <div class="bizdash-panel-sub">Your login details for this dashboard.</div>
         <div class="bizdash-card">
           <div class="form-group form-full" style="margin-bottom:4px;">
-            <label class="form-label">Username</label>
+            <label class="form-label" for="bizdash-profile-username">Username</label>
             <input class="form-input" id="bizdash-profile-username" type="text" disabled>
           </div>
           <div class="form-group form-full" style="margin-bottom:4px;" id="bizdash-profile-email-row">
-            <label class="form-label">Contact Email</label>
+            <label class="form-label" for="bizdash-profile-email">Contact Email</label>
             <input class="form-input" id="bizdash-profile-email" type="text" disabled>
           </div>
           <p style="font-size:0.85rem;color:var(--gray-mid);margin-top:10px;">Need your password changed, or this email updated? Contact StairlessJourney and we'll take care of it.</p>
@@ -5195,7 +5200,7 @@ body.gal-lb-open{ overflow:hidden; }
   <div class="modal" style="max-width:640px;text-align:left;">
     <button class="modal-close" onclick="closeModal('biz-dashboard-modal')" aria-label="Close">✕</button>
     <div style="font-size:1.8rem;margin-bottom:6px;" aria-hidden="true">📊</div>
-    <h2 id="biz-dash-name" style="margin-bottom:2px;"></h2>
+    <h2 id="biz-dash-name" style="margin-bottom:2px;">Your business</h2>
     <div id="biz-dash-email" style="font-size:0.85rem;color:var(--gray-mid);margin-bottom:8px;"></div>
     <p class="sub" style="margin-bottom:16px;">A preview of what this place's own business dashboard could look like, admin-only for now, until businesses have their own log-in.</p>
     <div class="ap-stats-row" id="biz-dash-stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px;"></div>
@@ -5207,7 +5212,7 @@ body.gal-lb-open{ overflow:hidden; }
     <div>
       <div style="font-weight:700;margin-bottom:8px;">📣 Updates</div>
       <div style="display:flex;gap:8px;margin-bottom:10px;">
-        <input type="text" class="form-input" id="biz-dash-update-text" placeholder="e.g. New ramp installed at the side entrance!" style="flex:1;">
+        <input type="text" class="form-input" id="biz-dash-update-text" placeholder="e.g. New ramp installed at the side entrance!" style="flex:1;" aria-label="Update text">
         <button class="btn-red" onclick="addPlaceUpdate()">Post</button>
       </div>
       <div id="biz-dash-updates"></div>
@@ -5262,7 +5267,7 @@ body.gal-lb-open{ overflow:hidden; }
       <label class="form-label" for="biz-login-pass">Password</label>
       <input class="form-input" id="biz-login-pass" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')bizLogin()">
     </div>
-    <p id="biz-login-error" style="color:#b11a2e;font-size:0.82rem;min-height:1.2em;margin-bottom:10px;"></p>
+    <p id="biz-login-error" style="color:#b81a30;font-size:0.82rem;min-height:1.2em;margin-bottom:10px;"></p>
     <button class="btn-red" onclick="bizLogin()" style="width:100%;justify-content:center;">Log In</button>
     <p style="font-size:0.78rem;color:var(--gray-mid);margin-top:14px;text-align:center;">Don't have a login yet? Contact us to get your place set up.</p>
   </div>
@@ -6360,11 +6365,11 @@ function renderPlaces() {
     <a class="place-card" role="listitem" tabindex="0" href="${placeUrlPath(p)}"
          onclick="${sjCardClick}"
          onkeypress="if(event.key==='Enter')openPlacePage(${p.id})"
-         aria-label="${esc(p.name)}, ${esc(p.category)}, ${esc(p.city)}. ${p.verified ? 'Community Visited' : 'Submitted by Community'}.">
+         aria-label="${esc(p.name)}, ${esc(p.category)}, ${esc(p.city)}. ${p.verified ? 'Verified by our team' : 'Submitted by Community'}.">
       <div class="place-img" aria-hidden="true" style="${cardThumb ? `background-image:url('${cardThumb}');background-size:cover;background-position:center;` : ''}">
         ${cardThumb ? '' : `<svg style="width:48px;height:48px;color: var(--red-strong);opacity:0.7;" aria-hidden="true"><use href="#i-pin"/></svg>`}
         <span class="place-badge ${p.verified ? 'badge-verified' : 'badge-community'}">
-          ${p.verified ? '✓ Community Visited' : '⊕ Submitted by Community'}
+          ${p.verified ? '✓ Verified by our team' : '⊕ Submitted by Community'}
         </span>
         ${p.foundBy ? `<span class="place-foundby-badge" title="Found by ${esc(p.foundBy)}">🔎 Found by ${esc(p.foundBy)}</span>` : ''}
         <button class="place-save-btn ${isPlaceSaved(p.id) ? 'saved' : ''}" onclick="event.stopPropagation();toggleSavePlace(${p.id})" aria-label="${isPlaceSaved(p.id) ? 'Remove from saved places' : 'Save this place'}" aria-pressed="${isPlaceSaved(p.id)}">${isPlaceSaved(p.id) ? '♥' : '♡'}</button>
@@ -6389,7 +6394,7 @@ function renderPlaces() {
 // Keeps the homepage "Verified Listings" number and the Explore city-card
 // counts in sync with the real Explore data (PLACES), instead of the old
 // hardcoded plain text. Counts every place regardless of badge — Community
-// Visited and Submitted by Community both count the same; the badge only
+// Team-verified and Submitted by Community both count the same; the badge only
 // credits how a place was found, not whether it's published. Called every
 // time PLACES is (re)loaded, so it updates for every visitor whenever an
 // admin adds/removes/edits a place — no manual number-typing needed.
@@ -6437,17 +6442,17 @@ function sjRenderBrowseGrids() {
       const label = `${n} verified listing${n === 1 ? '' : 's'}`;
       return `
       <div role="listitem" class="city-cell city-span-${spanMap[city]}">
-        <button type="button" class="city-card${small ? ' city-card-small' : ''}" onclick="showSection('explore');filterByCity('${esc(city)}')" aria-label="Browse ${esc(city)}: ${label}${small ? ', just started' : ''}">
+        <a class="city-card${small ? ' city-card-small' : ''}" href="/${sjSeoSlug(city)}/" onclick="showSection('explore');filterByCity('${esc(city)}');return false;" aria-label="Browse ${esc(city)}: ${label}${small ? ', just started' : ''}">
           <span class="city-card-img" aria-hidden="true"${photo ? ` style="background-image:url('${photo}')"` : ''}></span>
           ${photo ? '' : '<svg class="city-card-pin" aria-hidden="true"><use href="#i-pin"/></svg>'}
           <span class="city-card-shade" aria-hidden="true"></span>
           <span class="city-card-body"><span class="city-card-name">${esc(city)}</span><span class="city-card-count">${label}</span>${small ? '<span class="city-card-tag">Just started</span>' : ''}</span>
-        </button>
+        </a>
       </div>`;
     }).join('') : '<p style="color:var(--gray-mid);">Cities will appear here as places are added.</p>';
     // Footer city lists (every page) use the same data, so they never disagree with this section
     if (cities.length) document.querySelectorAll('.sj-footer-city-links').forEach(el => {
-      el.innerHTML = cities.map(c => `<a onclick="showSection('explore');filterByCity('${esc(c)}')">${esc(c)}</a>`).join('');
+      el.innerHTML = cities.map(c => `<a href="/${sjSeoSlug(c)}/" onclick="showSection('explore');filterByCity('${esc(c)}');return false;">${esc(c)}</a>`).join('');
     });
   }
   const catEl = document.getElementById('browse-categories-grid');
@@ -6472,7 +6477,7 @@ function sjRenderBrowseGrids() {
 
 function syncHomeCounters() {
   sjRenderBrowseGrids();
-  // Both badge types — Community Visited and Submitted by Community — are
+  // Both badge types — Verified by our team and Submitted by Community — are
   // published, counted listings. The badge only credits how a place was
   // found; it was never meant to gate whether it counts. Places switched to
   // "Inactive" in the admin panel are excluded from every count here, same
@@ -7760,11 +7765,11 @@ function sjApplyReels(reels) {
 }
 
 // ── Testimonials (public read via siteData/main — same doc, same rules, nothing new to set up) ──
-const TESTI_COLORS = ['#c81d34','#1D5FA6','#1A7F64','#6D28D9','#D97706','#DB2777','#0891B2','#65A30D'];
+const TESTI_COLORS = ['#e3213b','#1D5FA6','#14694F','#6D28D9','#D97706','#DB2777','#0891B2','#65A30D'];
 const DEFAULT_TESTIMONIALS = [
-  { id:'d1', name:'Ananya Sharma', meta:'Attended · Accessibility Walk, Pune · May 2025', quote:"Attending the Accessibility Walk in Pune opened my eyes. I had no idea how many barriers existed right in my own neighbourhood. This movement matters.", color:'#c81d34' },
+  { id:'d1', name:'Ananya Sharma', meta:'Attended · Accessibility Walk, Pune · May 2025', quote:"Attending the Accessibility Walk in Pune opened my eyes. I had no idea how many barriers existed right in my own neighbourhood. This movement matters.", color:'#e3213b' },
   { id:'d2', name:'Rohan Mehta', meta:'Volunteer · Documentation Sprint, Kolkata · May 2026', quote:"I joined the Kolkata documentation sprint expecting data entry. Instead I learned to see the city differently. Every step, counter, and doorway tells you who a place was built for.", color:'#1D5FA6' },
-  { id:'d3', name:'Priya Kulkarni', meta:'Volunteer · Community Audit Drive · Goa', quote:"Volunteering for the Goa audit drive was one of the most meaningful days I've spent. We mapped 15 places in one day. You could feel the difference we were making.", color:'#1A7F64' },
+  { id:'d3', name:'Priya Kulkarni', meta:'Volunteer · Community Audit Drive · Goa', quote:"Volunteering for the Goa audit drive was one of the most meaningful days I've spent. We mapped 15 places in one day. You could feel the difference we were making.", color:'#14694F' },
   { id:'d4', name:'Samir Joshi', meta:'Community Member · Pune', quote:"As a wheelchair user, I've been burned by inaccurate accessibility information too many times. StairlessJourney is the platform I've been waiting for. Finally, verified.", color:'#6D28D9' },
 ];
 let _testimonials = DEFAULT_TESTIMONIALS;
@@ -7779,7 +7784,7 @@ function sjApplyTestimonials(list) {
         <div class="testimonial-quote">"</div>
         <p class="testimonial-text${(t.quote || '').length > 200 ? ' t-clamp' : ''}">${escH(t.quote)}</p>${(t.quote || '').length > 200 ? '<button type="button" class="t-more" aria-expanded="false" onclick="sjTToggle(this)">Read more</button>' : ''}
         <div class="testimonial-footer">
-          <div class="testimonial-avatar" style="background:${esc(t.color || '#c81d34')}">${escH((t.name||'?')[0])}</div>
+          <div class="testimonial-avatar" style="background:${esc(t.color || '#e3213b')}">${escH((t.name||'?')[0])}</div>
           <div>
             <div class="testimonial-name">${escH(t.name)}</div>
             <div class="testimonial-meta">${escH(t.meta||'')}</div>
@@ -8244,10 +8249,10 @@ function sjCaptureDefaultMeta() {
 }
 function sjSetPlaceMeta(p) {
   sjCaptureDefaultMeta(); // always save the real defaults before the first overwrite
-  const title = `${p.name} — Wheelchair Accessible ${p.category || 'Place'} in ${p.city || ''} | StairlessJourney`;
+  const title = `${p.name}: Accessibility Details, ${p.category || 'Place'} in ${p.city || ''} | StairlessJourney`;
   const desc = (p.suited && p.suited.trim())
     ? p.suited.trim()
-    : `${p.name} in ${p.city || 'India'} — physically verified for wheelchair accessibility by StairlessJourney.`;
+    : `${p.name} in ${p.city || 'India'}: access details checked by StairlessJourney.`;
   const url = sjPlaceFullUrl(p);
   const img = placeCardThumb(p);
   const usableImg = (img && !img.startsWith('data:')) ? img : ''; // a data: URI isn't fetchable by link-preview crawlers, so skip it rather than publish a broken image
@@ -8337,6 +8342,255 @@ function aeDownloadSitemap() {
   URL.revokeObjectURL(a.href);
 }
 
+// ═══════════ GOOGLE-READABLE PAGES ═══════════
+// The site itself is one page, so Google can't list individual places (it ignores the #part of an address).
+// This builds ready-made, plain HTML pages: one real address for every place, every city, and every
+// "type of place in a city" (e.g. /pune/restaurants/), plus a hub page, sitemap.xml and robots.txt.
+// Admin → "Google pages (ZIP)" downloads them all; upload the folders to the website's repo.
+// The pages read from the live PLACES data, so re-download after adding or changing places.
+const SJ_PAGES_BASE = 'https://stairlessjourney.com';
+function sjH(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function sjJsonLd(o) { return JSON.stringify(o).replace(/</g, '\\u003c'); }
+function sjSeoSlug(s) { return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+function sjTrim(s, n) {
+  s = String(s || '').replace(/\s+/g, ' ').trim();
+  if (s.length <= n) return s;
+  const cut = s.slice(0, n - 1); const sp = cut.lastIndexOf(' ');
+  return (sp > 40 ? cut.slice(0, sp) : cut).replace(/[,.;:\-]+$/, '') + '…';
+}
+const SJ_CAT_PLURAL = { 'restaurant': 'Restaurants', 'café': 'Cafés', 'cafe': 'Cafés', 'hotel': 'Hotels', 'museum': 'Museums', 'shopping': 'Shopping places', 'bookstore': 'Bookstores', 'government': 'Government offices', 'community space': 'Community spaces', 'cultural centre': 'Cultural centres', 'salon': 'Salons', 'other': 'Places' };
+function sjCatPlural(c) { const k = String(c || '').trim().toLowerCase(); if (SJ_CAT_PLURAL[k]) return SJ_CAT_PLURAL[k]; const n = (typeof sjNiceCat === 'function') ? sjNiceCat(c) : c; return n ? n + 's' : 'Places'; }
+const SJ_SCHEMA_TYPES = { 'restaurant': 'Restaurant', 'café': 'CafeOrCoffeeShop', 'cafe': 'CafeOrCoffeeShop', 'hotel': 'Hotel', 'museum': 'Museum', 'shopping': 'Store', 'bookstore': 'BookStore', 'government': 'GovernmentOffice', 'salon': 'BeautySalon' };
+function sjAccessItems(p) {
+  return [['Step-free entry', p.stepFree], ['Ramp', p.ramp], ['Lift', p.lift], ['Accessible toilet', p.toilet], ['Parking', p.parking], ['Staff support', p.staff]]
+    .filter(([, v]) => v && String(v).trim() && String(v).trim() !== '?').map(([k, v]) => [k, String(v).trim()]);
+}
+function sjAccessSummary(p) { return sjAccessItems(p).map(([k, v]) => `${k}: ${v}`).join(' · '); }
+function sjSeoPhoto(p) {
+  const c = [p.photo, ...(p.photos || [])].filter(x => typeof x === 'string' && x);
+  for (const u of c) {
+    if (u.startsWith('data:')) continue;
+    try { const t = (typeof sjGDriveThumbnailUrl === 'function') ? sjGDriveThumbnailUrl(u) : null; if (t) return t; } catch (e) {}
+    if (/^https?:\/\//.test(u)) return u;
+  }
+  return '';
+}
+function sjVerifyText(p) {
+  return p.verified
+    ? 'Verified by our team' + (p.lastVerified ? ', last visited ' + p.lastVerified : '')
+    : 'Shared by the community, not yet verified by our team';
+}
+const SJ_SEO_CSS = ':root{--red:#e3213b;--red-strong:#b81a30;--ink:#1a1714;--mid:#4a4540;--bg:#f4f2ed;--line:#e2ded6}*{box-sizing:border-box}body{margin:0;font:17px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink);background:#fff}.wrap{max-width:960px;margin:0 auto;padding:0 20px}.skip{position:absolute;left:-999px;top:0;background:#fff;color:var(--ink);padding:10px 14px;z-index:10}.skip:focus{left:8px;top:8px}.top{border-bottom:1px solid var(--line)}.top .wrap{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}.brand{font:700 1.25rem Georgia,serif;color:var(--red-strong);text-decoration:none}.top nav a{margin-left:18px;color:var(--ink);text-decoration:none;font-weight:600}.top nav a:hover{text-decoration:underline}h1{font:700 2.1rem/1.2 Georgia,serif;margin:24px 0 8px}h2{font:700 1.4rem/1.3 Georgia,serif;margin:32px 0 10px}h3{font-size:1.1rem;margin:0 0 4px}a{color:var(--red-strong)}a:focus-visible{outline:3px solid var(--red-strong);outline-offset:3px}.crumbs{font-size:.9rem;margin-top:18px;color:var(--mid)}.crumbs a{color:var(--mid)}.meta{color:var(--mid);margin:0 0 6px}.badge{display:inline-block;background:var(--bg);border:1px solid var(--line);border-radius:100px;padding:3px 14px;font-size:.92rem;margin:6px 0}.hero-img{display:block;width:100%;max-height:420px;object-fit:cover;border-radius:12px;margin:14px 0;background:var(--bg)}table.access{border-collapse:collapse;width:100%;max-width:560px}table.access th,table.access td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}table.access th{font-weight:600;width:55%}dl.audit dt{font-weight:700;margin-top:14px}dl.audit dd{margin:2px 0 0}.btn{display:inline-block;background:var(--red-strong);color:#fff;text-decoration:none;font-weight:700;padding:12px 20px;border-radius:8px;margin:8px 10px 8px 0}.btn:hover{background:#9c1629}.btn.alt{background:#fff;color:var(--red-strong);border:2px solid var(--red-strong)}.cards{list-style:none;margin:0;padding:0;display:grid;gap:14px}.cards li{border:1px solid var(--line);border-radius:12px;padding:14px 16px}.cards .sum{color:var(--mid);font-size:.95rem;margin:4px 0 0}.chips{list-style:none;padding:0;margin:10px 0;display:flex;flex-wrap:wrap;gap:8px}.chips a{display:inline-block;border:1px solid var(--line);border-radius:100px;padding:6px 14px;text-decoration:none;background:var(--bg);color:var(--ink)}.foot{background:#1a1714;color:#fff;margin-top:48px;padding:28px 0;font-size:.95rem}.foot a{color:#fff}.foot p{margin:6px 0}@media (max-width:600px){h1{font-size:1.7rem}.top nav a{margin:0 14px 0 0}}';
+
+function sjSeoShell(o) {
+  const url = SJ_PAGES_BASE + o.path;
+  const ld = (o.jsonld || []).map(x => `<script type="application/ld+json">${sjJsonLd(x)}<\/script>`).join('\n');
+  const img = o.image ? `<meta property="og:image" content="${sjH(o.image)}">\n<meta name="twitter:card" content="summary_large_image">` : '<meta name="twitter:card" content="summary">';
+  return `<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${sjH(o.title)}</title>
+<meta name="description" content="${sjH(o.desc)}">
+<link rel="canonical" href="${url}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="StairlessJourney">
+<meta property="og:title" content="${sjH(o.title)}">
+<meta property="og:description" content="${sjH(o.desc)}">
+<meta property="og:url" content="${url}">
+<meta property="og:locale" content="en_IN">
+${img}
+<meta name="theme-color" content="#e3213b">
+${ld}
+<style>${SJ_SEO_CSS}</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to main content</a>
+<header class="top"><div class="wrap"><a class="brand" href="/">StairlessJourney</a>
+<nav aria-label="Main"><a href="/#explore">Explore places</a><a href="/accessible-places/">All accessible places</a><a href="/#about">About</a></nav></div></header>
+<main id="main" class="wrap">
+${o.body}
+</main>
+<footer class="foot"><div class="wrap">
+<p><strong>StairlessJourney</strong>: Move Freely, Know Before You Go.</p>
+<p>${o.footerLinks}</p>
+<p>&copy; ${new Date().getFullYear()} StairlessJourney. Founded by Pratik, Pune, India.</p>
+</div></footer>
+</body>
+</html>
+`;
+}
+function sjCrumbs(items) { // items: [[label, path|null], ...]
+  return `<nav class="crumbs" aria-label="Breadcrumb">${items.map(([l, p]) => p ? `<a href="${p}">${sjH(l)}</a>` : sjH(l)).join(' &rsaquo; ')}</nav>`;
+}
+function sjCrumbLd(items) {
+  return { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: items.map(([l, p], i) => { const e = { '@type': 'ListItem', position: i + 1, name: l }; if (p) e.item = SJ_PAGES_BASE + p; return e; }) };
+}
+function sjPlaceCards(list, pathOf) {
+  return `<ul class="cards">${list.map(p => `<li><h3><a href="${pathOf(p)}">${sjH(p.name)}</a></h3><p class="meta">${sjH((typeof sjNiceCat === 'function' ? sjNiceCat(p.category) : p.category) || 'Place')}${p.area ? ' · ' + sjH(p.area) : ''}, ${sjH(p.city)}</p><p class="sum">${sjH(sjAccessSummary(p))}</p></li>`).join('')}</ul>`;
+}
+function sjListWords(arr) { return arr.length <= 1 ? (arr[0] || '') : arr.slice(0, -1).join(', ') + ' and ' + arr[arr.length - 1]; }
+
+function sjBuildSeoFiles() {
+  const list = PLACES.filter(p => p.active !== false && p.name && p.city);
+  if (!list.length) throw new Error('No active places to build pages for.');
+  const used = new Set();
+  list.forEach(p => { let s = sjSeoSlug(placeSlug(p)) || String(p.id); if (used.has(s)) s += '-' + p.id; used.add(s); p._seoSlug = s; });
+  const pathOf = p => `/places/${p._seoSlug}/`;
+  const cityOf = p => String(p.city).trim();
+  const cities = {};
+  list.forEach(p => { (cities[cityOf(p)] = cities[cityOf(p)] || []).push(p); });
+  const cityNames = Object.keys(cities).sort((a, b) => cities[b].length - cities[a].length || a.localeCompare(b));
+  const byName = (a, b) => (b.verified ? 1 : 0) - (a.verified ? 1 : 0) || String(a.name).localeCompare(String(b.name));
+  const footerLinks = ['<a href="/accessible-places/">All accessible places</a>'].concat(cityNames.map(c => `<a href="/${sjSeoSlug(c)}/">${sjH(c)}</a>`)).join(' · ');
+  const files = []; const urls = ['/', '/accessible-places/'];
+  const counts = { places: 0, cities: 0, types: 0 };
+
+  // ── one page per place ──
+  list.forEach(p => {
+    const city = cityOf(p), cp = `/${sjSeoSlug(city)}/`, path = pathOf(p);
+    const catPlain = (typeof sjNiceCat === 'function' ? sjNiceCat(p.category) : p.category) || 'Place';
+    const sameType = cities[city].filter(x => String(x.category || '').toLowerCase() === String(p.category || '').toLowerCase());
+    const typePath = sameType.length >= 2 ? `${cp}${sjSeoSlug(sjCatPlural(p.category))}/` : '';
+    let title = `${p.name}: Accessibility Details in ${city} | StairlessJourney`;
+    if (title.length > 72) title = `${p.name}: Accessibility Details in ${city}`;
+    if (title.length > 72) title = `${sjTrim(p.name, 40)} – Accessibility, ${city}`;
+    const bits = sjAccessItems(p).slice(0, 4).map(([k, v]) => `${k}: ${v}.`).join(' ');
+    const desc = sjTrim(`${catPlain} in ${p.area ? p.area + ', ' : ''}${city}. ${bits} ${p.lastVerified && p.verified ? 'Last visited ' + p.lastVerified + '. ' : ''}See who it suits and the barriers before you go.`, 158);
+    const photo = sjSeoPhoto(p);
+    const items = sjAccessItems(p);
+    const audit = p.audit && typeof p.audit === 'object' ? Object.entries(p.audit).filter(([, v]) => v && String(v).trim()) : [];
+    const crumbs = [['Home', '/'], ['Accessible places', '/accessible-places/'], [city, cp], [p.name, null]];
+    const ld = [sjCrumbLd(crumbs)];
+    const biz = { '@context': 'https://schema.org', '@type': SJ_SCHEMA_TYPES[String(p.category || '').toLowerCase()] || 'LocalBusiness', name: p.name, url: SJ_PAGES_BASE + path, address: { '@type': 'PostalAddress', streetAddress: p.address || undefined, addressLocality: city, addressCountry: 'IN' } };
+    if (photo) biz.image = [photo];
+    if (p.phone) biz.telephone = String(p.phone);
+    const lat = parseFloat(p.lat), lng = parseFloat(p.lng);
+    if (isFinite(lat) && isFinite(lng) && (lat || lng)) biz.geo = { '@type': 'GeoCoordinates', latitude: lat, longitude: lng };
+    const amen = items.filter(([, v]) => /^(yes|no|partial)$/i.test(v)).map(([k, v]) => ({ '@type': 'LocationFeatureSpecification', name: k, value: /^yes$/i.test(v) ? true : /^no$/i.test(v) ? false : 'Partial' }));
+    if (amen.length) biz.amenityFeature = amen;
+    ld.push(biz);
+    const maps = (p.mapsUrl && p.mapsUrl.length > 30) ? p.mapsUrl : (p.address ? `https://maps.google.com/maps?q=${encodeURIComponent(p.address + ', ' + city + ', India')}` : '');
+    const related = cities[city].filter(x => x !== p).sort(byName).slice(0, 8);
+    const body = `${sjCrumbs(crumbs)}
+<h1>${sjH(p.name)}</h1>
+<p class="meta">${sjH(catPlain)} · ${p.area ? sjH(p.area) + ', ' : ''}${sjH(city)}</p>
+<p><span class="badge">${sjH(sjVerifyText(p))}</span></p>
+${photo ? `<img class="hero-img" src="${sjH(photo)}" alt="${sjH('Photo of ' + p.name + ' in ' + city)}" width="960" height="420">` : ''}
+${items.length ? `<h2>Accessibility at a glance</h2>
+<table class="access"><tbody>${items.map(([k, v]) => `<tr><th scope="row">${sjH(k)}</th><td>${sjH(v)}</td></tr>`).join('')}</tbody></table>` : ''}
+${p.suited ? `<h2>Who this place suits</h2><p>${sjH(p.suited)}</p>` : ''}
+${p.notSuited ? `<h2>Who it may not suit</h2><p>${sjH(p.notSuited)}</p>` : ''}
+${audit.length ? `<h2>What our audit found</h2><dl class="audit">${audit.map(([k, v]) => `<dt>${sjH(k)}</dt><dd>${sjH(v)}</dd>`).join('')}</dl>` : ''}
+<h2>Address and contact</h2>
+<p>${p.address ? sjH(p.address) : sjH(city)}</p>
+${p.hours ? `<p>Opening hours: ${sjH(p.hours)}</p>` : ''}${p.phone ? `<p>Phone: <a href="tel:${sjH(String(p.phone).replace(/[^+\d]/g, ''))}">${sjH(p.phone)}</a></p>` : ''}${/^https?:\/\//.test(p.website || '') ? `<p><a href="${sjH(p.website)}" rel="noopener">Visit the place's website</a></p>` : ''}
+<p><a class="btn" href="/#place-${sjH(p.id)}">See photos, full audit and reviews</a>${maps ? `<a class="btn alt" href="${sjH(maps)}" rel="noopener">Get directions</a>` : ''}</p>
+<p class="meta">Access details can change. It is worth a quick call ahead to confirm before you go.</p>
+<h2>More accessible places in ${sjH(city)}</h2>
+<ul class="chips">${related.map(x => `<li><a href="${pathOf(x)}">${sjH(x.name)}</a></li>`).join('')}</ul>
+<p><a href="${cp}">All accessible places in ${sjH(city)}</a>${typePath ? ` · <a href="${typePath}">${sjH(sjCatPlural(p.category))} in ${sjH(city)}</a>` : ''}</p>`;
+    files.push({ path: path.slice(1) + 'index.html', text: sjSeoShell({ title, desc, path, image: photo, jsonld: ld, body, footerLinks }) });
+    urls.push(path); counts.places++;
+  });
+
+  // ── one page per city, and per type of place in a city (only when there are at least 2) ──
+  cityNames.forEach(city => {
+    const arr = cities[city].slice().sort(byName), cp = `/${sjSeoSlug(city)}/`, n = arr.length;
+    const v = arr.filter(p => p.verified).length;
+    const catMap = {};
+    arr.forEach(p => { const k = sjCatPlural(p.category); (catMap[k] = catMap[k] || []).push(p); });
+    const catNames = Object.keys(catMap).filter(k => k !== 'Places').sort((a, b) => catMap[b].length - catMap[a].length || a.localeCompare(b));
+    const areas = Array.from(new Set(arr.map(p => (p.area || '').trim()).filter(Boolean))).slice(0, 4);
+    const catWords = sjListWords(catNames.slice(0, 4).map(k => k.toLowerCase()));
+    const intro = `StairlessJourney lists ${n} ${n === 1 ? 'place' : 'places'} in ${city} with honest access details: step-free entry, ramps, lifts, accessible toilets, parking and staff support.${v ? (n === 1 ? ' It has been verified by our team.' : v === n ? ' All of them have been verified by our team.' : ` ${v} ${v === 1 ? 'has' : 'have'} been verified by our team.`) : ''}${catWords ? ` You can find ${catWords}.` : ''}${areas.length ? ` Places are in areas such as ${sjListWords(areas)}.` : ''} Each page says who the place suits, who it may not suit, and when it was last visited.`;
+    const crumbs = [['Home', '/'], ['Accessible places', '/accessible-places/'], [city, null]];
+    const typeLinks = catNames.filter(k => catMap[k].length >= 2);
+    const body = `${sjCrumbs(crumbs)}
+<h1>Accessible places in ${sjH(city)}</h1>
+<p>${sjH(intro)}</p>
+${typeLinks.length ? `<h2>Browse by type</h2><ul class="chips">${typeLinks.map(k => `<li><a href="${cp}${sjSeoSlug(k)}/">${sjH(k)} (${catMap[k].length})</a></li>`).join('')}</ul>` : ''}
+<h2>All places in ${sjH(city)}</h2>
+${sjPlaceCards(arr, pathOf)}
+<p><a class="btn" href="/#explore">Search and filter all places</a></p>
+<h2>Other cities</h2>
+<ul class="chips">${cityNames.filter(c => c !== city).map(c => `<li><a href="/${sjSeoSlug(c)}/">${sjH(c)}</a></li>`).join('')}</ul>`;
+    const ld = [sjCrumbLd(crumbs), { '@context': 'https://schema.org', '@type': 'ItemList', name: `Accessible places in ${city}`, itemListElement: arr.map((p, i) => ({ '@type': 'ListItem', position: i + 1, url: SJ_PAGES_BASE + pathOf(p), name: p.name })) }];
+    files.push({ path: `${sjSeoSlug(city)}/index.html`, text: sjSeoShell({ title: `Accessible Places in ${city} | StairlessJourney`, desc: sjTrim(`${n} ${n === 1 ? 'place' : 'places'} in ${city} with honest access details: step-free entry, ramps, lifts and accessible toilets.${catWords ? ' Find accessible ' + catWords + ' before you go.' : ''}`, 158), path: cp, jsonld: ld, body, footerLinks }) });
+    urls.push(cp); counts.cities++;
+    typeLinks.forEach(k => {
+      const sub = catMap[k].slice().sort(byName), tp = `${cp}${sjSeoSlug(k)}/`;
+      const crumbs2 = [['Home', '/'], ['Accessible places', '/accessible-places/'], [city, cp], [k, null]];
+      const lower = k.toLowerCase();
+      const body2 = `${sjCrumbs(crumbs2)}
+<h1>Accessible ${sjH(lower)} in ${sjH(city)}</h1>
+<p>${sjH(`${sub.length} ${lower} in ${city} with honest access details from StairlessJourney: step-free entry, ramps, lifts, accessible toilets and parking. Each page says who the place suits and who it may not suit.`)}</p>
+${sjPlaceCards(sub, pathOf)}
+<p><a href="${cp}">All accessible places in ${sjH(city)}</a></p>`;
+      files.push({ path: `${sjSeoSlug(city)}/${sjSeoSlug(k)}/index.html`, text: sjSeoShell({ title: `Accessible ${k} in ${city} | StairlessJourney`, desc: sjTrim(`${sub.length} ${lower} in ${city} with honest access details: step-free entry, ramps, lifts and accessible toilets. Check before you go.`, 158), path: tp, jsonld: [sjCrumbLd(crumbs2)], body: body2, footerLinks }) });
+      urls.push(tp); counts.types++;
+    });
+  });
+
+  // ── hub page ──
+  const crumbsH = [['Home', '/'], ['Accessible places', null]];
+  const bodyH = `${sjCrumbs(crumbsH)}
+<h1>Accessible places in India</h1>
+<p>${sjH(`StairlessJourney lists ${list.length} places in ${cityNames.length} ${cityNames.length === 1 ? 'city' : 'cities'} with honest access details: step-free entry, ramps, lifts, accessible toilets, parking and staff support. Choose a city, or search and filter every place.`)}</p>
+<ul class="chips">${cityNames.map(c => `<li><a href="/${sjSeoSlug(c)}/">${sjH(c)} (${cities[c].length})</a></li>`).join('')}</ul>
+<p><a class="btn" href="/#explore">Search and filter all places</a></p>
+${cityNames.map(c => `<h2><a href="/${sjSeoSlug(c)}/">${sjH(c)}</a></h2><ul class="chips">${cities[c].slice().sort(byName).map(p => `<li><a href="${pathOf(p)}">${sjH(p.name)}</a></li>`).join('')}</ul>`).join('\n')}`;
+  files.push({ path: 'accessible-places/index.html', text: sjSeoShell({ title: 'Accessible Places in India | StairlessJourney', desc: sjTrim(`${list.length} places in ${sjListWords(cityNames.slice(0, 4))} with honest access details: step-free entry, ramps, lifts and accessible toilets.`, 158), path: '/accessible-places/', jsonld: [sjCrumbLd(crumbsH)], body: bodyH, footerLinks }) });
+
+  // ── sitemap + robots ──
+  const uniq = Array.from(new Set(urls));
+  files.push({ path: 'sitemap.xml', text: `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${uniq.map(u => `  <url><loc>${SJ_PAGES_BASE}${u}</loc></url>`).join('\n')}\n</urlset>\n` });
+  files.push({ path: 'robots.txt', text: `User-agent: *\nAllow: /\n\nSitemap: ${SJ_PAGES_BASE}/sitemap.xml\n` });
+  list.forEach(p => delete p._seoSlug);
+  return { files, counts, urlCount: uniq.length };
+}
+
+// ── tiny ZIP writer (no compression, no libraries) ──
+function sjCrc32(bytes) {
+  if (!sjCrc32.t) { sjCrc32.t = []; for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1); sjCrc32.t[n] = c >>> 0; } }
+  let crc = 0xFFFFFFFF;
+  for (let i = 0; i < bytes.length; i++) crc = sjCrc32.t[(crc ^ bytes[i]) & 0xFF] ^ (crc >>> 8);
+  return (crc ^ 0xFFFFFFFF) >>> 0;
+}
+function sjMakeZip(files) {
+  const enc = new TextEncoder(), chunks = [], central = []; let offset = 0;
+  const d = new Date();
+  const dosTime = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1);
+  const dosDate = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+  const u16 = v => [v & 255, (v >>> 8) & 255], u32 = v => [v & 255, (v >>> 8) & 255, (v >>> 16) & 255, (v >>> 24) & 255];
+  files.forEach(f => {
+    const name = enc.encode(f.path), data = enc.encode(f.text), crc = sjCrc32(data);
+    const local = new Uint8Array([0x50, 0x4b, 0x03, 0x04, ...u16(20), ...u16(0x0800), ...u16(0), ...u16(dosTime), ...u16(dosDate), ...u32(crc), ...u32(data.length), ...u32(data.length), ...u16(name.length), ...u16(0)]);
+    chunks.push(local, name, data);
+    central.push({ name, crc, size: data.length, offset });
+    offset += local.length + name.length + data.length;
+  });
+  const cdStart = offset; let cdSize = 0;
+  central.forEach(c => {
+    const h = new Uint8Array([0x50, 0x4b, 0x01, 0x02, ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(dosTime), ...u16(dosDate), ...u32(c.crc), ...u32(c.size), ...u32(c.size), ...u16(c.name.length), ...u16(0), ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(c.offset)]);
+    chunks.push(h, c.name); cdSize += h.length + c.name.length;
+  });
+  chunks.push(new Uint8Array([0x50, 0x4b, 0x05, 0x06, ...u16(0), ...u16(0), ...u16(central.length), ...u16(central.length), ...u32(cdSize), ...u32(cdStart), ...u16(0)]));
+  return new Blob(chunks, { type: 'application/zip' });
+}
+function aeDownloadSeoPages() {
+  try {
+    const r = sjBuildSeoFiles();
+    const blob = sjMakeZip(r.files);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'stairlessjourney-google-pages.zip';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    window.alert(`Done. The ZIP has ${r.files.length} files: ${r.counts.places} place pages, ${r.counts.cities} city pages, ${r.counts.types} "type in a city" pages, the all-places page, sitemap.xml and robots.txt.\n\nUnzip it and add the folders and files to the website's GitHub repo. There is no index.html at the top level, so your main page is never replaced.`);
+  } catch (e) { window.alert('Could not build the pages: ' + (e && e.message ? e.message : e)); }
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   sjStartRealtimeSync();
   renderHomeEvents();
@@ -8359,10 +8613,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p>Enter your name and password to access the admin panel.</p>
       <input type="text" id="admin-name-input" placeholder="Your name" autocomplete="off"
              onkeypress="if(event.key==='Enter')document.getElementById('admin-pw-input').focus()"
-             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px;text-align:center;transition:border-color 0.2s;">
+             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px;text-align:center;transition:border-color 0.2s;" aria-label="Admin name">
       <input type="password" id="admin-pw-input" placeholder="Password" autocomplete="off"
              onkeypress="if(event.key==='Enter')adminCheckPw()"
-             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:14px;text-align:center;letter-spacing:0.12em;transition:border-color 0.2s;">
+             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:14px;text-align:center;letter-spacing:0.12em;transition:border-color 0.2s;" aria-label="Admin password">
       <button id="admin-pw-btn" onclick="adminCheckPw()">Enter →</button>
       <div id="admin-pw-error"></div>
       <button id="admin-pw-cancel" onclick="adminCloseLoginModal()">Cancel</button>
@@ -8372,10 +8626,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       <h3>Set a new password</h3>
       <p>You're using a temporary password. Choose a permanent one that only you know. No one else, including other admins, will be able to see it.</p>
       <input type="password" id="admin-reset-new" placeholder="New password (min 6 characters)" autocomplete="new-password"
-             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px;text-align:center;transition:border-color 0.2s;">
+             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px;text-align:center;transition:border-color 0.2s;" aria-label="New password">
       <input type="password" id="admin-reset-confirm" placeholder="Confirm new password" autocomplete="new-password"
              onkeypress="if(event.key==='Enter')adminCompleteReset()"
-             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:14px;text-align:center;transition:border-color 0.2s;">
+             style="width:100%;padding:12px 16px;border-radius:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:white;font-size:1rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:14px;text-align:center;transition:border-color 0.2s;" aria-label="Confirm new password">
       <button id="admin-reset-btn" onclick="adminCompleteReset()">Save & Continue →</button>
       <div id="admin-reset-error"></div>
     </div>
@@ -8487,44 +8741,44 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="ap-card">
         <div class="ap-card-title">Quick Text Edits</div>
         <div class="ap-form-group">
-          <label class="ap-label">Hero Headline</label>
+          <label class="ap-label" for="qe-headline">Hero Headline</label>
           <input type="text" class="ap-input" id="qe-headline" placeholder="Accessibility, Verified.">
         </div>
         <div class="ap-form-group">
-          <label class="ap-label">Hero Subtext</label>
+          <label class="ap-label" for="qe-subtext">Hero Subtext</label>
           <textarea class="ap-input ap-textarea" id="qe-subtext" rows="2"></textarea>
         </div>
         <div class="ap-row" style="margin-bottom:10px;">
           <div class="ap-form-group">
-            <label class="ap-label">Stat 1 (number is automatic, counted from Explore)</label>
+            <label class="ap-label" for="qe-s1n">Stat 1 (number is automatic, counted from Explore)</label>
             <input type="text" class="ap-input" id="qe-s1n" placeholder="142+" disabled title="Automatic: counted live from verified places in Explore.">
-            <input type="text" class="ap-input" id="qe-s1l" placeholder="Community Visits" style="margin-top:6px;">
+            <input type="text" class="ap-input" id="qe-s1l" placeholder="Community Visits" style="margin-top:6px;" aria-label="Stat 1 (number is automatic, counted from Explore)">
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Stat 2 (number is automatic, counted from Explore)</label>
+            <label class="ap-label" for="qe-s2n">Stat 2 (number is automatic, counted from Explore)</label>
             <input type="text" class="ap-input" id="qe-s2n" placeholder="3" disabled title="Automatic: counted live from distinct cities with places in Explore.">
-            <input type="text" class="ap-input" id="qe-s2l" placeholder="Cities Active" style="margin-top:6px;">
+            <input type="text" class="ap-input" id="qe-s2l" placeholder="Cities Active" style="margin-top:6px;" aria-label="Stat 2 (number is automatic, counted from Explore)">
           </div>
         </div>
         <div class="ap-form-group" style="margin-bottom:14px;">
-          <label class="ap-label">Stat 3</label>
+          <label class="ap-label" for="qe-s3n">Stat 3</label>
           <div class="ap-row">
             <input type="text" class="ap-input" id="qe-s3n" placeholder="10+">
-            <input type="text" class="ap-input" id="qe-s3l" placeholder="Things We Check">
+            <input type="text" class="ap-input" id="qe-s3l" placeholder="Things We Check" aria-label="Stat 3">
           </div>
         </div>
         <div class="ap-row" style="margin-bottom:10px;">
           <div class="ap-form-group">
-            <label class="ap-label">Pune Count (automatic)</label>
+            <label class="ap-label" for="qe-pune">Pune Count (automatic)</label>
             <input type="text" class="ap-input" id="qe-pune" disabled title="Automatic: counted live from verified Pune places in Explore.">
           </div>
           <div class="ap-form-group">
-            <label class="ap-label">Kolkata Count (automatic)</label>
+            <label class="ap-label" for="qe-kolkata">Kolkata Count (automatic)</label>
             <input type="text" class="ap-input" id="qe-kolkata" disabled title="Automatic: counted live from verified Kolkata places in Explore.">
           </div>
         </div>
         <div class="ap-form-group" style="margin-bottom:14px;">
-          <label class="ap-label">Goa Count (automatic)</label>
+          <label class="ap-label" for="qe-goa">Goa Count (automatic)</label>
           <input type="text" class="ap-input" id="qe-goa" disabled title="Automatic: counted live from verified Goa places in Explore.">
         </div>
         <button class="ap-btn ap-btn-success" onclick="aeApplyQuickEdits()">✓ Apply These Changes</button>
@@ -8544,34 +8798,34 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="ap-inline-form" id="event-form-wrap">
         <div class="ap-card-title" id="event-form-title">New Event</div>
         <input type="hidden" id="ef-id">
-        <div class="ap-form-group"><label class="ap-label">Event Name *</label><input type="text" class="ap-input" id="ef-name" placeholder="e.g. Accessibility Walk · Pune"></div>
+        <div class="ap-form-group"><label class="ap-label" for="ef-name">Event Name *</label><input type="text" class="ap-input" id="ef-name" placeholder="e.g. Accessibility Walk · Pune"></div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Day</label><input type="text" class="ap-input" id="ef-day" placeholder="15" maxlength="2"></div>
-          <div class="ap-form-group"><label class="ap-label">Month (3 letters)</label><input type="text" class="ap-input" id="ef-month" placeholder="MAY" maxlength="3"></div>
+          <div class="ap-form-group"><label class="ap-label" for="ef-day">Day</label><input type="text" class="ap-input" id="ef-day" placeholder="15" maxlength="2"></div>
+          <div class="ap-form-group"><label class="ap-label" for="ef-month">Month (3 letters)</label><input type="text" class="ap-input" id="ef-month" placeholder="MAY" maxlength="3"></div>
         </div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Full Date</label><input type="text" class="ap-input" id="ef-date" placeholder="15 May 2025"></div>
-          <div class="ap-form-group"><label class="ap-label">Time</label><input type="text" class="ap-input" id="ef-time" placeholder="9:00 AM"></div>
+          <div class="ap-form-group"><label class="ap-label" for="ef-date">Full Date</label><input type="text" class="ap-input" id="ef-date" placeholder="15 May 2025"></div>
+          <div class="ap-form-group"><label class="ap-label" for="ef-time">Time</label><input type="text" class="ap-input" id="ef-time" placeholder="9:00 AM"></div>
         </div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">City</label>
+          <div class="ap-form-group"><label class="ap-label" for="ef-city">City</label>
             <select class="ap-input ap-select" id="ef-city">
               <option>Pune</option><option>Kolkata</option><option>Goa</option><option>Mumbai</option><option>Delhi</option><option>Online</option>
             </select>
           </div>
-          <div class="ap-form-group"><label class="ap-label">Status</label>
+          <div class="ap-form-group"><label class="ap-label" for="ef-status">Status</label>
             <select class="ap-input ap-select" id="ef-status">
               <option value="upcoming">Upcoming</option><option value="past">Past / Completed</option>
             </select>
           </div>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Description</label><textarea class="ap-input ap-textarea" id="ef-desc" rows="3" placeholder="What will happen at this event?"></textarea></div>
+        <div class="ap-form-group"><label class="ap-label" for="ef-desc">Description</label><textarea class="ap-input ap-textarea" id="ef-desc" rows="3" placeholder="What will happen at this event?"></textarea></div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Calendar Start<br><small style="font-weight:400;text-transform:none;letter-spacing:0;">YYYYMMDDTHHMMSS</small></label><input type="text" class="ap-input" id="ef-gcal-s" placeholder="20250515T090000"></div>
-          <div class="ap-form-group"><label class="ap-label">Calendar End</label><input type="text" class="ap-input" id="ef-gcal-e" placeholder="20250515T120000"></div>
+          <div class="ap-form-group"><label class="ap-label" for="ef-gcal-s">Calendar Start<br><small style="font-weight:400;text-transform:none;letter-spacing:0;">YYYYMMDDTHHMMSS</small></label><input type="text" class="ap-input" id="ef-gcal-s" placeholder="20250515T090000"></div>
+          <div class="ap-form-group"><label class="ap-label" for="ef-gcal-e">Calendar End</label><input type="text" class="ap-input" id="ef-gcal-e" placeholder="20250515T120000"></div>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Recording / photos link (optional, shown on past events)</label><input type="url" class="ap-input" id="ef-link" placeholder="Paste a YouTube, Drive or album link here"></div>
-        <div class="ap-form-group"><label class="ap-label">Registration Form Link (optional)</label><input type="url" class="ap-input" id="ef-register-link" placeholder="Paste a Google Form link here">
+        <div class="ap-form-group"><label class="ap-label" for="ef-link">Recording / photos link (optional, shown on past events)</label><input type="url" class="ap-input" id="ef-link" placeholder="Paste a YouTube, Drive or album link here"></div>
+        <div class="ap-form-group"><label class="ap-label" for="ef-register-link">Registration Form Link (optional)</label><input type="url" class="ap-input" id="ef-register-link" placeholder="Paste a Google Form link here">
           <p style="font-size:0.78rem;color:var(--gray-mid);margin-top:4px;">If filled in, "Register Now" opens this link directly in a new tab. Leave blank to use the built-in name/email popup instead.</p>
         </div>
         <div style="display:flex;gap:8px;margin-top:4px;">
@@ -8599,6 +8853,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div style="display:flex;gap:8px;">
           <button class="ap-btn ap-btn-ghost" id="places-migrate-btn" onclick="aeMigratePlacesToCollection()" style="display:none;">🔧 Move Places to Individual Storage</button>
+          <button class="ap-btn ap-btn-ghost" onclick="aeDownloadSeoPages()" title="Download ready-made pages for Google: one real address for every place, city and type of place, plus sitemap.xml and robots.txt. Re-download after adding or changing places, then add the files to the website's GitHub repo.">Google pages (ZIP)</button>
           <button class="ap-btn ap-btn-ghost" onclick="aeDownloadSitemap()" title="Download an up-to-date sitemap.xml listing every active place's real URL — upload it to replace the one at stairlessjourney.com/sitemap.xml whenever you've added or removed places">🗺️ Download Sitemap</button>
           <button class="ap-btn ap-btn-ghost" onclick="aeOpenChainForm(null)">+ Add Chain</button>
           <button class="ap-btn ap-btn-primary" onclick="aeOpenPlaceForm(null)">+ Add Place</button>
@@ -8613,36 +8868,36 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="ap-yn" id="pf-yn-active"><button class="ap-yn-btn" onclick="pfSetActive(true,this)">Active</button><button class="ap-yn-btn" onclick="pfSetActive(false,this)">Inactive</button></div>
         </div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Place Name *</label><input type="text" class="ap-input" id="pf-name" placeholder="e.g. Koregaon Park Café"></div>
-          <div class="ap-form-group"><label class="ap-label">Emoji</label><input type="text" class="ap-input" id="pf-emoji" placeholder="☕" maxlength="4"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-name">Place Name *</label><input type="text" class="ap-input" id="pf-name" placeholder="e.g. Koregaon Park Café"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-emoji">Emoji</label><input type="text" class="ap-input" id="pf-emoji" placeholder="☕" maxlength="4"></div>
         </div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Category</label>
+          <div class="ap-form-group"><label class="ap-label" for="pf-cat">Category</label>
             <input type="text" class="ap-input" id="pf-cat" placeholder="e.g. Café, Government, F1 Race Track" list="pf-cat-list">
             <datalist id="pf-cat-list"></datalist>
           </div>
-          <div class="ap-form-group"><label class="ap-label">City</label>
+          <div class="ap-form-group"><label class="ap-label" for="pf-city">City</label>
             <input type="text" class="ap-input" id="pf-city" placeholder="e.g. Pune, Mumbai, Jaipur" list="pf-city-list">
             <datalist id="pf-city-list"></datalist>
           </div>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Area <span style="font-weight:400;color:var(--gray-mid);">(optional, shows on the card, e.g. "Koregaon Park")</span></label><input type="text" class="ap-input" id="pf-area" placeholder="e.g. Koregaon Park"></div>
-        <div class="ap-form-group"><label class="ap-label">Address</label><input type="text" class="ap-input" id="pf-address" placeholder="Full address"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-area">Area <span style="font-weight:400;color:var(--gray-mid);">(optional, shows on the card, e.g. "Koregaon Park")</span></label><input type="text" class="ap-input" id="pf-area" placeholder="e.g. Koregaon Park"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-address">Address</label><input type="text" class="ap-input" id="pf-address" placeholder="Full address"></div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Phone</label><input type="text" class="ap-input" id="pf-phone" placeholder="+91 ..."></div>
-          <div class="ap-form-group"><label class="ap-label">Hours</label><input type="text" class="ap-input" id="pf-hours" placeholder="9am-9pm daily"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-phone">Phone</label><input type="text" class="ap-input" id="pf-phone" placeholder="+91 ..."></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-hours">Hours</label><input type="text" class="ap-input" id="pf-hours" placeholder="9am-9pm daily"></div>
         </div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Rating (1-5)</label><input type="number" class="ap-input" id="pf-rating" min="1" max="5" step="0.1" placeholder="4.5"></div>
-          <div class="ap-form-group"><label class="ap-label">Last Visited</label><input type="text" class="ap-input" id="pf-verified" placeholder="April 2025"></div>
-          <div class="ap-form-group"><label class="ap-label">Joined StairlessJourney <span style="font-weight:400;color:var(--gray-mid);">(powers the "X months with us" note on their dashboard)</span></label><input type="date" class="ap-input" id="pf-joined-date"></div>
-          <div class="ap-form-group"><label class="ap-label">Found By <span style="font-weight:400;color:var(--gray-mid);">(someone who told you about this place in person, not through the website — counts toward their contributor total)</span></label><input type="text" class="ap-input" id="pf-found-by" placeholder="e.g. Priya Sharma"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-rating">Rating (1-5)</label><input type="number" class="ap-input" id="pf-rating" min="1" max="5" step="0.1" placeholder="4.5"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-verified">Last Visited</label><input type="text" class="ap-input" id="pf-verified" placeholder="April 2025"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-joined-date">Joined StairlessJourney <span style="font-weight:400;color:var(--gray-mid);">(powers the "X months with us" note on their dashboard)</span></label><input type="date" class="ap-input" id="pf-joined-date"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-found-by">Found By <span style="font-weight:400;color:var(--gray-mid);">(someone who told you about this place in person, not through the website — counts toward their contributor total)</span></label><input type="text" class="ap-input" id="pf-found-by" placeholder="e.g. Priya Sharma"></div>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Google Maps URL</label><input type="url" class="ap-input" id="pf-maps" placeholder="https://maps.google.com/..."></div>
-        <div class="ap-form-group"><label class="ap-label">Business Website <span style="font-weight:400;color:var(--gray-mid);">(optional — shows as a "Visit Website" link on the place page)</span></label><input type="url" class="ap-input" id="pf-website" placeholder="https://theirsite.com"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-maps">Google Maps URL</label><input type="url" class="ap-input" id="pf-maps" placeholder="https://maps.google.com/..."></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-website">Business Website <span style="font-weight:400;color:var(--gray-mid);">(optional — shows as a "Visit Website" link on the place page)</span></label><input type="url" class="ap-input" id="pf-website" placeholder="https://theirsite.com"></div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Partner Name <span style="font-weight:400;color:var(--gray-mid);">(e.g. "HomelyHuts")</span></label><input type="text" class="ap-input" id="pf-partner-name" placeholder="e.g. HomelyHuts"></div>
-          <div class="ap-form-group"><label class="ap-label">Partner Booking Link</label><input type="url" class="ap-input" id="pf-partner-link" placeholder="https://partner-site.com/listing/..."></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-partner-name">Partner Name <span style="font-weight:400;color:var(--gray-mid);">(e.g. "HomelyHuts")</span></label><input type="text" class="ap-input" id="pf-partner-name" placeholder="e.g. HomelyHuts"></div>
+          <div class="ap-form-group"><label class="ap-label" for="pf-partner-link">Partner Booking Link</label><input type="url" class="ap-input" id="pf-partner-link" placeholder="https://partner-site.com/listing/..."></div>
         </div>
         <p style="font-size:0.76rem;color:var(--gray-mid);margin-top:-6px;margin-bottom:14px;">For a booking/tourism-platform collaboration (built generic on purpose — works for any current or future partner, not just one). If both are filled, shows as "Bookable through {Partner Name}" on the place page, linking out to that URL. Leave both blank for a normal listing.</p>
         <div class="ap-card-title" style="margin-top:12px;">Accessibility Features</div>
@@ -8658,44 +8913,44 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div class="ap-form-group"><label class="ap-label">Parking</label><div class="ap-yn" id="pf-yn-parking"><button class="ap-yn-btn" onclick="pfSetYN('parking','Yes',this)">Yes</button><button class="ap-yn-btn" onclick="pfSetYN('parking','No',this)">No</button></div></div>
           <div class="ap-form-group"><label class="ap-label">Staff</label><div class="ap-yn" id="pf-yn-staff"><button class="ap-yn-btn" onclick="pfSetYN('staff','Yes',this)">Yes</button><button class="ap-yn-btn" onclick="pfSetYN('staff','No',this)">No</button></div></div>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Badge Type <span style="font-weight:400;color:var(--gray-mid);">(how this place was found — every place counts in "Verified Listings" either way)</span></label>
-          <select class="ap-input ap-select" id="pf-badge"><option value="true">✓ Community Visited</option><option value="false">⊕ Submitted by Community</option></select>
+        <div class="ap-form-group"><label class="ap-label" for="pf-badge">Badge Type <span style="font-weight:400;color:var(--gray-mid);">(how this place was found — every place counts in "Verified Listings" either way)</span></label>
+          <select class="ap-input ap-select" id="pf-badge"><option value="true">✓ Verified by our team</option><option value="false">⊕ Submitted by Community</option></select>
         </div>
         <div class="ap-form-group">
           <label class="ap-label">Pin to Top of Explore <span style="font-weight:400;color:var(--gray-mid);">(up to 3 places, no badge shown to visitors)</span></label>
           <div class="ap-yn" id="pf-yn-pinned"><button class="ap-yn-btn" onclick="pfSetPinned(true,this)">Yes</button><button class="ap-yn-btn" onclick="pfSetPinned(false,this)">No</button></div>
         </div>
         <div class="ap-form-group">
-          <label class="ap-label">Chain <span style="font-weight:400;color:var(--gray-mid);">(optional — group this place with its other outlets under one shared login)</span></label>
+          <label class="ap-label" for="pf-chain">Chain <span style="font-weight:400;color:var(--gray-mid);">(optional — group this place with its other outlets under one shared login)</span></label>
           <select class="ap-input ap-select" id="pf-chain" onchange="pfOnChainChange()"><option value="">None — standalone place</option></select>
         </div>
         <div class="ap-form-group form-full" id="pf-biz-access-block" style="background:#FAFAF8;border:1.5px dashed var(--gray-light);border-radius:12px;padding:16px;">
           <label class="ap-label" style="margin-bottom:4px;">🔐 Business Access <span style="font-weight:400;color:var(--gray-mid);">(lets this business log into their own dashboard)</span></label>
           <p style="font-size:0.8rem;color:var(--gray-mid);margin-bottom:12px;">Saved together with the rest of this place when you hit Save Place below. Clear the username to remove access. Leave the password blank to keep the existing one.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <input type="text" class="ap-input" id="pf-biz-username" placeholder="Username" style="flex:1;min-width:140px;">
-            <input type="password" class="ap-input" id="pf-biz-password" placeholder="Password" autocomplete="new-password" style="flex:1;min-width:140px;">
+            <input type="text" class="ap-input" id="pf-biz-username" placeholder="Username" style="flex:1;min-width:140px;" aria-label="Business username">
+            <input type="password" class="ap-input" id="pf-biz-password" placeholder="Password" autocomplete="new-password" style="flex:1;min-width:140px;" aria-label="Business password">
           </div>
-          <input type="email" class="ap-input" id="pf-biz-email" placeholder="Contact email (used for review/issue notifications)" style="margin-top:10px;">
+          <input type="email" class="ap-input" id="pf-biz-email" placeholder="Contact email (used for review/issue notifications)" style="margin-top:10px;" aria-label="Business contact email">
         </div>
         <div class="ap-form-group form-full" id="pf-chain-note-block" style="display:none;background:#FAFAF8;border:1.5px dashed var(--gray-light);border-radius:12px;padding:16px;">
           <p style="font-size:0.85rem;color:var(--gray-mid);margin:0;">🔐 Login for this place is managed by its chain. Edit the chain itself (from the Places list) to change the shared username/password.</p>
         </div>
         <div class="ap-form-group">
-          <label class="ap-label">Finder Credit <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
+          <label class="ap-label" for="pf-foundby">Finder Credit <span style="font-weight:400;color:var(--gray-mid);">(optional)</span></label>
           <input type="text" class="ap-input" id="pf-foundby" placeholder="e.g. Ananya R., leave blank to hide">
           <p style="font-size:0.76rem;color:var(--gray-mid);margin-top:4px;">If filled, shows as "🔎 Found by {name}" on this place's Explore card. Leave blank and nothing is shown.</p>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Best Suited For</label><input type="text" class="ap-input" id="pf-suited"></div>
-        <div class="ap-form-group"><label class="ap-label">Not Suitable For</label><input type="text" class="ap-input" id="pf-notsuited"></div>
-        <div class="ap-form-group"><label class="ap-label">Volunteer Experience (shown as review)</label><textarea class="ap-input ap-textarea" id="pf-vol-note" rows="3"></textarea></div>
-        <div class="ap-form-group"><label class="ap-label">Volunteer Name</label><input type="text" class="ap-input" id="pf-vol-name" placeholder="e.g. Priya S. (volunteer)"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-suited">Best Suited For</label><input type="text" class="ap-input" id="pf-suited"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-notsuited">Not Suitable For</label><input type="text" class="ap-input" id="pf-notsuited"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-vol-note">Volunteer Experience (shown as review)</label><textarea class="ap-input ap-textarea" id="pf-vol-note" rows="3"></textarea></div>
+        <div class="ap-form-group"><label class="ap-label" for="pf-vol-name">Volunteer Name</label><input type="text" class="ap-input" id="pf-vol-name" placeholder="e.g. Priya S. (volunteer)"></div>
         <div class="ap-form-group">
           <label class="ap-label">Photo Categories</label>
           <p style="font-size:0.78rem;color:var(--gray-mid);margin-bottom:8px;">Optional. Name as many boxes as you want — e.g. "Entrance", "Ramp", "Washroom". On the public place page, visitors tap the cover photo, see these as a list, then tap one to see just those photos. Leave empty and the place page works exactly as before (tap photo → see all photos, no category step).</p>
           <div id="pf-cat-manager" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;"></div>
           <div style="display:flex;gap:8px;">
-            <input type="text" class="ap-input" id="pf-cat-name-input" placeholder="e.g. Entrance" style="flex:1;" onkeydown="if(event.key==='Enter'){event.preventDefault();pfAddCategory();}">
+            <input type="text" class="ap-input" id="pf-cat-name-input" placeholder="e.g. Entrance" style="flex:1;" onkeydown="if(event.key==='Enter'){event.preventDefault();pfAddCategory();}" aria-label="New photo category name">
             <button type="button" class="ap-btn ap-btn-ghost ap-btn-sm" onclick="pfAddCategory()">+ Add Category</button>
           </div>
         </div>
@@ -8705,7 +8960,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           <div id="pf-photos-grid" class="pp-photo-grid"></div>
           <input type="hidden" id="pf-photo-data">
           <div style="display:flex;gap:8px;margin-top:10px;">
-            <input type="text" class="ap-input" id="pf-video-link-input" placeholder="Paste a Google Drive link: photo or video, full quality (set sharing to 'anyone with the link')" style="flex:1;">
+            <input type="text" class="ap-input" id="pf-video-link-input" placeholder="Paste a Google Drive link: photo or video, full quality (set sharing to 'anyone with the link')" style="flex:1;" aria-label="Video link">
             <button type="button" class="ap-btn ap-btn-ghost ap-btn-sm" onclick="pfAddLink()">+ Add Link</button>
           </div>
         </div>
@@ -8718,15 +8973,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       <div class="ap-inline-form" id="chain-form-wrap">
         <div class="ap-card-title" id="chain-form-title">New Chain</div>
         <input type="hidden" id="cf-id">
-        <div class="ap-form-group"><label class="ap-label">Chain Name</label><input type="text" class="ap-input" id="cf-name" placeholder="e.g. BBQ Nation"></div>
+        <div class="ap-form-group"><label class="ap-label" for="cf-name">Chain Name</label><input type="text" class="ap-input" id="cf-name" placeholder="e.g. BBQ Nation"></div>
         <div class="ap-form-group form-full" style="background:#FAFAF8;border:1.5px dashed var(--gray-light);border-radius:12px;padding:16px;">
           <label class="ap-label" style="margin-bottom:4px;">🔐 Chain Business Access <span style="font-weight:400;color:var(--gray-mid);">(one login for every place in this chain)</span></label>
           <p style="font-size:0.8rem;color:var(--gray-mid);margin-bottom:12px;">Leave the password blank when editing an existing chain to keep the current one.</p>
           <div style="display:flex;gap:10px;flex-wrap:wrap;">
-            <input type="text" class="ap-input" id="cf-biz-username" placeholder="Username" style="flex:1;min-width:140px;">
-            <input type="password" class="ap-input" id="cf-biz-password" placeholder="Password" autocomplete="new-password" style="flex:1;min-width:140px;">
+            <input type="text" class="ap-input" id="cf-biz-username" placeholder="Username" style="flex:1;min-width:140px;" aria-label="Chain username">
+            <input type="password" class="ap-input" id="cf-biz-password" placeholder="Password" autocomplete="new-password" style="flex:1;min-width:140px;" aria-label="Chain password">
           </div>
-          <input type="email" class="ap-input" id="cf-biz-email" placeholder="Contact email (used for review/issue notifications)" style="margin-top:10px;">
+          <input type="email" class="ap-input" id="cf-biz-email" placeholder="Contact email (used for review/issue notifications)" style="margin-top:10px;" aria-label="Chain contact email">
         </div>
         <div style="display:flex;gap:8px;margin-top:4px;">
           <button class="ap-btn ap-btn-primary" onclick="aeSaveChain()">Save Chain</button>
@@ -8773,7 +9028,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="ap-card-title">Your Reels (max 5)</div>
         <div id="reel-url-inputs"></div>
         <button class="ap-btn ap-btn-success" style="margin-top:16px;" onclick="saveReelUrls()">💾 Save Reels → Update Website</button>
-        <div id="reel-save-msg" style="display:none;margin-top:10px;padding:10px 14px;background:var(--green-tint,#E8F6F0);border-radius:8px;color:#1A7F64;font-size:0.85rem;font-weight:600;">✓ Reels saved! They're now live on the Volunteer page.</div>
+        <div id="reel-save-msg" style="display:none;margin-top:10px;padding:10px 14px;background:var(--green-tint,#E8F6F0);border-radius:8px;color:#14694F;font-size:0.85rem;font-weight:600;">✓ Reels saved! They're now live on the Volunteer page.</div>
       </div>
     </div>
 
@@ -8788,10 +9043,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="ap-card-title" id="testi-form-title">New Testimonial</div>
         <input type="hidden" id="tf-id">
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Name *</label><input type="text" class="ap-input" id="tf-name" placeholder="e.g. Ananya Sharma"></div>
-          <div class="ap-form-group"><label class="ap-label">Description *</label><input type="text" class="ap-input" id="tf-meta" placeholder="e.g. Volunteer · Documentation Sprint, Kolkata · May 2026"></div>
+          <div class="ap-form-group"><label class="ap-label" for="tf-name">Name *</label><input type="text" class="ap-input" id="tf-name" placeholder="e.g. Ananya Sharma"></div>
+          <div class="ap-form-group"><label class="ap-label" for="tf-meta">Description *</label><input type="text" class="ap-input" id="tf-meta" placeholder="e.g. Volunteer · Documentation Sprint, Kolkata · May 2026"></div>
         </div>
-        <div class="ap-form-group"><label class="ap-label">Quote *</label><textarea class="ap-input ap-textarea" id="tf-quote" rows="3" placeholder="What they said..."></textarea></div>
+        <div class="ap-form-group"><label class="ap-label" for="tf-quote">Quote *</label><textarea class="ap-input ap-textarea" id="tf-quote" rows="3" placeholder="What they said..."></textarea></div>
         <div style="display:flex;gap:8px;margin-top:4px;">
           <button class="ap-btn ap-btn-primary" onclick="testiSaveItem()">Save Testimonial</button>
           <button class="ap-btn ap-btn-ghost" onclick="document.getElementById('testi-form-wrap').classList.remove('open')">Cancel</button>
@@ -8842,29 +9097,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="ap-card-title">Website Logo</div>
         <p style="font-size:0.82rem;color:var(--gray-mid);margin-bottom:12px;">Square, PNG transparent background recommended. Appears in navbar and footer.</p>
         <div class="ap-dropzone" id="dz-logo" ondragover="dzOver(event,'dz-logo')" ondragleave="dzLeave('dz-logo')" ondrop="dzDrop(event,'logo','logo-preview')">
-          <input type="file" accept="image/*" onchange="dzChange(event,'logo','logo-preview')">
+          <input type="file" accept="image/*" onchange="dzChange(event,'logo','logo-preview')" aria-label="Choose a file to upload">
           <div class="ap-dropzone-icon">🖼️</div>
           <div class="ap-dropzone-text"><strong>Click or drag</strong> logo here · PNG/JPG/SVG</div>
         </div>
-        <img id="logo-preview" class="ap-img-preview">
-        <div id="logo-status" style="text-align:center;font-size:0.78rem;color:#1A7F64;margin-top:6px;display:none;">✓ Logo uploaded</div>
+        <img id="logo-preview" class="ap-img-preview" alt="Preview of the uploaded logo">
+        <div id="logo-status" style="text-align:center;font-size:0.78rem;color:#14694F;margin-top:6px;display:none;">✓ Logo uploaded</div>
       </div>
       <div class="ap-card">
         <div class="ap-card-title">Founder Photo (About Page)</div>
         <p style="font-size:0.82rem;color:var(--gray-mid);margin-bottom:12px;">Square crop recommended. Minimum 300×300px.</p>
         <div class="ap-dropzone" id="dz-founder" ondragover="dzOver(event,'dz-founder')" ondragleave="dzLeave('dz-founder')" ondrop="dzDrop(event,'founder','founder-preview')">
-          <input type="file" accept="image/*" onchange="dzChange(event,'founder','founder-preview')">
+          <input type="file" accept="image/*" onchange="dzChange(event,'founder','founder-preview')" aria-label="Choose a file to upload">
           <div class="ap-dropzone-icon">👤</div>
           <div class="ap-dropzone-text"><strong>Click or drag</strong> your photo here</div>
         </div>
-        <img id="founder-preview" class="ap-img-preview-round">
-        <div id="founder-status" style="text-align:center;font-size:0.78rem;color:#1A7F64;margin-top:6px;display:none;">✓ Photo uploaded</div>
+        <img id="founder-preview" class="ap-img-preview-round" alt="Preview of the uploaded founder photo">
+        <div id="founder-status" style="text-align:center;font-size:0.78rem;color:#14694F;margin-top:6px;display:none;">✓ Photo uploaded</div>
       </div>
       <div class="ap-card">
         <div class="ap-card-title">Change Admin Password</div>
-        <div class="ap-form-group"><label class="ap-label">Current Password</label><input type="password" class="ap-input" id="pw-curr" placeholder="Current password"></div>
-        <div class="ap-form-group"><label class="ap-label">New Password</label><input type="password" class="ap-input" id="pw-new" placeholder="New password (min 6 chars)"></div>
-        <div class="ap-form-group"><label class="ap-label">Confirm New</label><input type="password" class="ap-input" id="pw-conf" placeholder="Confirm new password"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pw-curr">Current Password</label><input type="password" class="ap-input" id="pw-curr" placeholder="Current password"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pw-new">New Password</label><input type="password" class="ap-input" id="pw-new" placeholder="New password (min 6 chars)"></div>
+        <div class="ap-form-group"><label class="ap-label" for="pw-conf">Confirm New</label><input type="password" class="ap-input" id="pw-conf" placeholder="Confirm new password"></div>
         <div id="pw-msg" style="font-size:0.82rem;padding:8px;border-radius:6px;margin-bottom:10px;display:none;"></div>
         <button class="ap-btn ap-btn-primary" onclick="aeChangePw()">Update Password</button>
       </div>
@@ -8881,12 +9136,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div class="ap-card-title" id="vol-form-title">New Team Member</div>
         <input type="hidden" id="vf-id">
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Full Name *</label><input type="text" class="ap-input" id="vf-name" placeholder="e.g. Chirayu"></div>
-          <div class="ap-form-group"><label class="ap-label">Role *</label><input type="text" class="ap-input" id="vf-role" placeholder="e.g. Graphic Designer"></div>
+          <div class="ap-form-group"><label class="ap-label" for="vf-name">Full Name *</label><input type="text" class="ap-input" id="vf-name" placeholder="e.g. Chirayu"></div>
+          <div class="ap-form-group"><label class="ap-label" for="vf-role">Role *</label><input type="text" class="ap-input" id="vf-role" placeholder="e.g. Graphic Designer"></div>
         </div>
         <div class="ap-row">
-          <div class="ap-form-group"><label class="ap-label">Temporary Password</label><input type="password" class="ap-input" id="vf-pw" placeholder="Set login password" autocomplete="new-password"></div>
-          <div class="ap-form-group"><label class="ap-label">Is Founder?</label>
+          <div class="ap-form-group"><label class="ap-label" for="vf-pw">Temporary Password</label><input type="password" class="ap-input" id="vf-pw" placeholder="Set login password" autocomplete="new-password"></div>
+          <div class="ap-form-group"><label class="ap-label" for="vf-founder">Is Founder?</label>
             <select class="ap-input ap-select" id="vf-founder"><option value="false">No, Team Member</option><option value="true">Yes, Founder (full access)</option></select>
           </div>
         </div>
@@ -8930,7 +9185,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // VOLUNTEER DATABASE
 // ══════════════════════════════════════════════════
 
-const VOL_COLORS = ['#c81d34','#1D5FA6','#1A7F64','#6D28D9','#D97706','#DB2777','#0891B2','#65A30D'];
+const VOL_COLORS = ['#e3213b','#1D5FA6','#14694F','#6D28D9','#D97706','#DB2777','#0891B2','#65A30D'];
 
 // VOLUNTEERS is the live, Firestore-synced team roster (kept fresh by the
 // onSnapshot listener in sjStartRealtimeSync). loadVolunteers() is kept as a
@@ -9320,8 +9575,8 @@ const CHAR_SIZE = 28, CHAR_SPEED = 3;
 // Room definitions
 const OFFICE_ROOMS = [
   { id:'content',    name:'Content Creation',     icon:'🎨', seats:4, x:0,   y:0,   w:280, h:185, color:'#EBF3FF', border:'#1D5FA6', textColor:'#1D5FA6' },
-  { id:'founder',    name:"Founder's Room",        icon:'👑', seats:1, x:620, y:0,   w:280, h:185, color:'#FDF2F1', border:'#c81d34', textColor:'#c81d34', private:true },
-  { id:'coordinator',name:'Volunteer Coordinator', icon:'🤝', seats:4, x:0,   y:185, w:280, h:185, color:'#E8F6F0', border:'#1A7F64', textColor:'#1A7F64' },
+  { id:'founder',    name:"Founder's Room",        icon:'👑', seats:1, x:620, y:0,   w:280, h:185, color:'#FDF2F1', border:'#e3213b', textColor:'#e3213b', private:true },
+  { id:'coordinator',name:'Volunteer Coordinator', icon:'🤝', seats:4, x:0,   y:185, w:280, h:185, color:'#E8F6F0', border:'#14694F', textColor:'#14694F' },
   { id:'research',   name:'Research Center',       icon:'🔬', seats:4, x:620, y:185, w:280, h:185, color:'#F3F0FF', border:'#6D28D9', textColor:'#6D28D9' },
   { id:'lounge',     name:'Common Hall',           icon:'🛋️', seats:0, x:280, y:0,   w:340, h:370, color:'#F7F6F3', border:'#D4D0C8', textColor:'#888', isOpen:true },
   { id:'flex',       name:'Flex Room',             icon:'📦', seats:4, x:0,   y:370, w:280, h:190, color:'#FEF9E7', border:'#D97706', textColor:'#D97706' },
@@ -9357,7 +9612,7 @@ function officeInit() {
   // Set avatar
   const vol = currentVolunteer;
   const av = document.getElementById('office-avatar');
-  av.style.background = vol?.color || '#c81d34';
+  av.style.background = vol?.color || '#e3213b';
   av.innerHTML = `<div class="avatar-name-tag" id="avatar-name-tag">${vol?.name || 'You'}</div>` +
     (vol?.photo ? `<img src="${vol.photo}" alt="${esc(vol?.name || 'You')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%;">` : vol?.name?.[0] || '?');
   document.getElementById('osb-name').textContent = vol?.name || 'You';
@@ -9662,7 +9917,7 @@ function cctvLoadSession(sessionIdx) {
   const dot = document.createElement('div');
   dot.className = 'cctv-replay-dot';
   dot.id = 'cctv-dot';
-  dot.style.background = vol?.color || '#c81d34';
+  dot.style.background = vol?.color || '#e3213b';
   dot.style.color = 'white';
   dot.textContent = vol?.name?.[0] || '?';
   dot.style.left = cctvFrames[0].x + 'px';
@@ -9670,7 +9925,7 @@ function cctvLoadSession(sessionIdx) {
   map.appendChild(dot);
 
   // Legend
-  document.getElementById('cctv-legend').innerHTML = `<div class="cctv-legend-item"><div class="cctv-legend-dot" style="background:${vol?.color||'#c81d34'}"></div>${escH(sess.volName)}</div>`;
+  document.getElementById('cctv-legend').innerHTML = `<div class="cctv-legend-item"><div class="cctv-legend-dot" style="background:${vol?.color||'#e3213b'}"></div>${escH(sess.volName)}</div>`;
 
   updateCCTVFrame(0);
   document.getElementById('cctv-replay-card').scrollIntoView({ behavior:'smooth', block:'nearest' });
@@ -9856,7 +10111,7 @@ function renderReelAdmin() {
           style="flex:1;">
         ${urls[i] ? `<button class="ap-btn ap-btn-danger ap-btn-sm" onclick="clearReelSlot(${i})" title="Clear this reel">✕</button>` : ''}
       </div>
-      ${urls[i] ? `<div style="font-size:0.7rem;color:#1A7F64;margin-top:3px;">✓ Reel ${i+1} saved</div>` : ''}
+      ${urls[i] ? `<div style="font-size:0.7rem;color:#14694F;margin-top:3px;">✓ Reel ${i+1} saved</div>` : ''}
     </div>`).join('');
   document.getElementById('reel-save-msg').style.display = 'none';
 }
@@ -9891,7 +10146,7 @@ function renderTestimonialAdmin() {
   if (!list) return;
   list.innerHTML = _testimonials.map(t => `
     <div class="ap-item" style="margin-bottom:10px;align-items:flex-start;">
-      <div class="ap-item-icon" style="width:36px;height:36px;border-radius:50%;background:${t.color||'#c81d34'};display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">${escH((t.name||'?')[0])}</div>
+      <div class="ap-item-icon" style="width:36px;height:36px;border-radius:50%;background:${t.color||'#e3213b'};display:flex;align-items:center;justify-content:center;color:white;font-weight:700;flex-shrink:0;">${escH((t.name||'?')[0])}</div>
       <div class="ap-item-info">
         <div class="ap-item-name">${escH(t.name)}</div>
         <div class="ap-item-sub">${escH(t.meta||'')}</div>
@@ -10130,7 +10385,7 @@ async function renderVisitStats() {
     `;
   } catch(e) {
     console.warn('Could not load visit stats:', e);
-    el.innerHTML = '<p style="color:#b11a2e;font-size:0.85rem;">Could not load stats. This almost always means your Firestore Security Rules need updating for the new fields being tracked. See the note Claude gave you for the exact rules to add in the Firebase Console.</p>';
+    el.innerHTML = '<p style="color:#b81a30;font-size:0.85rem;">Could not load stats. This almost always means your Firestore Security Rules need updating for the new fields being tracked. See the note Claude gave you for the exact rules to add in the Firebase Console.</p>';
   }
 }
 
@@ -10583,7 +10838,7 @@ async function renderBizDashPage() {
     reviewsEl.innerHTML = reviews.length ? reviews.map(r => `
       <div class="bizdash-review-card">
         ${isChain ? `<div style="font-size:0.76rem;color:var(--gray-mid);margin-bottom:4px;">📍 ${escH(myPlaces.find(x=>x.id==r.placeId)?.name || 'Unknown outlet')}</div>` : ''}
-        <div style="font-weight:600;">${escH(r.name||'Anonymous')} <span style="color:#D68910;">${'★'.repeat(Math.min(r.rating||5,5))}</span></div>
+        <div style="font-weight:600;">${escH(r.name||'Anonymous')} <span style="color:#8A5A00;">${'★'.repeat(Math.min(r.rating||5,5))}</span></div>
         <p style="margin:6px 0 10px;font-size:0.92rem;">${escH(r.text||'')}</p>
         ${r.reply
           ? `<div class="bizdash-reply-box"><strong>Your reply:</strong> ${escH(r.reply)}</div>`
@@ -12108,14 +12363,14 @@ function renderSubItems(items, tab, el, localKey) {
     if (tab === 'places') {
       return `<div class="sub-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
-          <div class="sub-name">${escH(s.name||'—')} ${photoCount ? `<span style="font-size:0.7rem;font-weight:600;color:#1A7F64;">📎 ${photoCount}</span>` : ''}</div>
+          <div class="sub-name">${escH(s.name||'—')} ${photoCount ? `<span style="font-size:0.7rem;font-weight:600;color:#14694F;">📎 ${photoCount}</span>` : ''}</div>
           <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;"><div class="sub-time">${s.time||''}</div>${delBtn}</div>
         </div>
         <div class="sub-row">📍 <strong>${escH(s.address||'—')}</strong></div>
         <div class="sub-row">🏙️ <strong>${escH(s.city||'—')}</strong> · ${escH(s.category||'—')}</div>
         ${s.submittedBy?`<div class="sub-row">👤 <strong>${escH(s.submittedBy)}</strong></div>`:''}
         <div class="sub-place-grid">
-          ${['stepfree','ramp','wideDoorway','lift','toilet','seating','parking','staff'].map(f => `<div class="sub-place-item"><div class="lbl">${f}</div><div class="val" style="color:${s[f]==='Yes'?'#1A7F64':s[f]==='No'?'#c81d34':'#D68910'}">${s[f]||'—'}</div></div>`).join('')}
+          ${['stepfree','ramp','wideDoorway','lift','toilet','seating','parking','staff'].map(f => `<div class="sub-place-item"><div class="lbl">${f}</div><div class="val" style="color:${s[f]==='Yes'?'#14694F':s[f]==='No'?'#e3213b':'#8A5A00'}">${s[f]||'—'}</div></div>`).join('')}
         </div>
         <div class="sub-row" style="margin-top:6px;">📎 <a href="#" onclick="return openPhotoForm(event)" style="color: var(--red-strong);">Check the Photos/Video form for this place →</a></div>
         ${s.photos ? (Object.values(s.photos).some(arr => arr && arr.length) ? `
@@ -12123,7 +12378,7 @@ function renderSubItems(items, tab, el, localKey) {
           ${Object.entries(s.photos).flatMap(([catKey, arr]) => (arr||[]).map(src => `<img src="${src}" title="${escH(catKey)}" style="width:44px;height:44px;object-fit:cover;border-radius:6px;">`)).join('')}
         </div>` : '') : ''}
         ${s.videoLink ? `<div class="sub-row">🎥 <a href="${escH(s.videoLink)}" target="_blank" rel="noopener" style="color: var(--red-strong);">Video / Drive link</a></div>` : ''}
-        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#E8F6F0;color:#1A7F64;font-size:0.68rem;font-weight:700;margin-top:8px;">Place Submission</span>
+        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#E8F6F0;color:#14694F;font-size:0.68rem;font-weight:700;margin-top:8px;">Place Submission</span>
       </div>`;
     }
     if (tab === 'issues') {
@@ -12134,7 +12389,7 @@ function renderSubItems(items, tab, el, localKey) {
         </div>
         <p style="font-size:0.88rem;margin:6px 0;">${escH(s.issue||'')}</p>
         ${s.submittedBy?`<div class="sub-row">👤 <strong>${escH(s.submittedBy)}</strong>${s.submittedByEmail?` · ${escH(s.submittedByEmail)}`:''}</div>`:''}
-        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#FBEAE9;color:#b11a2e;font-size:0.68rem;font-weight:700;margin-top:8px;">🚩 Reported Issue</span>
+        <span style="display:inline-block;padding:2px 8px;border-radius:100px;background:#FBEAE9;color:#b81a30;font-size:0.68rem;font-weight:700;margin-top:8px;">🚩 Reported Issue</span>
       </div>`;
     }
     if (tab === 'contact') {
@@ -12245,7 +12500,7 @@ async function aeChangePw() {
     const ok = await sjVerifyPassword(curr, cred?.passwordHash, cred?.salt);
     if (!ok) { showErr('✗ Current password is incorrect.'); return; }
     await sjSetAdminPassword(currentVolunteer.id, nw, { mustReset: false });
-    msg.style.display='block'; msg.style.background='var(--green-tint,#E8F6F0)'; msg.style.color='#1A7F64'; msg.textContent='✓ Password updated successfully.';
+    msg.style.display='block'; msg.style.background='var(--green-tint,#E8F6F0)'; msg.style.color='#14694F'; msg.textContent='✓ Password updated successfully.';
     ['pw-curr','pw-new','pw-conf'].forEach(id => document.getElementById(id).value = '');
   } catch(e) {
     showErr('✗ Something went wrong. Try again.');
